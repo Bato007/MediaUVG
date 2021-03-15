@@ -1,25 +1,45 @@
 import logo from './logo.svg';
-import './App.css';
-
+import './Login.css';
 function App() {
+
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    
+      <body className="fondo">
+        <div>
+          <div id="titulo">
+          Swap
+          </div>
+            
+          
+          <form>
+            <label>
+              <div>
+                <input type="text" name="usuario" placeholder="Introduce tu nombre de usuario" />
+              </div>
+                
+              <div>
+                <input type="password" name="contrasena" placeholder="Introduce tu contraseña" />
+              </div>
+
+              <div>
+                <input type="submit" value="Sign in" id="button" />   
+              </div>
+
+              <div>
+                <input type="submit" value="Log in" id="button" />   
+              </div>
+
+            </label> 
+          </form>
+          
+        </div>
+        
+      </body>
+
     </div>
   );
 }
-
 export default App;
