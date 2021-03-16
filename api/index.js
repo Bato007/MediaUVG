@@ -13,6 +13,8 @@ app.post('/', async(req, res) => {
   }
 })
 
+const { Pool, Client } = require('pg')
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
