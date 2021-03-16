@@ -1,6 +1,17 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const pool = require('./database')
+
+app.use(express.json())
+
+app.post('/', async(req, res) => {
+  try{
+    console.log(req.body)
+  }catch (err) {
+    console.error(err.message)
+  }
+})
 
 const { Pool, Client } = require('pg')
 
