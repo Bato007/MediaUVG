@@ -9,14 +9,15 @@ function App() {
     
       <body className="fondo">
         <div>
-          <div id="titulo">
-          Swap
-          </div>
-            
           
-          <form>
+          
+          
+          <form className="cuadro">
             <label>
-              <div>
+              <div id="titulo">
+                Swap
+              </div>
+              <div >
                 <input type="text" name="usuario" placeholder="Introduce tu nombre de usuario" />
               </div>
                 
@@ -25,11 +26,11 @@ function App() {
               </div>
 
               <div>
-                <input type="submit" value="Sign in" id="button" />   
+                <input type="submit" value="Log in" id="button" />   
               </div>
 
               <div>
-                <input type="submit" value="Log in" id="button" />   
+                <input type="submit" value="Sign up" id="button" />   
               </div>
 
             </label> 
