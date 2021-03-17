@@ -1,6 +1,6 @@
 
 import './Login.css';
-function App() {
+function SignUp() {
 
  
   return (
@@ -8,11 +8,11 @@ function App() {
     
     
       <body className="fondo">
-        <div className="cuadro">
+        <div>
           
           
           
-          <form  action="SignUp.js" >
+          <form className="cuadro">
             <label>
               <div id="titulo">
                 Swap
@@ -24,18 +24,17 @@ function App() {
               <div>
                 <input type="password" name="contrasena" placeholder="Introduce tu contraseña" />
               </div>
-            
+
               <div>
                 <input type="submit" value="Log in" id="button" />   
               </div>
 
               <div>
-                <input type="submit" value="Sign up" id="button" />   
+                <input type="submit" value="Crear cuenta" id="button" />   
               </div>
 
             </label> 
           </form>
-          
           
         </div>
         
@@ -44,4 +43,4 @@ function App() {
     </div>
   );
 }
-export default App;
+export default SignUp;
