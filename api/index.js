@@ -1,22 +1,22 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const pool = require('./database')
+const cors = require('cors')
+const searchRouter = require('./routes/search')
 
 app.use(express.json())
+app.use(cors())
 
-app.post('/', async(req, res) => {
-  try{
-    console.log(req.body)
-  }catch (err) {
-    console.error(err.message)
+app.use('/search', searchRouter)
+
+app.get('/', async (req, res) => {
+  try {
+    const users = await pool.query("SELECT * FROM swapuser")
+    res.json(users.rows)
+  } catch (error) {
+    console.error(error.messasge)
   }
-})
-
-const { Pool, Client } = require('pg')
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
 })
 
 app.listen(port, () => {
