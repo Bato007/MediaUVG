@@ -9,16 +9,14 @@ function SignUp() {
     <div className="App">
     
     
-      <body className="fondo">
+    
         <div>
           
           
           
-          <form className="cuadro">
+          <form >
             <label>
-              <div id="titulo">
-                Swap
-              </div>
+              
               
 
               <div>
@@ -30,7 +28,7 @@ function SignUp() {
           
         </div>
         
-      </body>
+    
 
     </div>
   );

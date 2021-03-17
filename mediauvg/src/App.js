@@ -1,12 +1,14 @@
 
 import './Login.css';
 import React from "react";
-import { BrowserRouter as Router,Switch, Route, Link} from 'react-router-dom';
-import SignUp from "./SignUp";
+import { BrowserRouter as Router,Switch, Route} from 'react-router-dom';
+import Signup from "./Signup";
+import Create from "./Create";
 function App() {
 
  
   return (
+    <Router>
     <div className="App">
     
     
@@ -27,24 +29,33 @@ function App() {
               <div>
                 <input type="password" name="contrasena" placeholder="Introduce tu contraseña" />
               </div>
-              <Router>
+             
                   <div>
                     <input type="submit" value="Log in" id="button" />   
                   </div>
                  
-                  <Link to="SignUp">
                     <button renderAs="button" id="button">
                       <span>Sign Up</span>
                     </button>
-                  </Link>
-                  <div>
-                    <Switch>
-                      <Route path="/SignUp"component={SignUp}/>
-                    </Switch>
-                  </div>
+           
+                <div>
+                  <Switch>
+                    
+                    <Route exact path="/"/>
+                    <Route path="/signup">
+                      <Signup/>
+
+                    </Route>
+                    <Route path="/create">
+                      <Create/>
+
+                    </Route>
+                    
+                  </Switch>
+                </div>
                   
                   
-              </Router>
+             
               
 
             </label> 
@@ -56,6 +67,7 @@ function App() {
       </body>
 
     </div>
+    </Router>
   );
 }
 export default App;
