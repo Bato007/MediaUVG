@@ -1,5 +1,7 @@
 
 import './Login.css';
+
+import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 function SignUp() {
 
  
@@ -17,17 +19,7 @@ function SignUp() {
               <div id="titulo">
                 Swap
               </div>
-              <div >
-                <input type="text" name="usuario" placeholder="Introduce tu nombre de usuario" />
-              </div>
-                
-              <div>
-                <input type="password" name="contrasena" placeholder="Introduce tu contraseña" />
-              </div>
-
-              <div>
-                <input type="submit" value="Log in" id="button" />   
-              </div>
+              
 
               <div>
                 <input type="submit" value="Crear cuenta" id="button" />   
