@@ -20,7 +20,7 @@ background: linear-gradient(to bottom, #021B79, #0575E6); /* W3C, IE 10+/ Edge, 
 #titulo{
     font-family: "magneto";
     font-size: 100px;
-    margin-top: 10px;
+  
     font-weight: bold;
     color: black;
 }
@@ -46,7 +46,7 @@ background: linear-gradient(to bottom, #021B79, #0575E6); /* W3C, IE 10+/ Edge, 
     color: black;
     opacity: 50;
     font-family: "arial";
-  }
+}
 input[type=text] {
     width: 200px;
     padding: 8px 10px;

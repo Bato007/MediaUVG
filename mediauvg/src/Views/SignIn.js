@@ -1,7 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-import '../Login.css';
+import '../Estilos/Home.css';
+
 
 export default function SignIn(){
     const history = useHistory()
@@ -10,7 +11,9 @@ export default function SignIn(){
     const toSignUp = () =>{
         history.push('/SignUp')
     }
-
+    const toHome = () =>{
+        history.push('/Home')
+    }
     return (
         <div className="App">    
             <body className="fondo">
@@ -29,7 +32,7 @@ export default function SignIn(){
                             </div>
 
                             <div>
-                                <input type="submit" value="Log in" id="button" />   
+                                <input type="submit" value="Log in" id="button"  onClick = {toHome} />   
                             </div>
                                 
                             <button renderAs="button" onClick = {toSignUp} id="button">
