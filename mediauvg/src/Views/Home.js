@@ -11,6 +11,9 @@ export default function Home() {
   const logOut = () => {
     history.push('/')
   }
+  const toPlayList = () =>{
+    history.push('/PlayLists')
+  }
  
   return (
     <div className="App">
@@ -19,31 +22,28 @@ export default function Home() {
           
         <div>
             
-          <form className="cuadro">
+          <form className="cuadrop">
             <label>
-                <div id="nav">
+              <div id="nav">
                     
                     <div class="titulonav">
                         Perfil 
                     </div>
                         
+
                     <div class="cuerporec">
                         <ul>
                             <li>Nombre</li>
                             <li>Usuario</li>
-                            <li><input type="submit" value="Listas de reproduccion" className="botonMenu"/> </li>
+                            <li><input type="submit" value="Listas de reproduccion" className="botonMenu" onClick = {toPlayList}/> </li>
                             <li><input type="submit" value="Ser artista" className="botonMenu"/> </li>
                             <li><input type="submit" value="Subscribirse" className="botonMenu"/> </li>
-                            <li><input type="text" name="usuario" placeholder="Buscar" /> </li>
+                            <li><input type="text" name="usuario" placeholder="Buscar" className="search"/> </li>
                             <li><input type="submit" value="Cerrar sesion" className="botonMenu" onClick = {logOut} /> </li>
                         </ul>
                     </div>
                     
                 </div>
-
-                
-            
-               
 
             </label> 
           </form>

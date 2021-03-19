@@ -34,13 +34,11 @@ export default function AppInput({
                 }} />
             <TextInput 
                 onBlur = { () =>  setFocusColor('black')}
-                onFocus = { () => setFocusColor(rgba(73, 133, 245, 0.8)) }
+                onFocus = { () => setFocusColor('green') }
                 style = {{
                     width: 200,
                     padding:  10,
-                    margin: 20 ,
-                    outline: none,
-                    border: none,
+                    margin: 20 
                 }}
                 defaultValue = {written}
                 onChangeText = {handleChange}

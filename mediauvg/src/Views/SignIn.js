@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-import '../Estilos/Home.css';
+import '../Estilos/Login.css';
 
 
 export default function SignIn(){
@@ -14,6 +14,9 @@ export default function SignIn(){
     const toHome = () =>{
         history.push('/Home')
     }
+
+
+    
     return (
         <div className="App">    
             <body className="fondo">

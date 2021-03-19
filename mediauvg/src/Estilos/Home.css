@@ -7,7 +7,7 @@
    
 }
 
-input[type=text] {
+.search {
     width: 200px;
     padding: 8px 10px;
     margin: 20px 0;
@@ -17,11 +17,7 @@ input[type=text] {
    
     background-color: black;
 }
-::placeholder {
-    color: white;
-    opacity: 50;
-    font-family: "arial";
-}
+
 
 .botonMenu{
     font-family: "Bahnschrift";
@@ -47,7 +43,7 @@ input[type=text] {
  
 
 
-.cuadro{
+.cuadrop{
     position: absolute;
     left: 20px;
     top: 0px;
