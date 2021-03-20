@@ -4,7 +4,8 @@
   "description": "api of media uvg",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "lint": "eslint index.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,12 @@
   "author": "Diego Martin Brandon",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "nodemon": "^2.0.7"
   },
   "dependencies": {
