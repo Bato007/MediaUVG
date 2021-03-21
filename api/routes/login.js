@@ -21,7 +21,7 @@ const router = express.Router()
   }
   Si no hay errores entonces manda la información con el mismo formato.
 */
-router.get('/verify', async (req, res) => {
+router.post('/verify', async (req, res) => {
   try {
     const { username, password } = req.body
     const user = await pool.query('SELECT * FROM swapuser WHERE username = $1', [username])
@@ -35,6 +35,12 @@ router.get('/verify', async (req, res) => {
 
     if (user.rows.length > 0) {
       if (user.rows[0].password === password) {
+        let premium = false
+        const free = await pool.query('SELECT * FROM freeuser WHERE username = $1', [username])
+        if (free.rowCount < 1) {
+          premium = true
+        }
+        user.rows[0] = { premium, ...user.rows[0] }
         res.json(user.rows)
       } else {
         err.username = 'ERROR 102'

@@ -1,11 +1,14 @@
 
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import '../Estilos/Home.css';
 
 export default function Home() {
   const history = useHistory()
+  const location = useLocation()
+  const { admin, name, password, 
+    playback, premium, username } = location.state
 
   // Para regresar al pasado
   const logOut = () => {

@@ -25,7 +25,7 @@ background: linear-gradient(to bottom, #021B79, #0575E6); /* W3C, IE 10+/ Edge, 
     color: black;
 }
 
-#button{
+.button{
     font-family: "Bahnschrift";
     font-weight: bold;
     font-size: 20px;
@@ -38,7 +38,7 @@ background: linear-gradient(to bottom, #021B79, #0575E6); /* W3C, IE 10+/ Edge, 
     background-color: black;
     outline: none;
 }
-#button:hover{
+.button:hover{
     background-color: rgb(73, 133, 245);
 }
 
