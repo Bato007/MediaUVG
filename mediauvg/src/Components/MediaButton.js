@@ -1,14 +1,14 @@
 import React from 'react';
 
 export default function AppButton({
-    onPress,
+    onClick,
     text  
 }){
 
     return(
         <button 
         className = 'button espaciado'
-        onClick={onPress}>
+        onClick={onClick}>
           {text}
         </button>
     );

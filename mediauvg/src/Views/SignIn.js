@@ -11,17 +11,18 @@ import '../Estilos/Login.css';
 export default function SignIn(){
   const history = useHistory()
   const [ username, setUsername ] = useState('')
-  const { password, setPassword } = useState('')
+  const [ password, setPassword ] = useState('')
 
   // Encargado de mandar a la siguiente pantalla
   const toSignUp = () =>{
     history.push('/SignUp')
   }
-  
+
   const toHome = () =>{
+    console.log(username)
       const data = {
-        username: username,
-        password: password
+        username,
+        password
       }
       fetch("http://localhost:3001/login/verify", 
       {method: 'POST', 
@@ -39,7 +40,7 @@ export default function SignIn(){
             console.log('Tirar error contraseñas no coinciden')
             break
           default:
-            if (resp.admin) console.log('Mandar pantalla admin')
+            if (resp.admin) history.push('/Admin', out[0])
             else if (resp.premium) history.push('/Home', out[0])
             else history.push('/Home', out[0])
             break
@@ -48,38 +49,30 @@ export default function SignIn(){
   }
 
   return (
-      <body className="fondo">
-          <div className="cuadro">
-              <form>
-                  <label>
-                      <div id="titulo">
-                          Swap
-                      </div>
-                      <Input 
-                        type="text"
-                        placeholder="Introduce tu nombre de usuario"
-                        value={username}
-                        limit={20}
-                        handleChange={setUsername}
-                      />
-                      <Input 
-                        type='password'
-                        placeholder='Introduce tu contraseña'
-                        value={password}
-                        limit={20}
-                        handleChange={setPassword}
-                      />
-                      <Button
-                        text='Log In'
-                        onClick={toHome}
-                      />
-                      <Button
-                        text='Sign Up'
-                        onClick={toSignUp}
-                      />
-                  </label> 
-              </form>
-          </div>
-      </body>
+    <div>
+      <div id="titulo">
+      Swap
+      </div>
+      <Input 
+        type="text"
+        placeholder="Introduce tu nombre de usuario"
+        limit={20}
+        onChange={setUsername}
+      />
+      <Input
+        type='password'
+        placeholder='Introduzca su contraseña'
+        limit={20}
+        onChange={setPassword}
+      />
+      <Button 
+        onClick={toHome} 
+        text='Log In'
+      />
+      <Button
+        onClick={toSignUp}
+        text='Sign Up'
+      />
+    </div>
   );
 }
