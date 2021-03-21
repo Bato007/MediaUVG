@@ -49,30 +49,42 @@ export default function SignIn(){
   }
 
   return (
-    <div>
-      <div id="titulo">
-      Swap
+    <div className="fondo">
+      <div className="cuadro">
+        <div id="titulo">
+          Swap
+        </div>
+        <div>
+          <Input 
+            type="text"
+            placeholder="Introduce tu nombre de usuario"
+            limit={20}
+            onChange={setUsername}
+          />
+        </div>
+        <div>
+          <Input
+            type='password'
+            placeholder='Introduzca su contraseña'
+            limit={20}
+            onChange={setPassword}
+          />
+        </div>
+        <div>
+          <Button 
+            clase="button"
+            onClick={toHome} 
+            text='Log In'
+          />
+        </div>
+        <div>
+          <Button
+            clase="button"
+            onClick={toSignUp}
+            text='Sign Up'
+          />
+        </div> 
       </div>
-      <Input 
-        type="text"
-        placeholder="Introduce tu nombre de usuario"
-        limit={20}
-        onChange={setUsername}
-      />
-      <Input
-        type='password'
-        placeholder='Introduzca su contraseña'
-        limit={20}
-        onChange={setPassword}
-      />
-      <Button 
-        onClick={toHome} 
-        text='Log In'
-      />
-      <Button
-        onClick={toSignUp}
-        text='Sign Up'
-      />
     </div>
   );
 }

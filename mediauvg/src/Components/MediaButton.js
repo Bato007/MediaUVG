@@ -2,12 +2,13 @@ import React from 'react';
 
 export default function AppButton({
     onClick,
-    text  
+    text,
+    clase  
 }){
 
     return(
         <button 
-        className = 'button espaciado'
+        className = {clase} 
         onClick={onClick}>
           {text}
         </button>

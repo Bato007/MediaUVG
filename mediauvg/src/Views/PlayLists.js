@@ -1,7 +1,8 @@
 
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-
+import Button from '../Components/MediaButton'
+import Input from '../Components/MediaInput'
 import '../Estilos/Home.css';
 
 export default function PlayLists() {
@@ -16,49 +17,61 @@ export default function PlayLists() {
     
     if(hidden === 1){
         return (
-            <body className="fondo">
-               <div>
-                  <form className="cuadrop">
-                    <label>
-                        <div id="nav">
-                            <div class="titulonav">
-                                PlayLists
-                            </div>
-                            <div class="cuerporec">
-                                <ul>
-                                        
-                                    <li><input type="submit" value="PLayList1" onClick={() => setHidden(2)} className="botonMenu"/> </li>
-                                    <li><input type="submit" value="Crear" onClick={() => setHidden(3)} className="botonMenu"/> </li>
-                                    <li><input type="submit" value="Atras" className="botonMenu" onClick = {toHome} /> </li>
-                                </ul>
-                            </div> 
+            <div className="fondo">
+               <div className="cuadrop">
+                    <div id="nav">
+                        <div class="titulonav">
+                            PlayLists
                         </div>
-                    </label> 
-                  </form>
+                        <div class="cuerporec">
+                            <ul>
+                                <Button
+                                    clase="botonMenu"
+                                    onClick={() => setHidden(2)} 
+                                    text='PLayList1'
+                                />
+                                <Button
+                                    clase="botonMenu"
+                                    onClick={() => setHidden(3)} 
+                                    text='Crear'
+                                />
+                                <Button
+                                    clase="botonMenu"
+                                    onClick={toHome}
+                                    text='Atras'
+                                />
+                            </ul>
+                        </div> 
+                    </div>
                 </div>
-            </body>
+            </div>
           );
     }else if (hidden === 2) {
         return(
-            <body className="fondo">
-                <div>
-                    <form className="cuadrop">
-                        <label>
-                            <div id="nav">
-                                <div class="titulonav">
-                                    PlayLists
-                                </div>
-                                <div class="cuerporec">
-                                    <ul>                                        
-                                        <li><input type="submit" value="PlayList1" onClick={() => setHidden(2)} className="botonMenu"/> </li>
-                                        <li><input type="submit" value="Atras" className="botonMenu" onClick = {toHome} /> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </label> 
-                    </form>
+            <div className="fondo">
+                <div className="cuadrop">
+                    
+                    <div id="nav">
+                        <div class="titulonav">
+                            PlayLists
+                        </div>
+                        <div class="cuerporec">
+                            <ul>          
+                                <Button
+                                    clase="botonMenu"
+                                    onClick={() => setHidden(2)} 
+                                    text='PLayList1'
+                                />                              
+                                <Button
+                                    clase="botonMenu"
+                                    onClick = {toHome}
+                                    text='Atras'
+                                />
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </body> 
+            </div> 
         );
     }
 }

@@ -1,14 +1,18 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import '../Estilos/Home.css';
+import Button from '../Components/MediaButton'
+import Input from '../Components/MediaInput'
 
 export default function Home() {
   const history = useHistory()
+  const [ search, setsearch ] = useState('')
+  // Esta onda me tira error :/
   const location = useLocation()
-  const { admin, name, password, 
-    playback, premium, username } = location.state
+  // const { admin, name, password, 
+  //   playback, premium, username } = location.state
 
   // Para regresar al pasado
   const logOut = () => {
@@ -20,30 +24,48 @@ export default function Home() {
 
  
   return (
-    <body className="fondo">
-      <div>
-        <form className="cuadrop">
-          <label>
-            <div id="nav">    
-              <div class="titulonav">
-                Perfil 
-              </div>
+    <div className="fondo">
+      <div className="cuadrop">
+        <div id="nav">    
+          <div class="titulonav">
+            Perfil 
+          </div>
 
-              <div class="cuerporec">
-                <ul>
-                  <li>Nombre</li>
-                  <li>Usuario</li>
-                  <li><input type="submit" value="Listas de reproduccion" className="botonMenu" onClick = {toPlayList}/> </li>
-                  <li><input type="submit" value="Ser artista" className="botonMenu" /> </li>
-                  <li><input type="submit" value="Subscribirse" className="botonMenu"/> </li>
-                  <li><input type="text" name="usuario" placeholder="Buscar" className="search"/> </li>
-                  <li><input type="submit" value="Cerrar sesion" className="botonMenu" onClick = {logOut} /> </li>
-                  </ul>
-              </div>  
-            </div>
-          </label> 
-        </form>
+          <div class="cuerporec">
+            <ul>
+              {/* <li>{name}</li> */}
+              {/* <li>{username}</li> */}
+              <Button
+                onClick={toPlayList}
+                text='Listas de reproduccion'
+                clase="botonMenu"
+              /> 
+              <Button
+                onClick={''}
+                text='Ser artista'
+                clase="botonMenu"
+              />
+              <Button
+                onClick={''}
+                text='Subscribirse'
+                clase="botonMenu"
+              />
+              <Input 
+                type="text"
+                placeholder="Buscar"
+                limit={20}
+                onChange={setsearch}
+              /> 
+
+              <Button
+                onClick={logOut}
+                text='Cerrar sesion'
+                clase="botonMenu"
+              />
+            </ul>
+          </div>  
+        </div>
       </div>
-    </body> 
+    </div> 
   );
 }

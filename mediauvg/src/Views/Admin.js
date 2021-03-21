@@ -32,46 +32,46 @@ export default function Admin() {
   }
 
   return (
-    <body className="fondo">
-      <div>
-        <form className="cuadrop">
-          <label>
-            <div id="nav">    
-              <div class="titulonav">
-                Admin 
-              </div>
+    <div className="fondo">
+      <div className="cuadrop">
+        <div id="nav">    
+          <div class="titulonav">
+            Admin 
+          </div>
 
-              <div class="cuerporec">
-                <ul>
-                  <li>Nombre</li>
-                  <li>Usuario</li>
-                  <Button 
-                    text='Administrar Canción'
-                    onPress={adminSong}
-                  />
-                  <Button 
-                    text='Administrar Album'
-                    onPress={adminAlbum}
-                  />
-                  <Button 
-                    text='Administrar Artista'
-                    onPress={adminArtist}
-                  />
-                  <Button 
-                    text='Ver Estadisticas'
-                    onPress={adminstatistics}
-                  />
-                  <Button 
-                    text='Cerrar sesion'
-                    onPress={logOut}
-                  />
-                </ul>
-              </div>  
-            </div>
-          </label> 
-        </form>
-        <Form />
+          <div class="cuerporec">
+            <ul>
+              <li>Nombre</li>
+              <li>Usuario</li>
+              <Button 
+                clase="button"
+                text='Administrar Canción'
+                onPress={adminSong}
+              />
+              <Button 
+                clase="button"
+                text='Administrar Album'
+                onPress={adminAlbum}
+              />
+              <Button 
+                clase="button"
+                text='Administrar Artista'
+                onPress={adminArtist}
+              />
+              <Button
+                clase="button" 
+                text='Ver Estadisticas'
+                onPress={adminstatistics}
+              />
+              <Button
+                clase="button" 
+                text='Cerrar sesion'
+                onPress={logOut}
+              />
+            </ul>
+          </div>  
+        </div>
       </div>
-    </body> 
+    </div> 
   );
 }

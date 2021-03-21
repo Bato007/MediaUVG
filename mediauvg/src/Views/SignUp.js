@@ -1,27 +1,20 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { useInput } from '../hooks/hook-input';
-
 import '../Estilos/Login.css';
+import Button from '../Components/MediaButton'
+import Input from '../Components/MediaInput'
 
 
 export default function SignUp() {
   const history = useHistory()
-  const { value:nombre, bind:bindnombre, reset:resetnombre } = useInput('');
-  const { value:usuario, bind:bindusuario, reset:resetusuario } = useInput('');
-  const { value:contrasena, bind:bindcontrasena, reset:resetcontrasena } = useInput('');
-  const { value:conficontra, bind:bindconficontra, reset:resetconficontra } = useInput('');
+  const [ nombre, setNombre ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ passwordR, setPasswordR ] = useState('')
+  const [ usuario, setUsuario ] = useState('')
+
   
-  const handleSubmit = (evt) => {
-      evt.preventDefault();
-      console.log('que onda hueco', nombre, usuario, contrasena, conficontra)
-      resetnombre();
-      resetusuario();
-      resetcontrasena();
-      resetconficontra();
-  }
 
   // Para regresar al pasado
   const toSignIn = () => {
@@ -29,48 +22,63 @@ export default function SignUp() {
   }
  
   return (
-    
-
-  <body className="fondo">
-    <div>
-      <form onSubmit={handleSubmit} className="cuadro">
-        <label>
-          <div id="titulo">
-            Swap
-          </div>
-
-          <div>
-            <input type="text" {...bindnombre} placeholder="Introduce tu nombre" name="nombre" />
-          </div>
-        </label>
-
-        <label>
-          <div>
-            <input type="text" {...bindusuario} name="usuario" placeholder="Introduce tu nombre de usuario"  />   
-          </div>
-        </label>
-
-        <label>
-          <div>
-            <input type="password" {...bindcontrasena} name="contra" placeholder="Introduce tu contraseña"  />   
-          </div>
-        </label>
-
-        <label>
-          <div>
-            <input type="password" {...bindconficontra} name="contra" placeholder="Verifica tu contraseña"  />   
-          </div>
-        </label>
-
-        <div>
-          <input type="submit" value="Confirmar" id="button"  />   
+    <div className="fondo">
+      <div className="cuadro">
+        <div id="titulo">
+          Swap
         </div>
 
         <div>
-          <input type="submit" value="Entrar" id="button"  onClick = {toSignIn}/>   
+          <Input 
+            type="text"
+            placeholder="Introduce tu nombre"
+            limit={20}
+            onChange={setNombre}
+          />
         </div>
-      </form>
-    </div>
-  </body>  
+
+        <div>
+          <Input 
+            type="text"
+            placeholder="Introduce tu nombre de usuario"
+            limit={20}
+            onChange={setUsuario}
+          /> 
+        </div>
+
+        <div>
+          <Input 
+            type="password"
+            placeholder="Introduce tu contraseña"
+            limit={20}
+            onChange={setPassword}
+          />   
+        </div>
+
+        <div>
+          <Input 
+            type="password"
+            placeholder="Verifica tu contraseña"
+            limit={20}
+            onChange={setPasswordR}
+          />  
+        </div>
+
+        {/* <div>
+          <Button
+            onClick={handleSubmit}
+            text='Confirmar'
+          />  
+        </div> */}
+
+        <div>
+          <Button
+            clase="button"
+            onClick={toSignIn}
+            text='Entrar'
+          /> 
+        </div>
+      </div>
+    </div>  
   );
 }
