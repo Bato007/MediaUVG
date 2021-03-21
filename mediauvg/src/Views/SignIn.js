@@ -15,36 +15,33 @@ export default function SignIn(){
         history.push('/Home')
     }
 
-
-    
     return (
-        <div className="App">    
-            <body className="fondo">
-                <div className="cuadro">
-                    <form  action="SignUp.js" >
-                        <label>
-                            <div id="titulo">
-                                Swap
-                            </div>
-                            <div >
-                                <input type="text" name="usuario" placeholder="Introduce tu nombre de usuario" />
-                            </div>
+        <body className="fondo">
+            <div className="cuadro">
+                <form  action="SignUp.js" >
+                    <label>
+                        <div id="titulo">
+                            Swap
+                        </div>
+                        <div className="espaciado" >
+                            <input type="text" name="usuario" placeholder="Introduce tu nombre de usuario" />
+                        </div>
                                 
-                            <div>
-                                <input type="password" name="contrasena" placeholder="Introduce tu contraseña" />
-                            </div>
+                        <div>
+                            <input type="password" name="contrasena" placeholder="Introduce tu contraseña" />
+                        </div>
 
-                            <div>
-                                <input type="submit" value="Log in" id="button"  onClick = {toHome} />   
-                            </div>
-                                
-                            <button renderAs="button" onClick = {toSignUp} id="button">
-                                <span>Sign Up</span>
-                            </button> 
-                        </label> 
-                    </form>
-                </div>
-            </body>
-        </div>
+                        <div className="espaciado" >
+                            <input type="submit" value="Log in" id="button"  onClick = {toHome} />   
+                        </div>
+
+                        <div>
+                            <input type="submit" value="Sign up" id="button"  onClick = {toSignUp} />   
+                        </div>
+                        
+                    </label> 
+                </form>
+            </div>
+        </body>
     );
 }

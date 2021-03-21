@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import '../Estilos/Home.css';
 
-export default function Home() {
+export default function Admin() {
   const history = useHistory()
 
   // Para regresar al pasado
@@ -14,7 +14,7 @@ export default function Home() {
   const toPlayList = () =>{
     history.push('/PlayLists')
   }
-
+ 
  
   return (
     <body className="fondo">
@@ -23,7 +23,7 @@ export default function Home() {
           <label>
             <div id="nav">    
               <div class="titulonav">
-                Perfil 
+                Admin 
               </div>
 
               <div class="cuerporec">
@@ -31,7 +31,7 @@ export default function Home() {
                   <li>Nombre</li>
                   <li>Usuario</li>
                   <li><input type="submit" value="Listas de reproduccion" className="botonMenu" onClick = {toPlayList}/> </li>
-                  <li><input type="submit" value="Ser artista" className="botonMenu" /> </li>
+                  <li><input type="submit" value="Ser artista" className="botonMenu"  /> </li>
                   <li><input type="submit" value="Subscribirse" className="botonMenu"/> </li>
                   <li><input type="text" name="usuario" placeholder="Buscar" className="search"/> </li>
                   <li><input type="submit" value="Cerrar sesion" className="botonMenu" onClick = {logOut} /> </li>

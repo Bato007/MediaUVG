@@ -7,6 +7,7 @@ import SignUp from "./Views/SignUp";
 import SignIn from './Views/SignIn';
 import Home from './Views/Home';
 import PlayLists from './Views/PlayLists';
+import Admin from './Views/Admin';
 export default function App() {
 
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route exact path = '/SignUp' component = {SignUp} />
           <Route exact path = '/Home' component = {Home} />
           <Route exact path = '/PlayLists' component = {PlayLists} />
+          <Route exact path = '/Admin' component = {Admin} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
