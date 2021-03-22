@@ -18,7 +18,7 @@ export default function App() {
           <Route exact path = '/' component = {SignIn} />
           <Route exact path = '/SignUp' component = {SignUp} />
           <Route exact path = '/Home' component = {Home} />
-          <Route exact path = '/PlayLists' component = {PlayLists} />
+          <Route exact path = '/Home/PlayLists' component = {PlayLists} />
           <Route exact path = '/Admin' component = {Admin} />
           <Route exact path = '/Reportes' component = {Reportes} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
