@@ -110,7 +110,7 @@ router.post('/goauthor', async (req, res) => {
   }
   Si hubo un error, se enviara ERROR 304 en vez del espacio en blanco
 */
-router.post('/goauthor', async (req, res) => {
+router.delete('/goauthor', async (req, res) => {
   const response = {
     status: '',
   }

@@ -8,11 +8,11 @@ import '../Estilos/Home.css';
 export default function PlayLists() {
     const history = useHistory()
     const [ hidden, setHidden ] = React.useState(1);// cambiar de pantalla
-
+   
     // Para regresar al pasado
     const toHome = () =>{
     
-    history.push('/Home')
+        history.push('/Home')
     }
     
     if(hidden === 1){

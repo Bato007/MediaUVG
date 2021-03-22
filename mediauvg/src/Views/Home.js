@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import '../Estilos/Home.css';
 import Button from '../Components/MediaButton'
 import Input from '../Components/MediaInput'
+import Cuadro from '../Components/MediaCuadro'
 
 export default function Home() {
   const history = useHistory()
@@ -82,13 +83,33 @@ export default function Home() {
         byArtist: out
       })
     })
-  }
+    
+    
+    showResult()
 
-  console.log(songResult)
+  }
+  const showResult = () =>{
+    
+    // pues aqui se busca en cada array si hay un resultado de lo que escribio el usuario
+    for(var a = 0; a<songResult.byAlbum.length; a++ ){
+      console.log(songResult.byAlbum[a].songname)
+    }
+    for(var s = 0; s<songResult.bySong.length; s++ ){
+      console.log(songResult.byAlbum[s].songname)
+    }
+    for(var g = 0; g<songResult.byGenre.length; g++ ){
+      console.log(songResult.byAlbum[g].songname)
+    }
+    for(var ar = 0; ar<songResult.byArtist.length; ar++ ){
+      console.log(songResult.byAlbum[ar].songname)
+    }
+    
+  }
 
   return (
     <div className="fondo">
       <div className="cuadrop">
+          
         <div id="nav">    
           <div className="titulonav">
             Perfil 
@@ -130,7 +151,7 @@ export default function Home() {
                 clase="botonMenu"
               />
             </ul>
-          </div>  
+          </div> 
         </div>
       </div>
     </div> 
