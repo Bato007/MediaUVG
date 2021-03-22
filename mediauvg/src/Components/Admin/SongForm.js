@@ -12,7 +12,6 @@ export default function FormManager({ form }) {
 
   const onClick = (selected) => {
     setSong(selected)
-    console.log(selected)
   }
 
   const onSetSong = (text) => {
@@ -42,8 +41,6 @@ export default function FormManager({ form }) {
       songname: text
     })
   }
-
-  console.log(song.songname)
 
   const onSelected = () => {
     if(song.songid !== undefined && song.songid !== -1) return (

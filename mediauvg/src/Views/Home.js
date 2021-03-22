@@ -9,10 +9,15 @@ import Input from '../Components/MediaInput'
 export default function Home() {
   const history = useHistory()
   const [ search, setsearch ] = useState('')
-  // Esta onda me tira error :/
+  const [ songResult, setSongResult ] = useState({
+    bySong: [],
+    byAlbum: [],
+    byGenre: [],
+    byArtist: [],
+  })
   const location = useLocation()
-  // const { admin, name, password, 
-  //   playback, premium, username } = location.state
+  const { admin, name, password, 
+    playback, premium, username } = location.state
 
   // Para regresar al pasado
   const logOut = () => {
@@ -22,16 +27,74 @@ export default function Home() {
     history.push('/PlayLists')
   }
 
- 
+  const searchSong = () => {
+    const data = {
+      value: search
+    }
+    fetch("http://localhost:3001/search/song", 
+    {method: 'POST', 
+    body: JSON.stringify(data), 
+    headers:{'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+    .catch((error) =>  console.error('Error', error))
+    .then((out) => {
+      setSongResult({
+        ...songResult,
+        bySong: out
+      })
+    })
+
+    fetch("http://localhost:3001/search/album", 
+    {method: 'POST', 
+    body: JSON.stringify(data), 
+    headers:{'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+    .catch((error) =>  console.error('Error', error))
+    .then((out) => {
+      setSongResult({
+        ...songResult,
+        byAlbum: out
+      })
+    })
+
+    fetch("http://localhost:3001/search/genre", 
+    {method: 'POST', 
+    body: JSON.stringify(data), 
+    headers:{'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+    .catch((error) =>  console.error('Error', error))
+    .then((out) => {
+      setSongResult({
+        ...songResult,
+        byGenre: out
+      })
+    })
+
+    fetch("http://localhost:3001/search/artist", 
+    {method: 'POST', 
+    body: JSON.stringify(data), 
+    headers:{'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+    .catch((error) =>  console.error('Error', error))
+    .then((out) => {
+      setSongResult({
+        ...songResult,
+        byArtist: out
+      })
+    })
+  }
+
+  console.log(songResult)
+
   return (
     <div className="fondo">
       <div className="cuadrop">
         <div id="nav">    
-          <div class="titulonav">
+          <div className="titulonav">
             Perfil 
           </div>
 
-          <div class="cuerporec">
+          <div className="cuerporec">
             <ul>
               {/* <li>{name}</li> */}
               {/* <li>{username}</li> */}
@@ -56,7 +119,11 @@ export default function Home() {
                 limit={20}
                 onChange={setsearch}
               /> 
-
+              <Button 
+                onClick={searchSong}
+                text='Search'
+                clase='botonMenu'
+              />
               <Button
                 onClick={logOut}
                 text='Cerrar sesion'
