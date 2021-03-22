@@ -9,10 +9,25 @@ const router = express.Router()
     'song': 'ejemplo'
   }
 */
-router.get('/song', async (req, res) => {
+router.put('/song', async (req, res) => {
   try {
     const { song } = req.body
     const songs = await pool.query('SELECT * FROM song WHERE songname = $1', [song])
+    res.json(songs.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
+/*
+  Retorna un array de canciones con ese nombre, formato
+  {
+    'song': 'ejemplo'
+  }
+*/
+router.get('/song', async (req, res) => {
+  try {
+    const songs = await pool.query('SELECT * FROM (song NATURAL JOIN album) P1')
     res.json(songs.rows)
   } catch (error) {
     console.error(error.messasge)

@@ -32,46 +32,42 @@ export default function Admin() {
   }
 
   return (
-    <div className="fondo">
-      <div className="cuadrop">
-        <div id="nav">    
-          <div class="titulonav">
-            Admin 
-          </div>
-
-          <div class="cuerporec">
-            <ul>
-              <li>Nombre</li>
-              <li>Usuario</li>
-              <Button 
-                clase="button"
-                text='Administrar Canción'
-                onPress={adminSong}
-              />
-              <Button 
-                clase="button"
-                text='Administrar Album'
-                onPress={adminAlbum}
-              />
-              <Button 
-                clase="button"
-                text='Administrar Artista'
-                onPress={adminArtist}
-              />
-              <Button
-                clase="button" 
-                text='Ver Estadisticas'
-                onPress={adminstatistics}
-              />
-              <Button
-                clase="button" 
-                text='Cerrar sesion'
-                onPress={logOut}
-              />
-            </ul>
-          </div>  
+    <div>
+      <div id="nav">    
+        <div class="titulonav">
+          Admin 
         </div>
-      </div>
-    </div> 
+
+        <div class="cuerporec">
+          <ul>
+            <li>Nombre</li>
+            <li>Usuario</li>
+            <Button 
+              text='Administrar Canción'
+              onClick={adminSong}
+            />
+            <Button 
+              text='Administrar Album'
+              onClick={adminAlbum}
+            />
+            <Button 
+              text='Administrar Artista'
+              onClick={adminArtist}
+            />
+            <Button 
+              text='Ver Estadisticas'
+              onClick={adminstatistics}
+            />
+            <Button 
+              text='Cerrar sesion'
+              onClick={logOut}
+            />
+          </ul>
+        </div>  
+      </div> 
+      <Form 
+        form={form}
+      />
+    </div>
   );
 }

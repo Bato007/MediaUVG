@@ -43,18 +43,11 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-// Aqui es donde se agregan las columnas, entonces si se quiere uno nuevo, se copia-pega 
-// y se cambia a la necesidad 
 const headCells = [
-    { id: 'nombreCompleto', numeric: false, disablePadding: true, label: 'Nombre Becado' },
-    { id: 'promocion', numeric: false, disablePadding: false, label: 'Promoción' },
-    { id: 'cuota', numeric: true, disablePadding: false, label: 'Saldo Pendiente ASIGBO' },
-    { id: 'totalHours', numeric: true, disablePadding: false, label: 'Horas de Beca Totales' },
-    { id: 'difundeHours', numeric: true, disablePadding: false, label: 'Horas Difunde' },
-    { id: 'fundaninasHours', numeric: true, disablePadding: false, label: 'Horas Fundaniñas' },
-    { id: 'socialProyectHours', numeric: true, disablePadding: false, label: 'Horas Proyecto Social' },
-    { id: 'asigboHours', numeric: true, disablePadding: false, label: 'Horas ASIGBO' },
-    { id: 'otherHours', numeric: true, disablePadding: false, label: 'Horas Otros' },
+  { id: 'songname', numeric: false, disablePadding: true, label: 'Nombre Canción' },
+  { id: 'albumname', numeric: false, disablePadding: false, label: 'Album' },
+  { id: 'author', numeric: false, disablePadding: false, label: 'Autor' },
+  { id: 'songlink', numeric: false, disablePadding: false, label: 'Link' },
 ];
 
 // Se crean las columnas con la informacion de 'const headCells', junto con las flechas 
@@ -134,7 +127,7 @@ const EnhancedTableToolbar = (props) => {
         // className={clsx(classes.root, {[classes.highlight]: numSelected > 0,})}> Para resaltar el titulo
             className={clsx(classes.root)}>
             <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            Consulta de Becados
+            Consulta de Música
             </Typography>
         </Toolbar>
     );
@@ -163,10 +156,10 @@ const useStyles = makeStyles((theme) => ({
         top: 20,
         width: 1,
     },
-    saldoNegativo: {
+    notActive: {
         color: '#ff0000',
     },
-    saldoPositivo: {
+    active: {
         color: '#00bb2d',
     },
 }));
@@ -179,18 +172,16 @@ const useStyles = makeStyles((theme) => ({
  *      page - el numero de pagina en la que se debe de encontrar la tabla
  *      setPage - funcion actualiza el estado de la pagina  
  */
-export default function EnhancedTable(
-    {
-        rows,
-        rowsNumber,
-        onClick,
-        page,
-        setPage
-    }
-    ) {
+export default function SongTable({
+  rows,
+  rowsNumber,
+  onClick,
+  page,
+  setPage,
+}) {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('promocion');
+    const [orderBy, setOrderBy] = React.useState('songname');
     const [selected, setSelected] = React.useState([]);
     const [rowsPerPage] = React.useState(5);
 
@@ -221,18 +212,14 @@ export default function EnhancedTable(
             onClick(newSelected[0]);
         } else {
             onClick({
-                id: -1,
-                nombreCompleto: 'Sin seleccionar',
-                promocion: '',
-                graduado: 0,
-                usuario: '',
-                cuota: 0,
-                totalHours: 0, 
-                difundeHours: 0, 
-                fundaninasHours: 0, 
-                socialProyectHours: 0,
-                asigboHours: 0, 
-                otherHours: 0
+                active: false, 
+                albumid: -1,
+                albumname: '',
+                author: '', 
+                release: '',
+                songid: -1,
+                songlink: '',
+                songname: ''
             });
         }
     };
@@ -257,105 +244,80 @@ export default function EnhancedTable(
     const emptyRows = 5 - Math.min(5, rowsNumber - page * 5);
 
 // Se crea el resto de la tabla
-return (
+  return (
     <div className={classes.root}>
-        <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
+      <Paper className={classes.paper}>
+      <EnhancedTableToolbar numSelected={selected.length} />
+      <TableContainer>
 
-            {/* Se crea el el encabezado de la tabla */}
-            <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size = 'medium'
-            aria-label="enhanced table">
-                <EnhancedTableHead
-                    classes={classes}
-                    numSelected={selected.length}
-                    order={order}
-                    orderBy={orderBy}
-                    onRequestSort={handleRequestSort}
-                    rowCount={rows.length}/>
-                <TableBody>
-                {/* Se crean las filas de la tabla */}
-                {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                    const isItemSelected = isSelected(row);
-                    const labelId = `enhanced-table-checkbox-${index}`;
-                    {/* Se verifica si la cuota debe de ser resaltada en verde o rojo */}
-                    if (row.cuota > 0) {
-                        return (
-                            <TableRow
-                            hover
-                            onClick={(event) => handleClick(event, row)}
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.usuario}
-                            selected={isItemSelected}
-                            >
-                                {/* Propiedades de cada una de las filas */}
-                                <TableCell padding="checkbox"></TableCell>
-                                <TableCell component="th" id={labelId} scope="row" padding="none">
-                                    {row.nombreCompleto}
-                                </TableCell>
-                                <TableCell align="right">{row.promocion}</TableCell>
-                                <TableCell align="center" className={classes.saldoNegativo}>{row.cuota}</TableCell>
-                                <TableCell align="center">{row.totalHours}</TableCell>
-                                <TableCell align="center">{row.difundeHours}</TableCell>
-                                <TableCell align="center">{row.fundaninasHours}</TableCell>
-                                <TableCell align="center">{row.socialProyectHours}</TableCell>
-                                <TableCell align="center">{row.asigboHours}</TableCell>
-                                <TableCell align="center">{row.otherHours}</TableCell>
-                            </TableRow>
-                        );
-                    
-                    } else { 
-                        return (
-                            <TableRow
-                            hover
-                            onClick={(event) => handleClick(event, row)}
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.usuario}
-                            selected={isItemSelected}
-                            >
-                                {/* Propiedades de cada una de las filas */}
-                                <TableCell padding="checkbox"></TableCell>
-                                <TableCell component="th" id={labelId} scope="row" padding="none">
-                                    {row.nombreCompleto}
-                                </TableCell>
-                                <TableCell align="right">{row.promocion}</TableCell>
-                                <TableCell align="center" className={classes.saldoPositivo}>{row.cuota}</TableCell>
-                                <TableCell align="center">{row.totalHours}</TableCell>
-                                <TableCell align="center">{row.difundeHours}</TableCell>
-                                <TableCell align="center">{row.fundaninasHours}</TableCell>
-                                <TableCell align="center">{row.socialProyectHours}</TableCell>
-                                <TableCell align="center">{row.asigboHours}</TableCell>
-                                <TableCell align="center">{row.otherHours}</TableCell>
-                            </TableRow>
-                        );
-                    }
-                    })}
-                {emptyRows > 0 && (
-                    <TableRow style={{ height: (53) * emptyRows }}>
-                    <TableCell colSpan={6} />
-                    </TableRow>
-                )}
-                </TableBody>
-            </Table>
-        </TableContainer>
+          {/* Se crea el el encabezado de la tabla */}
+          <Table
+          className={classes.table}
+          aria-labelledby="tableTitle"
+          size = 'medium'
+          aria-label="enhanced table"
+          >
+            <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}/>
+            <TableBody>
+            {/* Se crean las filas de la tabla */}
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                const isItemSelected = isSelected(row);
+                const labelId = `enhanced-table-checkbox-${index}`;
+                let activeStyle = (row.active) ? classes.active : classes.notActive
 
-        {/* Aqui es en donde se cambia la pagina y el numero de elementos con los que se cuenta */}
-        <TablePagination
-            rowsPerPageOptions={[5]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}/>
-        </Paper>
-        
-    </div>
-    );
+                return (
+                  <TableRow
+                  hover
+                  onClick={(event) => handleClick(event, row)}
+                  aria-checked={isItemSelected}
+                  tabIndex={-1}
+                  key={row.songid}
+                  selected={isItemSelected}
+                  >
+                      {/* Propiedades de cada una de las filas */}
+                      <TableCell padding="checkbox"></TableCell>
+                      <TableCell 
+                        className={activeStyle} 
+                        component="th" 
+                        id={labelId} 
+                        scope="row" 
+                        padding="none"
+                      >
+                        {row.songname}
+                      </TableCell>
+                      <TableCell className={activeStyle} align="center">{row.albumname}</TableCell>
+                      <TableCell className={activeStyle} align="center">{row.author}</TableCell>
+                      <TableCell className={activeStyle}>{row.songlink}</TableCell>
+                  </TableRow>
+                )
+              })}
+              {emptyRows > 0 && (
+                  <TableRow style={{ height: (53) * emptyRows }}>
+                  <TableCell colSpan={6} />
+                  </TableRow>
+              )}
+            </TableBody>
+          </Table>
+      </TableContainer>
+
+      {/* Aqui es en donde se cambia la pagina y el numero de elementos con los que se cuenta */}
+      <TablePagination
+          rowsPerPageOptions={[5]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}/>
+      </Paper>
+      
+  </div>
+  );
 }

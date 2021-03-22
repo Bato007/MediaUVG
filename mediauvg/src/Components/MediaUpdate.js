@@ -5,7 +5,8 @@ export default function AppButton({
     onChange,
     placeholder,
     limit,
-    type
+    type,
+    value
 }){
   
   const onWrite = (event) => {
@@ -17,6 +18,7 @@ export default function AppButton({
       className="espaciado" 
       maxLength={limit}
       type={type}
+      value={value}
       placeholder={placeholder}
       onChange={onWrite} 
     />

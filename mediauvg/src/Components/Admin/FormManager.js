@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
 
-import Button from '../MediaButton'
+import SongForm from './SongForm'
+import lazyStitch from '../../Estilos/giphy.gif'
 
-export default function FormManager({
-  form,
-}) {
+export default function FormManager({ form }) {
 
   const formType = () => {
-    console.log(form)
+    switch (form) {
+      case 'song':
+        return <SongForm />
+      case 'album':
+        break
+      case 'artist':
+        break
+      case 'statistics':
+        break
+      default:
+        return <img src={lazyStitch} alt='Sin form'/>
+    }
   }
 
   return (
     <div>
-      Perro
+      {formType()}
     </div>
   );
 }
