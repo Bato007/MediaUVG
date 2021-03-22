@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const htmlRoot = document.getElementById('root')
+
+            const Juan = () => {
+                React.useEffect(() => {
+                    todo()
+                })
+                async function todo() {
+                    const token = 'BQBN3ASs3X_ntQM9Eq4xJ4AwpBwnCbgClXR7rH-aK1TlIh-XOX_AeQUTGZoB-VvjDqKVlOTi2QIcDpFA4HeBGKz4_3VCGPgPZ6G6wtNL0YD0fk9GyaqFfcRQYotz6zrez6jf-tqszxo43so'
+                    const playlist = await fetch('https://api.spotify.com/v1/playlists/37i9dQZF1DWWEcRhUVtL8n/tracks', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    }).then(js => js.json())
+                    
+                    console.log(playlist)
+                }
+
+                return(
+                    <div>
+                       <p></p> 
+                    </div>
+                )
+            }
+
+            ReactDOM.render(
+                <Juan />,
+                htmlRoot
+            )
+        </script>
+    </body>
+</html>
