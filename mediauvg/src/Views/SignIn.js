@@ -31,19 +31,21 @@ export default function SignIn(){
       .then((res) => res.json())
       .catch((error) =>  console.error('Error', error))
       .then((out) => {
-        const resp = out[0]
-        switch (resp.username) {
-          case 'ERROR 101':
-            console.log('Tirar error no existe user')
-            break
-          case 'ERROR 102':
-            console.log('Tirar error contraseñas no coinciden')
-            break
-          default:
-            if (resp.admin) history.push('/Admin', out[0])
-            else if (resp.premium) history.push('/Home', out[0])
-            else history.push('/Home', out[0])
-            break
+        if (out) {
+          const resp = out[0]
+          switch (resp.username) {
+            case 'ERROR 101':
+              console.log('Tirar error no existe user')
+              break
+            case 'ERROR 102':
+              console.log('Tirar error contraseñas no coinciden')
+              break
+            default:
+              if (resp.admin) history.push('/Admin', out[0])
+              else if (resp.premium) history.push('/Home', out[0])
+              else history.push('/Home', out[0])
+              break
+          }
         }
       })
   }
