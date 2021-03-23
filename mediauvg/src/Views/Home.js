@@ -22,7 +22,8 @@ export default function Home() {
 
   // Para regresar al pasado
   const logOut = () => {
-    history.push('/')
+    const idCancion = {songId: 1}
+    history.push('/Play', idCancion)
   }
   const toPlayList = () =>{
     history.push('/PlayLists')

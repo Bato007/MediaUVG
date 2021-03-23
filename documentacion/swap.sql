@@ -114,7 +114,7 @@ INSERT INTO album (albumID, albumName, author, release) VALUES
 	(4, 'Sixteando', 'xDiegox', '2021-01-30');
 
 INSERT INTO song (songId, songName, active, songLink, albumId, author) VALUES 
-	(1, 'Retaul', true, 'linkit', 1, 'Batoux'),
+	(1, 'Retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'Batoux'),
 	(2, 'Tu y el Cielo', true, 'linkit', 1, 'Batoux'),
 	(3, 'Pepiando', true, 'linked', 2, 'El Pepe'),
 	(4, 'Rojel', true, 'linked', 2, 'El Pepe'),

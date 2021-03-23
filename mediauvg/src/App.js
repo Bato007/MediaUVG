@@ -9,6 +9,7 @@ import Home from './Views/Home';
 import PlayLists from './Views/PlayLists';
 import Admin from './Views/Admin';
 import Reportes from './Views/Reportes';
+import Play from './Views/Play';
 export default function App() {
 
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route exact path = '/Home/PlayLists' component = {PlayLists} />
           <Route exact path = '/Admin' component = {Admin} />
           <Route exact path = '/Reportes' component = {Reportes} />
+          <Route path = '/Play' component = {Play} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
