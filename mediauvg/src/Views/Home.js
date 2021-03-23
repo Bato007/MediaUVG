@@ -86,23 +86,36 @@ export default function Home() {
     })
     
     
-    showResult()
-
+    
   }
   const showResult = () =>{
     
     // pues aqui se busca en cada array si hay un resultado de lo que escribio el usuario
     for(var a = 0; a<songResult.byAlbum.length; a++ ){
-      console.log(songResult.byAlbum[a].songname)
+      console.log("aqui",songResult.byAlbum[a].albumName)
+      return(// se supone que deberia de retornar este boton pero nel, algo asi lo tiene brandon en songform
+        <Button
+          onClick={''}
+          text={songResult.byAlbum[a].albumName}
+          clase="botonMenu"
+        />
+      )
     }
     for(var s = 0; s<songResult.bySong.length; s++ ){
-      console.log(songResult.byAlbum[s].songname)
+      console.log("aqui",songResult.bySong[s].songname)
+      return(// se supone que deberia de retornar este boton pero nel, algo asi lo tiene brandon en songform
+        <Button
+          onClick={''}
+          text={songResult.bySong[s].songname}//no jala el nombre pero si haces console.og si :|
+          clase="botonMenu"
+        />
+      )
     }
     for(var g = 0; g<songResult.byGenre.length; g++ ){
-      console.log(songResult.byAlbum[g].songname)
+      console.log(songResult.byGenre[g].songname)
     }
     for(var ar = 0; ar<songResult.byArtist.length; ar++ ){
-      console.log(songResult.byAlbum[ar].songname)
+      console.log(songResult.byArtist[ar].songname)
     }
     
   }
@@ -115,7 +128,13 @@ export default function Home() {
           <div className="titulonav">
             Perfil 
           </div>
-
+          <div>
+            <Cuadro
+              text='Resultados'
+            />
+            {showResult()}
+          </div>
+          
           <div className="cuerporec">
             <ul>
               {/* <li>{name}</li> */}
