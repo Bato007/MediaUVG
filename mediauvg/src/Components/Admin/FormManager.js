@@ -10,9 +10,9 @@ export default function FormManager({ form }) {
       case 'song':
         return <SongForm />
       case 'album':
-        break
+        return <SongForm />
       case 'artist':
-        break
+        return <SongForm />
       case 'statistics':
         break
       default:
