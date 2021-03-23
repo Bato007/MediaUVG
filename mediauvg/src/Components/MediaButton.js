@@ -9,7 +9,8 @@ export default function AppButton({
     return(
         <button 
         className = {clase} 
-        onClick={onClick}>
+        onClick={onClick}
+        >
           {text}
         </button>
     );
