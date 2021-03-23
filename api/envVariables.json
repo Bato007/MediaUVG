@@ -2,6 +2,6 @@
     "user": "postgres",
     "host": "localhost",
     "database": "swap",
-    "password": "06042001",
+    "password": "data",
     "port": 5432
 }
