@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom'
 
 export default function Play(){
     const [render, setRender] = useState(false)
-    const [source, setSource] = useState('https://open.spotify.com/embeded/track/')
+    const [source, setSource] = useState('https://open.spotify.com/embed/track/')
     const location = useLocation()
     const {songId} = location.state
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function Play(){
     const IFrame = () => {
         if(render){
             return(
-                <iframe src={source} width='300' height='380' frameBorder='0' allowTransparency='true' allow='encrypted-media'></iframe>
+                <iframe src={source} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             )
         }else{
             return <div></div>
