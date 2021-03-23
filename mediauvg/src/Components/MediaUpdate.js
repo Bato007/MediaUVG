@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Estilos/Login.css';
+import './songForm.css';
 
 export default function AppButton({
     onChange,
@@ -15,7 +15,7 @@ export default function AppButton({
 
   return(
     <input
-      className="espaciado" 
+      className="inputAdmin" 
       maxLength={limit}
       type={type}
       value={value}

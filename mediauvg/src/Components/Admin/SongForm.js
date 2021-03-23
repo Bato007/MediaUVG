@@ -4,7 +4,7 @@ import Switch from './Switch'
 import Table from './SongTable'
 import Button from '../MediaButton'
 import Update from '../MediaUpdate'
-
+import '../songForm.css';
 export default function FormManager({ form }) {
   const [ song, setSong ] = useState({})
   const [ action, setAction ] = useState(false)
@@ -53,6 +53,11 @@ export default function FormManager({ form }) {
   const onSelected = () => {
     if(song.songid !== undefined && song.songid !== -1) return (
       <div>
+        <Switch
+          onChange={onSetActive}
+          text='Active'
+          active={song.active}
+        />
         <Update 
           onChange={onSetSong}
           placeholder={''}
@@ -81,18 +86,16 @@ export default function FormManager({ form }) {
           type='text'
           value={song.songlink}
         />
-        <Switch
-          onChange={onSetActive}
-          text='Active'
-          active={song.active}
-        />
+        
         <Button 
           onClick={updateSong}
+          clase="button"
           text='Actualziar'
         />
         <Button
           onClick={deleteSong}
           text='Eliminar'
+          clase="button"
         />
       </div>
     )
@@ -157,7 +160,7 @@ export default function FormManager({ form }) {
   }
 
   return (
-    <div>
+    <div id="margen">
       <Table 
         rows={rows}
         rowsNumber={rows.length}

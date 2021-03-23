@@ -3,8 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import Button from '../Components/MediaButton'
 import Form from '../Components/Admin/FormManager'
-import '../Estilos/Home.css';
-
+import '../Estilos/Admin.css';
 export default function Admin() {
   const history = useHistory()
   const [ form, setForm ] = useState('')
@@ -32,39 +31,44 @@ export default function Admin() {
   }
 
   return (
-    <div>
-      <div id="nav">    
-        <div class="titulonav">
-          Admin 
+    <div className="fondo">
+         
+        <div id="titulo">
+          Swap Admin 
         </div>
 
-        <div class="cuerporec">
+        <div id="navegador">
+            
           <ul>
-            <li>Nombre</li>
-            <li>Usuario</li>
+            
             <Button 
               text='Administrar Canción'
               onClick={adminSong}
+              clase="botonAdmin"
             />
             <Button 
               text='Administrar Album'
               onClick={adminAlbum}
+              clase="botonAdmin"
             />
             <Button 
               text='Administrar Artista'
               onClick={adminArtist}
+              clase="botonAdmin"
             />
             <Button 
               text='Ver Estadisticas'
               onClick={adminstatistics}
+              clase="botonAdmin"
             />
             <Button 
               text='Cerrar sesion'
               onClick={logOut}
+              clase="botonAdmin"
             />
           </ul>
         </div>  
-      </div> 
+      
       <Form 
         form={form}
       />
