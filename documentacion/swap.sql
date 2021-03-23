@@ -49,7 +49,8 @@ CREATE TABLE song (
 	active BOOL,
 	songLink VARCHAR(150),
 	albumId INT, 
-	author VARCHAR(30), 
+	author VARCHAR(30),
+	timesplayed INT, 
 	CONSTRAINT fk_song_album FOREIGN KEY (albumId)
 	REFERENCES album(albumId) ON DELETE CASCADE, 
 	CONSTRAINT fk_song_artist FOREIGN KEY (author)
@@ -113,15 +114,15 @@ INSERT INTO album (albumID, albumName, author, release) VALUES
 	(3, 'Pepiando', 'El Pepe', '2021-02-23'),
 	(4, 'Sixteando', 'xDiegox', '2021-01-30');
 
-INSERT INTO song (songId, songName, active, songLink, albumId, author) VALUES 
-	(1, 'Retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'Batoux'),
-	(2, 'Tu y el Cielo', true, 'linkit', 1, 'Batoux'),
-	(3, 'Pepiando', true, 'linked', 2, 'El Pepe'),
-	(4, 'Rojel', true, 'linked', 2, 'El Pepe'),
-	(5, 'Yelt', true, 'linked', 3, 'El Pepe'),
-	(6, 'Barrio', true, 'linked', 3, 'El Pepe'),
-	(7, 'Trueno', false, 'linked', 3, 'El Pepe'),
-	(8, 'Sixteando', true, 'linked', 4, 'xDiegox');
+INSERT INTO song (songId, songName, active, songLink, albumId, author, timesplayed) VALUES 
+	(1, 'Retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'Batoux', 2),
+	(2, 'Tu y el Cielo', true, 'linkit', 1, 'Batoux', 5),
+	(3, 'Pepiando', true, 'linked', 2, 'El Pepe', 8),
+	(4, 'Rojel', true, 'linked', 2, 'El Pepe', 7),
+	(5, 'Yelt', true, 'linked', 3, 'El Pepe', 0),
+	(6, 'Barrio', true, 'linked', 3, 'El Pepe', 2),
+	(7, 'Trueno', false, 'linked', 3, 'El Pepe', 6),
+	(8, 'Sixteando', true, 'linked', 4, 'xDiegox', 10);
 
 INSERT INTO playlistSongs (playlistId, songId) VALUES
 	(1, 1),
