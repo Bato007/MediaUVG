@@ -17,6 +17,22 @@ export default function SignIn(){
   const toSignUp = () =>{
     history.push('/SignUp')
   }
+  //reconocer el enter
+  const handleKeyDown = (event) => {
+    if(event.keyCode === 13){
+      toHome()
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    // cleanup this component
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  });
+  
 
   const toHome = () =>{
     const data = {
