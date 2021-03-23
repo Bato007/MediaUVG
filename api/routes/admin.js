@@ -51,7 +51,7 @@ router.put('/album', async (req, res) => {
     const {
       albumid, albumname, author, release,
     } = req.body
-    await pool.query('UPDATE album SET albumname = $1 author = $2 release = $3 WHERE songid = $4',
+    await pool.query('UPDATE album SET albumname = $1, author = $2, release = $3 WHERE albumid = $4',
       [albumname, author, release, albumid])
   } catch (error) {
     response.status = 'ERROR 503'
@@ -65,7 +65,6 @@ router.put('/album', async (req, res) => {
   {
     "username": "username",
     "artistname": "ejemplo",
-    "startrecord": "2000-12-12"
   }
   Regresa un objeto con el status y ERROR 505 si no se logro hacer
   la instrucciom
@@ -76,10 +75,10 @@ router.put('/artist', async (req, res) => {
   }
   try {
     const {
-      username, artistname, startrecord,
+      username, artistname,
     } = req.body
-    await pool.query('UPDATE artist SET artistname = $1 startrecord = $2 WHERE username = $3',
-      [artistname, startrecord, username])
+    await pool.query('UPDATE artist SET artistname = $1 WHERE username = $2',
+      [artistname, username])
   } catch (error) {
     response.status = 'ERROR 505'
   } finally {

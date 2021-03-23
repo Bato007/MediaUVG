@@ -35,7 +35,6 @@ export default function Admin() {
 
   return (
     <div className="fondo">
-         
         <div id="titulo">
           Swap Admin 
         </div>

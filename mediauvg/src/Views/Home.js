@@ -5,7 +5,6 @@ import { useHistory, useLocation } from 'react-router-dom'
 import '../Estilos/Home.css';
 import Button from '../Components/MediaButton'
 import Input from '../Components/MediaInput'
-import Cuadro from '../Components/MediaCuadro'
 
 export default function Home() {
   const location = useLocation()
@@ -22,20 +21,20 @@ export default function Home() {
     byGenre: [],
     byArtist: [],
   })
-  const [ ready, setReady ] = useState({
-    bySong: false,
-    byAlbum: false,
-    byGenre: false,
-    byArtist: false,
-  })
 
   // Para regresar al pasado
   const logOut = () => {
-    const idCancion = {songId: 1}
-    history.push('/Play', idCancion)
+    history.push('/')
   }
+
   const toPlayList = () =>{
     history.push('/PlayLists')
+  }
+
+  const toPlaySong = (value) => {
+    const songId = value.songid
+    console.log(songId)
+    history.push('/Play', { songId })
   }
 
   // Searching a song 
@@ -54,10 +53,6 @@ export default function Home() {
         ...songResult,
         bySong: out
       })
-      setReady({
-        ...ready,
-        bySong: true
-      })
     })
 
     fetch("http://localhost:3001/search/album", 
@@ -70,10 +65,6 @@ export default function Home() {
       setSongResult({
         ...songResult,
         byAlbum: out
-      })
-      setReady({
-        ...ready,
-        byAlbum: true
       })
     })
 
@@ -88,10 +79,6 @@ export default function Home() {
         ...songResult,
         byGenre: out
       })
-      setReady({
-        ...ready,
-        byGenre: true
-      })
     })
 
     fetch("http://localhost:3001/search/artist", 
@@ -104,10 +91,6 @@ export default function Home() {
       setSongResult({
         ...songResult,
         byArtist: out
-      })
-      setReady({
-        ...ready,
-        byArtist: true
       })
     })
   }
@@ -229,40 +212,6 @@ export default function Home() {
     )
   }
 
-  const showResult = () =>{
-    
-    if (ready.bySong  ) {
-      // pues aqui se busca en cada array si hay un resultado de lo que escribio el usuario
-    for (var a = 0; a<songResult.byAlbum.length; a++ ){
-      console.log("aqui",songResult.byAlbum[a].albumName)
-      return(// se supone que deberia de retornar este boton pero nel, algo asi lo tiene brandon en songform
-        <Button
-          onClick={''}
-          text={songResult.byAlbum[a].albumName}
-          clase="botonMenu"
-        />
-      )
-    }
-    for(var s = 0; s<songResult.bySong.length; s++ ){
-      console.log("aqui",songResult.bySong[s].songname)
-      return(// se supone que deberia de retornar este boton pero nel, algo asi lo tiene brandon en songform
-        <Button
-          onClick={''}
-          text={songResult.bySong[s].songname}//no jala el nombre pero si haces console.og si :|
-          clase="botonMenu"
-        />
-      )
-    }
-    for(var g = 0; g<songResult.byGenre.length; g++ ){
-      console.log(songResult.byGenre[g].songname)
-    }
-    for(var ar = 0; ar<songResult.byArtist.length; ar++ ){
-      console.log(songResult.byArtist[ar].songname)
-    }
-    }
-    
-  }
-
   return (
     <div className="fondo">
       <div className="cuadrop">
@@ -271,13 +220,6 @@ export default function Home() {
           <div className="titulonav">
             Perfil 
           </div>
-          <div>
-            <Cuadro
-              text='Resultados'
-            />
-            {showResult()}
-          </div>
-          
           <div className="cuerporec">
             <ul>
               <li>{name}</li>
@@ -305,6 +247,50 @@ export default function Home() {
           </div> 
         </div>
       </div>
+      {songResult.bySong.map((value) => {
+        console.log('1')
+        return(
+          <div 
+            key={value.songid} 
+            style={{background: 'yellow'}} 
+            onClick={(event) => toPlaySong(value)}>
+            {value.songname}
+          </div>
+        )
+      })}
+      {songResult.byAlbum.map((value) => {
+        console.log('2')
+        return(
+          <div 
+            key={value.songid} 
+            style={{background: 'yellow'}} 
+            onClick={(event) => toPlaySong(value)}>
+            {value.songname}
+          </div>
+        )
+      })}
+      {songResult.byGenre.map((value) => {
+        console.log('3')
+        return(
+          <div 
+            key={value.songid} 
+            style={{background: 'yellow'}} 
+            onClick={(event) => toPlaySong(value)}>
+            {value.songname}
+          </div>
+        )
+      })}
+      {songResult.byArtist.map((value) => {
+        console.log('4')
+        return(
+          <div 
+            key={value.songid} 
+            style={{background: 'yellow'}} 
+            onClick={(event) => toPlaySong(value)}>
+            {value.songname}
+          </div>
+        )
+      })}
     </div> 
   );
 }

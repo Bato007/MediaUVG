@@ -83,6 +83,36 @@ router.get('/song', async (req, res) => {
 })
 
 /*
+  Retorna un array de canciones que pertenecen a ese album, formato
+  {
+    'search': 'ejemplo'
+  }
+*/
+router.get('/album', async (req, res) => {
+  try {
+    const albums = await pool.query('SELECT * FROM album')
+    res.json(albums.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
+/*
+  Retorna un array de canciones de este artista, formato
+  {
+    'searchSong': 'ejemplo'
+  }
+*/
+router.get('/artist', async (req, res) => {
+  try {
+    const artists = await pool.query('SELECT * FROM artist')
+    res.json(artists.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
+/*
 
 */
 router.post('/play', async (req, res) => {

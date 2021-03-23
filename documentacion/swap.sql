@@ -9,14 +9,16 @@ CREATE TABLE premiumUser (
 	username VARCHAR(30) PRIMARY KEY,
 	subscription DATE,
 	CONSTRAINT fk_premium_user FOREIGN KEY (username)
-	REFERENCES swapUser(username) ON DELETE CASCADE);
+	REFERENCES swapUser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE);
 	
 CREATE TABLE freeUser (
 	username VARCHAR(30) PRIMARY KEY,
 	playbackLeft INT, 
 	lastPlay DATE,
 	CONSTRAINT fk_free_user FOREIGN KEY (username)
-	REFERENCES swapUser(username) ON DELETE CASCADE);	
+	REFERENCES swapUser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE);	
 	
 CREATE TABLE artist (
 	username VARCHAR(30),
@@ -25,26 +27,29 @@ CREATE TABLE artist (
 	playbackSixMonths INT,
 	startRecord DATE,
 	CONSTRAINT fk_artist_user FOREIGN KEY (username)
-	REFERENCES swapUser(username) ON DELETE CASCADE);
+	REFERENCES swapUser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE);
 
 CREATE TABLE userPlaylist (
-	playlistId INT PRIMARY KEY,
+	playlistId SERIAL PRIMARY KEY,
 	username VARCHAR(30),
 	playlistName VARCHAR(30),
 	UNIQUE (username, playlistName),
 	CONSTRAINT fk_playlist_user FOREIGN KEY (username)
-	REFERENCES swapUser(username) ON DELETE CASCADE);
+	REFERENCES swapUser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE);
 	
 CREATE TABLE album (
-	albumID INT PRIMARY KEY,
+	albumID SERIAL PRIMARY KEY,
 	albumName VARCHAR(50),
 	author VARCHAR(30),
 	release DATE,
 	CONSTRAINT fk_album_artist FOREIGN KEY (author)
-	REFERENCES artist(artistName) ON DELETE CASCADE);
+	REFERENCES artist(artistName) 
+	ON DELETE CASCADE ON UPDATE CASCADE);
 	
 CREATE TABLE song (
-	songId INT PRIMARY KEY,
+	songId SERIAL PRIMARY KEY,
 	songName VARCHAR(30),
 	active BOOL,
 	songLink VARCHAR(150),
@@ -53,22 +58,26 @@ CREATE TABLE song (
 	CONSTRAINT fk_song_album FOREIGN KEY (albumId)
 	REFERENCES album(albumId) ON DELETE CASCADE, 
 	CONSTRAINT fk_song_artist FOREIGN KEY (author)
-	REFERENCES artist(artistName) ON DELETE CASCADE);
+	REFERENCES artist(artistName) 
+	ON DELETE CASCADE ON UPDATE CASCADE);
 	
 CREATE TABLE playlistSongs (
 	playlistId INT,
 	songId INT,
-  	UNIQUE (playlistId, songId),
+  UNIQUE (playlistId, songId),
 	CONSTRAINT fk_playlist FOREIGN KEY (playlistId)
-	REFERENCES userPlaylist(playlistId) ON DELETE CASCADE,
+	REFERENCES userPlaylist(playlistId) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_song FOREIGN KEY (songId)
-	REFERENCES song(songId) ON DELETE CASCADE);	
+	REFERENCES song(songId) 
+	ON DELETE CASCADE ON UPDATE CASCADE);	
 
 CREATE TABLE genre (
 	songId INT,
 	songGenre VARCHAR(50),
 	CONSTRAINT fk_genre_song FOREIGN KEY (songId)
-	REFERENCES song(songId) ON DELETE CASCADE,
+	REFERENCES song(songId) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
 	UNIQUE(songId, songGenre));
 	
 INSERT INTO swapUser (username, password, name,  playback, admin) VALUES 
@@ -96,32 +105,32 @@ INSERT INTO artist (username, artistName, playbackThreeMonths, playbackSixMonths
 	('pepe22', 'El Pepe', 2332, 1253, '2020-08-01'),
 	('diego586', 'xDiegox', 4322, 1125, '2020-08-23');
 	
-INSERT INTO userPlaylist (playlistId, username, playlistName) VALUES
-	(1, 'bato007', 'Perreo Intenso'),
-	(2, 'bato007', 'Electronica'),
-	(3, 'bato007', 'K-Pop'),
-	(4, 'requetetin', 'Solo Dance'),
-	(5, 'requetetin', '80s'),
-	(6, 'diego586', 'Para fiestas'),
-	(7, 'diego586', 'Pa carrear'),
-	(8, 'ruther', 'Viernes'),
-	(9, 'pepe22', 'Le pepe');
+INSERT INTO userPlaylist (username, playlistName) VALUES
+	('bato007', 'Perreo Intenso'),
+	('bato007', 'Electronica'),
+	('bato007', 'K-Pop'),
+	('requetetin', 'Solo Dance'),
+	('requetetin', '80s'),
+	('diego586', 'Para fiestas'),
+	('diego586', 'Pa carrear'),
+	('ruther', 'Viernes'),
+	('pepe22', 'Le pepe');
 	
-INSERT INTO album (albumID, albumName, author, release) VALUES
-	(1, 'Fantastic', 'Batoux', '2021-01-2'),
-	(2, 'EL PEPE', 'El Pepe', '2020-12-29'),
-	(3, 'Pepiando', 'El Pepe', '2021-02-23'),
-	(4, 'Sixteando', 'xDiegox', '2021-01-30');
+INSERT INTO album (albumName, author, release) VALUES
+	('Fantastic', 'Batoux', '2021-01-2'),
+	('EL PEPE', 'El Pepe', '2020-12-29'),
+	('Pepiando', 'El Pepe', '2021-02-23'),
+	('Sixteando', 'xDiegox', '2021-01-30');
 
-INSERT INTO song (songId, songName, active, songLink, albumId, author) VALUES 
-	(1, 'Retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'Batoux'),
-	(2, 'Tu y el Cielo', true, 'linkit', 1, 'Batoux'),
-	(3, 'Pepiando', true, 'linked', 2, 'El Pepe'),
-	(4, 'Rojel', true, 'linked', 2, 'El Pepe'),
-	(5, 'Yelt', true, 'linked', 3, 'El Pepe'),
-	(6, 'Barrio', true, 'linked', 3, 'El Pepe'),
-	(7, 'Trueno', false, 'linked', 3, 'El Pepe'),
-	(8, 'Sixteando', true, 'linked', 4, 'xDiegox');
+INSERT INTO song (songName, active, songLink, albumId, author) VALUES 
+	('Retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'Batoux'),
+	('Tu y el Cielo', true, 'linkit', 1, 'Batoux'),
+	('Pepiando', true, 'linked', 2, 'El Pepe'),
+	('Rojel', true, 'linked', 2, 'El Pepe'),
+	('Yelt', true, 'linked', 3, 'El Pepe'),
+	('Barrio', true, 'linked', 3, 'El Pepe'),
+	('Trueno', false, 'linked', 3, 'El Pepe'),
+	('Sixteando', true, 'linked', 4, 'xDiegox');
 
 INSERT INTO playlistSongs (playlistId, songId) VALUES
 	(1, 1),

@@ -5,7 +5,8 @@ import Table from './SongTable'
 import Button from '../MediaButton'
 import Update from '../MediaUpdate'
 import '../songForm.css';
-export default function FormManager({ form }) {
+
+export default function SongFomr({ form }) {
   const [ song, setSong ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)
