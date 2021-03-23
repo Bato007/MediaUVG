@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import Switch from './Switch'
 import Table from './SongTable'
 import Button from '../MediaButton'
 import Update from '../MediaUpdate'
@@ -42,6 +43,13 @@ export default function FormManager({ form }) {
     })
   }
 
+  const onSetActive = (active) => {
+    setSong({
+      ...song,
+      active: active
+    })
+  }
+
   const onSelected = () => {
     if(song.songid !== undefined && song.songid !== -1) return (
       <div>
@@ -73,6 +81,11 @@ export default function FormManager({ form }) {
           type='text'
           value={song.songlink}
         />
+        <Switch
+          onChange={onSetActive}
+          text='Active'
+          active={song.active}
+        />
         <Button 
           onClick={updateSong}
           text='Actualziar'
@@ -97,7 +110,32 @@ export default function FormManager({ form }) {
   }, [form, action])
 
   const updateSong = () => {
-    console.log('hola')
+    const data = { 
+      songid: song.songid,
+      songname: song.songname,
+      songlink: song.songlink,
+      author: song.author,
+      albumname: song.albumname,
+      active: song.active
+    }
+
+    // Se actualiza la informacion
+    fetch('http://localhost:3001/admin/song', 
+    {method: 'PUT', 
+    body: JSON.stringify(data),
+    headers:{'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+    .catch((error) =>  console.error('Error', error))
+    .then((out) => {
+      console.log(out)
+      if (out.status === '') {
+        setSong({})
+        setAction(!action)
+      } else {
+        console.log('no se borro')
+      }
+    })
+
   }
 
   const deleteSong = () => {

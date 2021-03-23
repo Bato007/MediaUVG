@@ -4,50 +4,6 @@ const pool = require('../database')
 const router = express.Router()
 
 /*
-  Permite habilitar una cancion del catalogo de musica, recibe
-  {
-    "songid": 0
-  }
-  Regresa un objeto con el status y ERROR 501 si no se logro hacer
-  la instrucciom
-*/
-router.put('/enable', async (req, res) => {
-  const response = {
-    status: '',
-  }
-  try {
-    const { songid } = req.body
-    await pool.query('UPDATE song SET active = true WHERE songid = $1', [songid])
-  } catch (error) {
-    response.status = 'ERROR 501'
-  } finally {
-    res.json(response)
-  }
-})
-
-/*
-  Permite habilitar una cancion del catalogo de musica, recibe
-  {
-    "songid": 0
-  }
-  Regresa un objeto con el status y ERROR 502 si no se logro hacer
-  la instrucciom
-*/
-router.put('/disable', async (req, res) => {
-  const response = {
-    status: '',
-  }
-  try {
-    const { songid } = req.body
-    await pool.query('UPDATE song SET active = false WHERE songid = $1', [songid])
-  } catch (error) {
-    response.status = 'ERROR 501'
-  } finally {
-    res.json(response)
-  }
-})
-
-/*
   Permite modificar una cancion de la base de datos
   {
     "songid": 0,
@@ -65,10 +21,10 @@ router.put('/song', async (req, res) => {
   }
   try {
     const {
-      songid, songname, songlink, albumid, author,
+      songid, songname, songlink, author, albumname, active,
     } = req.body
-    await pool.query('UPDATE song SET songname = $1 songlink = $2 albumid = $3 author = $4 WHERE songid = $5',
-      [songname, songlink, albumid, author, songid])
+    await pool.query('UPDATE song SET songname = $1, songlink = $2, albumid = (SELECT albumid FROM album WHERE author = $3 AND albumname = $4), author = $3, active = $5  WHERE songid = $6',
+      [songname, songlink, author, albumname, active, songid])
   } catch (error) {
     response.status = 'ERROR 503'
   } finally {

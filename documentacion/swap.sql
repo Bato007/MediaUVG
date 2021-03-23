@@ -58,7 +58,7 @@ CREATE TABLE song (
 CREATE TABLE playlistSongs (
 	playlistId INT,
 	songId INT,
-  UNIQUE (playlistId, songId)
+  	UNIQUE (playlistId, songId),
 	CONSTRAINT fk_playlist FOREIGN KEY (playlistId)
 	REFERENCES userPlaylist(playlistId) ON DELETE CASCADE,
 	CONSTRAINT fk_song FOREIGN KEY (songId)

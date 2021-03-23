@@ -23,6 +23,7 @@ const router = express.Router()
 */
 router.post('/verify', async (req, res) => {
   try {
+    console.log(req.body)
     const { username, password } = req.body
     const user = await pool.query('SELECT * FROM swapuser WHERE username = $1', [username])
     const err = {
@@ -32,7 +33,6 @@ router.post('/verify', async (req, res) => {
       playback: 0,
       admin: false,
     }
-
     if (user.rows.length > 0) {
       if (user.rows[0].password === password) {
         let premium = false
@@ -51,6 +51,7 @@ router.post('/verify', async (req, res) => {
     }
   } catch (error) {
     console.error(error.messasge)
+    console.log('ahh perro')
   }
 })
 
