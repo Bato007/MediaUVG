@@ -54,7 +54,8 @@ CREATE TABLE song (
 	active BOOL,
 	songLink VARCHAR(150),
 	albumId INT, 
-	author VARCHAR(30), 
+	author VARCHAR(30),
+	timesplayed INT, 
 	CONSTRAINT fk_song_album FOREIGN KEY (albumId)
 	REFERENCES album(albumId) ON DELETE CASCADE, 
 	CONSTRAINT fk_song_artist FOREIGN KEY (author)
