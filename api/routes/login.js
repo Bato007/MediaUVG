@@ -23,7 +23,6 @@ const router = express.Router()
 */
 router.post('/verify', async (req, res) => {
   try {
-    console.log(req.body)
     const { username, password } = req.body
     const user = await pool.query('SELECT * FROM swapuser WHERE username = $1', [username])
     const err = {
@@ -36,11 +35,17 @@ router.post('/verify', async (req, res) => {
     if (user.rows.length > 0) {
       if (user.rows[0].password === password) {
         let premium = false
+        let artist = false
         const free = await pool.query('SELECT * FROM freeuser WHERE username = $1', [username])
+        const author = await pool.query('SELECT * FROM artist WHERE username = $1', [username])
         if (free.rowCount < 1) {
           premium = true
         }
         user.rows[0] = { premium, ...user.rows[0] }
+        if (author.rowCount > 0) {
+          artist = true
+        }
+        user.rows[0] = { artist, ...user.rows[0] }
         res.json(user.rows)
       } else {
         err.username = 'ERROR 102'

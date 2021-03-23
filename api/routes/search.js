@@ -86,11 +86,11 @@ router.get('/song', async (req, res) => {
 
 */
 router.post('/play', async (req, res) => {
-  try{
-    const {songId} = req.body
+  try {
+    const { songId } = req.body
     const song = await pool.query('SELECT * FROM song WHERE songid = $1', [songId])
     res.json(song.rows)
-  }catch(error){
+  } catch (error) {
     console.error(error.messasge)
   }
 })
