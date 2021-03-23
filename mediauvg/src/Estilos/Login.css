@@ -6,6 +6,7 @@
     background: linear-gradient(to bottom, #021B79, #0575E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .cuadro{
+    
     position: absolute;
     left: 460px;
     top: 50px;
@@ -57,7 +58,7 @@
     opacity: 50;
     font-family: "arial";
 }
-input[type=text] {
+.inputSign {
     width: 200px;
     padding: 8px 10px;
     margin: 10px 0;
@@ -67,7 +68,7 @@ input[type=text] {
     background-color: white;
 }
 
-input[type=text]:focus{
+.inputSign[type=text]:focus{
     background-color: rgba(73, 133, 245, 0.8);
 }
 

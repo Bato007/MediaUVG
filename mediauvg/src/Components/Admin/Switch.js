@@ -7,12 +7,12 @@ import Switch from '@material-ui/core/Switch';
 
 const PurpleSwitch = withStyles({
   switchBase: {
-    color: purple[300],
+    color: "#000000",
     '&$checked': {
-      color: purple[500],
+      color: "#ffffff",
     },
     '&$checked + $track': {
-      backgroundColor: purple[500],
+      backgroundColor: "#ffffff",
     },
   },
   checked: {},

@@ -14,7 +14,7 @@ export default function AppButton({
 
   return(
     <input
-      className="espaciado" 
+      className="inputSign" 
       maxLength={limit}
       type={type}
       placeholder={placeholder}

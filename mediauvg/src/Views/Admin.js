@@ -12,6 +12,9 @@ export default function Admin() {
   const logOut = () => {
     history.push('/')
   }
+  const Reportes = () => {
+    history.push('/Admin/Reportes')
+  }
 
   // Para cambiar de form 
   const adminSong = () => {
@@ -59,6 +62,11 @@ export default function Admin() {
             <Button 
               text='Ver Estadisticas'
               onClick={adminstatistics}
+              clase="botonAdmin"
+            />
+            <Button 
+              text='Reportes'
+              onClick={Reportes}
               clase="botonAdmin"
             />
             <Button 

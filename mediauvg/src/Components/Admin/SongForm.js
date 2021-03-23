@@ -57,46 +57,52 @@ export default function FormManager({ form }) {
           onChange={onSetActive}
           text='Active'
           active={song.active}
-        />
-        <Update 
-          onChange={onSetSong}
-          placeholder={''}
-          limit={20}
-          type='text'
-          value={song.songname}
-        />
-        <Update 
-          onChange={onSetAlbum}
-          placeholder={''}
-          limit={20}
-          type='text'
-          value={song.albumname}
-        />
-        <Update 
-          onChange={onSetAuthor}
-          placeholder={''}
-          limit={20}
-          type='text'
-          value={song.author}
-        />
-        <Update 
-          onChange={onSetLink}
-          placeholder={''}
-          limit={20}
-          type='text'
-          value={song.songlink}
-        />
+        />  
+        <div id="navegador">
+          <ul>
+            <Update 
+              onChange={onSetSong}
+              placeholder={''}
+              limit={20}
+              type='text'
+              value={song.songname}
+            />
+          <Update 
+            onChange={onSetAlbum}
+            placeholder={''}
+            limit={20}
+            type='text'
+            value={song.albumname}
+          />
+          <Update 
+            onChange={onSetAuthor}
+            placeholder={''}
+            limit={20}
+            type='text'
+            value={song.author}
+          />
+          <Update 
+            onChange={onSetLink}
+            placeholder={''}
+            limit={20}
+            type='text'
+            value={song.songlink}
+          />
+          
+          <Button 
+            onClick={updateSong}
+            clase="button"
+            text='Actualizar'
+          />
+          <Button
+            onClick={deleteSong}
+            text='Eliminar'
+            clase="button"
+          />
+          </ul>
+        </div>
         
-        <Button 
-          onClick={updateSong}
-          clase="button"
-          text='Actualziar'
-        />
-        <Button
-          onClick={deleteSong}
-          text='Eliminar'
-          clase="button"
-        />
+        
       </div>
     )
   }

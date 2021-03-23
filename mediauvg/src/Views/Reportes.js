@@ -12,7 +12,7 @@ export default function Home() {
  
   // Para regresar al pasado
   const logOut = () => {
-    history.push('/')
+    history.push('/Admin')
   }
   
   if(reporte === 1){

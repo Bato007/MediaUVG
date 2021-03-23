@@ -21,7 +21,7 @@ export default function App() {
           <Route exact path = '/Home' component = {Home} />
           <Route exact path = '/Home/PlayLists' component = {PlayLists} />
           <Route exact path = '/Admin' component = {Admin} />
-          <Route exact path = '/Reportes' component = {Reportes} />
+          <Route exact path = '/Admin/Reportes' component = {Reportes} />
           <Route path = '/Play' component = {Play} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
