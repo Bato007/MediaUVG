@@ -34,7 +34,7 @@ export default function StatisticsForm({ form }) {
               {
                 label: 'Incremento en los ultimos 3 meses',
                 data: rise,
-                backgroundColor: ['green', 'green', 'green', 'green', 'green']
+                backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
               }
             ]
           }
@@ -180,7 +180,23 @@ export default function StatisticsForm({ form }) {
       console.log(out)
     })
   }, [])
-  
+  const styles = {
+    cuadro:{
+      backgroundColor:'#021B79',
+      width: 'auto',
+      height: '60px',
+      marginLeft: '20px',
+      marginRight: '20px',
+      marginBottom: '20px',
+    },
+    estiloTexto:{
+      fontWeight: 'bold',
+      fontFamily: "magneto",
+      fontSize: '20px',
+      color: 'white',
+      padding: '4px',
+    }
+  }
 
 
 
@@ -192,9 +208,9 @@ export default function StatisticsForm({ form }) {
           <dl>
             {lista.map((values) => {
               return(
-                <div style={{marginLeft:'20px'}}>
-                  <dt>{values.albumname}</dt>
-                  <dd>-by {values.author}</dd>
+                <div style={styles.cuadro}>
+                  <dt style={styles.estiloTexto}>{values.albumname}</dt>
+                  <dd style={styles.estiloTexto}>-by {values.author}</dd>
                 </div>
               )
             })

@@ -34,9 +34,9 @@ export default function Play(){
             return <div></div>
         }
     }
-    const toHome = () =>{
-        history.push('/Home')
-      }
+    // const toHome = () =>{
+    //     history.push('/Home')
+    //   }
     const styles = {
         estiloSong:{
             
@@ -64,13 +64,7 @@ export default function Play(){
         <div style={styles.orden} >
             <div style={styles.fondo}>
                 <IFrame/>
-                <div>
-                    <Button
-                    onClick={toHome}
-                    text='Atras'
-                    clase='botonMenu'
-                    />
-                </div>
+                
             </div>
             
             
