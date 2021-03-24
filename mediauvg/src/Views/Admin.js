@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom'
 
 import Button from '../Components/MediaButton'
 import Form from '../Components/Admin/FormManager'
-import '../Estilos/Admin.css';
+import '../Estilos/Admin.css'
+
 export default function Admin() {
   const history = useHistory()
   const [ form, setForm ] = useState('')

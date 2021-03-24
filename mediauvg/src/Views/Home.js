@@ -5,22 +5,20 @@ import { useHistory, useLocation } from 'react-router-dom'
 import '../Estilos/Home.css';
 import Button from '../Components/MediaButton'
 import Input from '../Components/MediaInput'
-import Cuadro from '../Components/MediaCuadro'
+
 export default function Home() {
   const location = useLocation()
   const history = useHistory()
   const { name, username } = location.state
 
   const [ search, setsearch ] = useState('')
-  const [ artistname, setArtistName ] = useState('')
+  const [ artistname, setArtistName ] = useState(location.state.artistname)
   const [ artist, setArtist ] = useState(location.state.artist)
   const [ premium, setPremium ] = useState(location.state.premium)
-  const [ songResult, setSongResult ] = useState({
-    bySong: [],
-    byAlbum: [],
-    byGenre: [],
-    byArtist: [],
-  })
+  const [ bySong, setBySong ] = useState([])
+  const [ byAlbum, setByAlbum ] = useState([])
+  const [ byGenre, setByGenre ] = useState([])
+  const [ byArtist, setByArtist ] = useState([])
 
   // Para regresar al pasado
   const logOut = () => {
@@ -28,13 +26,17 @@ export default function Home() {
   }
 
   const toPlayList = () =>{
-    history.push('/PlayLists')
+    history.push('/Home/PlayLists', { username, name, artist, premium, artistname })
   }
 
   const toPlaySong = (value) => {
     const songId = value.songid
     console.log(songId)
     history.push('/Play', { songId })
+  }
+
+  const toArtist = () => {
+    history.push('/Home/Artist', { username, name, artist, premium, artistname })
   }
 
   // Searching a song 
@@ -49,10 +51,7 @@ export default function Home() {
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      setSongResult({
-        ...songResult,
-        bySong: out
-      })
+      setBySong(out)
     })
 
     fetch("http://localhost:3001/search/album", 
@@ -62,12 +61,9 @@ export default function Home() {
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      setSongResult({
-        ...songResult,
-        byAlbum: out
-      })
+      setByAlbum(out)
     })
-
+    
     fetch("http://localhost:3001/search/genre", 
     {method: 'POST', 
     body: JSON.stringify(data), 
@@ -75,24 +71,18 @@ export default function Home() {
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      setSongResult({
-        ...songResult,
-        byGenre: out
-      })
+      setByGenre(out)
     })
 
-    fetch("http://localhost:3001/search/artist", 
-    {method: 'POST', 
-    body: JSON.stringify(data), 
-    headers:{'Content-Type': 'application/json'}})
-    .then((res) => res.json())
-    .catch((error) =>  console.error('Error', error))
-    .then((out) => {
-      setSongResult({
-        ...songResult,
-        byArtist: out
+      fetch("http://localhost:3001/search/artist", 
+      {method: 'POST', 
+      body: JSON.stringify(data), 
+      headers:{'Content-Type': 'application/json'}})
+      .then((res) => res.json())
+      .catch((error) =>  console.error('Error', error))
+      .then((out) => {
+        setByArtist(out)
       })
-    })
   }
 
   const showPlayList = () => {
@@ -172,11 +162,18 @@ export default function Home() {
 
   const showAuthor = () => {
     if (artist) return (
-      <Button
-        onClick={noLongerArtist}
-        text='Ya no ser artista'
-        clase="botonMenu"
-      />
+      <div>
+        <Button
+          onClick={toArtist}
+          text='Agregar Contenido'
+          clase="botonMenu"
+        />
+        <Button
+          onClick={noLongerArtist}
+          text='Ya no ser artista'
+          clase="botonMenu"
+        />
+      </div>
     )
     else return (
       <div>
@@ -227,8 +224,7 @@ export default function Home() {
   return (
     <div className="fondo">
       <div className="resultados">
-        {songResult.bySong.map((value) => {
-          console.log('1')
+        {bySong.map((value) => {
           return(
             <div>
               <div 
@@ -242,9 +238,7 @@ export default function Home() {
             
           )
         })}
-        {songResult.byAlbum.map((value) => {
-          console.log('2')
-          console.log(value)
+        {byAlbum.map((value) => {
           return(
             <div>
               
@@ -260,8 +254,7 @@ export default function Home() {
             </div>
           )
         })}
-        {songResult.byGenre.map((value) => {
-          console.log('3')
+        {byGenre.map((value) => {
           return(
             <div 
               key={value.songid} 
@@ -271,9 +264,7 @@ export default function Home() {
             </div>
           )
         })}
-        {songResult.byArtist.map((value) => {
-          console.log('4')
-          
+        {byArtist.map((value) => {
           return(
             <div 
               key={value.songid} 
@@ -289,7 +280,6 @@ export default function Home() {
       </div>
 
       <div className="cuadrop">
-       
         <div id="nav">    
           <div className="titulonav">
             Perfil 

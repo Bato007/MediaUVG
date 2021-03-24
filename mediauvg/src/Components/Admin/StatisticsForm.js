@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
-import ActiveUsers from './Charts/ActiveUser'
+import ActiveUsers from './Charts/Chart'
 import '../songForm.css';
 
 export default function StatisticsForm({ form }) {
