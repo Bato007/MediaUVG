@@ -8,7 +8,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider,KeyboardDatePicker } from '@material-ui/pickers'
 import lazyStitch from '../Estilos/giphy.gif'
 import Button from '../Components/MediaButton'
-import Input from '../Components/MediaInput'
+import Update from '../Components/MediaUpdate'
 
 const styles = {
   back: {
@@ -73,10 +73,15 @@ export default function Home() {
 
   const getAddSong = () => {
     setForm('song')
+    setAlbumName('')
+    setSelectedDate(new Date())
   }
 
   const getAddAlbum = () => {
     setForm('album')
+    setSongName('')
+    setSongAlbum('')
+    setSongLink('')
   }
 
   const handleDateChange = (date) => {
@@ -100,7 +105,7 @@ export default function Home() {
       if (out && out.status === '') {
         setSongName('')
         setSongAlbum('')
-        songlink('')
+        setSongLink('')
         setForm('')
       }
     }) 
@@ -140,19 +145,22 @@ export default function Home() {
             <h1 style={styles.title}>
               Canción
             </h1>
-            <Input 
+            <Update 
+              value={songname}
               type="text"
               placeholder="Nombre Canción"
               limit={20}
               onChange={setSongName}
             />
-            <Input 
+            <Update 
+              value={songalbum}
               type="text"
               placeholder="Nombre Album"
               limit={20}
               onChange={setSongAlbum}
             />
-            <Input 
+            <Update
+              value={songlink} 
               type="text"
               placeholder="Link de Canción"
               limit={35}
@@ -171,7 +179,8 @@ export default function Home() {
             <h1 style={styles.title}>
               Album
             </h1>
-            <Input 
+            <Update
+              value={albumname} 
               type='text'
               placeholder='Nombre Album'
               limit={35}

@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Button from '../Components/MediaButton'
-import Input from '../Components/MediaInput'
-import '../Estilos/Home.css';
+import Update from '../Components/MediaUpdate'
+import lazyStitch from '../Estilos/giphy.gif'
 
 const styles = {
   back: {
@@ -41,7 +41,7 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 0 10px 5px'
   },
-  title:{
+  title: {
     fontWeight: 'bold',
     fontFamily: 'magneto',
     fontSize: '40px',
@@ -54,9 +54,9 @@ const styles = {
     padding: '10px',
     width: '90%',
     margin: '10px',
-    background: '#794be3',
+    color: 'white',
     borderRadius: '10px',
-    border: '2px solid black'
+    background: '#021B79'
   },
   smallSideMenu: {
     display: 'flex',
@@ -66,42 +66,126 @@ const styles = {
     background: 'white',
     marginLeft: '70px',
     minWidth: '45vh',
-    margin: '15px',
+    margin: '20px',
     borderRadius: '10px',
     boxShadow: '0 0 10px 5px'
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    background: '#141E30',  /* fallback for old browsers */
+    background: '-webkit-linear-gradient(to bottom, #243B55, #141E30)', /* Chrome 10-25, Safari 5.1-6 */
+    background: 'linear-gradient(to bottom, #243B55, #141E30)', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    borderRadius: '10px',
+    boxShadow: '0 0 10px 5px',
+    marginRight: '15%',
+    padding: '10px',
+    minHeight: '50px',
+    minWidth: '50px'
+  },
+  song: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '75%',
+    height: '30px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '5px',
+    borderRadius: '10px',
+    padding: '5px',
+    background: '#0575E6', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ 
+  },
+  name: {
+    fontSize: '15px',
+    color: 'white',
+    padding: '1px'
   },
 }
 
 export default function PlayLists() {
   const history = useHistory()
   const location = useLocation()
-  const [ newPlaylist, setNewPlaylist ] = useState('')
+  const [ newname, setNewName ] = useState('')
+  const [ playlists, setPlaylists ] = useState([])
+
+  const [ playlistTitle, setTitle ] = useState([])
+  const [ songs, setSongs ] = useState([])
+
   const [ action, setAction ] = useState(false)
   const { username, name, artist, premium, artistname } = location.state
-  const [ playlists, setPlaylists ] = useState([])
-  
+
   // Para regresar al pasado
-  const toHome = () =>{
-      history.push('/Home', { username, name, artist, premium, artistname })
+  const toHome = () => {
+    history.push('/Home', { username, name, artist, premium, artistname })
   }
   
+  const toPlay = (value) => {
+    const songId = value.songid
+    history.push('/Play', { username, name, artist, premium, artistname, songId })
+  }
+
+  const putSongs = () => {
+    if (songs.length > 0) {
+      return (
+        <div style={styles.container} >
+          <h1 style={styles.title}>
+            {playlistTitle}
+          </h1>
+          {songs.map((value) => {
+            return(
+            <div 
+              style={styles.song}
+              onClick={() => toPlay(value)}
+              key={value.songid}
+            >
+              <h2 style={styles.name}>
+                {value.songname} by {value.author}
+              </h2>
+            </div>)
+          })}
+        </div>
+      ) 
+    } else {
+      return <img style={styles.image} src={lazyStitch} alt='Sin form'/>
+    }
+  }
+
   const addPlaylist = () => {
-    fetch("http://localhost:3001/add/playlist", 
+    if (newname !== ''){
+      fetch("http://localhost:3001/add/playlist", 
+      {method: 'POST', 
+      body: JSON.stringify({ username, newPlaylist: newname }), 
+      headers:{'Content-Type': 'application/json'}})
+      .then((res) => res.json())
+      .catch((error) =>  console.error('Error', error))
+      .then((out) => {
+        if (out && out.status === '') {
+          setAction(!action)
+          setNewName('')
+          setSongs([])
+        }
+      })
+    }
+  }
+
+  const getSongs = (value) => {
+    const { playlistid } = value
+    fetch("http://localhost:3001/search/playlist/songs", 
     {method: 'POST', 
-    body: JSON.stringify({ username, newPlaylist }), 
+    body: JSON.stringify({ playlistid }), 
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      if (out && out.status === '') {
-        setAction(!action)
+      if (out) {
+        setNewName('')
+        setSongs(out)
+        setTitle(value.playlistname)
       }
-      setNewPlaylist('')
     })
-  }
-
-  const getSongs = (value) => {
-    console.log(value)
   }
   
   useEffect(() => {
@@ -123,11 +207,12 @@ export default function PlayLists() {
           <h1 style={styles.title}>
             Administrador
           </h1>
-          <Input 
+          <Update
+            value={newname} 
             type="text"
             placeholder="Nombre Playlist"
             limit={25}
-            onChange={setNewPlaylist}
+            onChange={setNewName}
           />
           <Button 
             onClick={addPlaylist}
@@ -142,7 +227,7 @@ export default function PlayLists() {
         </div>
         <div style={styles.sideMenu}>
           <h1 style={styles.title}>
-            PlayList
+            PlayLists
           </h1>
           {playlists.map((value) => {
             return(
@@ -152,11 +237,11 @@ export default function PlayLists() {
               >
                 {value.playlistname}
               </div>
-              
             )
           })}
         </div>  
       </div>  
+      {putSongs()}
     </div> 
   )
 }
