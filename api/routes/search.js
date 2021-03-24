@@ -122,6 +122,17 @@ router.post('/playlist', async (req, res) => {
   }
 })
 
+router.post('/playlist/songs', async (req, res) => {
+  try {
+    const { playlistid } = req.body
+    const songs = await pool.query('SELECT * FROM song WHERE songid IN (SELECT songid FROM playlistsongs WHERE playlistid = $1)', [playlistid])
+    res.json(songs.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
+
 /*
 
 */
