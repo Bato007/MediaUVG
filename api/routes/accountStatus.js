@@ -128,4 +128,14 @@ router.delete('/goauthor', async (req, res) => {
   }
 })
 
+router.put('/canhear', async (req, res) => {
+  try {
+    const { username } = req.body
+    const info = await pool.query('SELECT playbackleft, lastPlay FROM freeuser WHERE username = $1', [username])
+    res.json(info.rows)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 module.exports = router
