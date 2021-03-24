@@ -5,10 +5,9 @@ export default function AppCuadro({
 }){
 
     return(
-        <div 
-            className = "cuadroReporte">
-            <div className="titulonav">
-                Resultados
+        <div className = "cuadroReporte">
+            <div id="tituloR">
+                {text}
             </div>
         </div>
     );

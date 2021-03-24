@@ -19,14 +19,22 @@
 
 .cuadroReporte{
     position: absolute;
-    left: 660px;
-    top: 50px;
-    height: 450px;
+    left: 438px;
+    top: 0px;
+    height: 100%;
     width: 450px;
     box-shadow: 0 0 10px 5px;
     background-color: rgb(255, 255, 255);
 }
-
+#tituloR{
+    font-family: "magneto";
+    font-size: 50px;
+    position: absolute;
+    bottom: 0px;
+    left: 70px;
+    font-weight: bold;
+    color: black;
+}
 
 #titulo{
     font-family: "magneto";

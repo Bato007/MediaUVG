@@ -7,14 +7,15 @@ import Box from '@material-ui/core/Box';
 const useStyles = makeStyles({
   textColor: {
     color: '#044464',
+    // height:'200px',
   },
 });
 
 export default function Title(props) {
   const classes = useStyles();
   return (
-    <Typography component="h2" variant="h6" align='center' color="primary" gutterBottom>
-      <Box fontWeight="fontWeightBold" className={classes.textColor}>
+    <Typography component="h6" variant="h6" align='center' color="primary" gutterBottom>
+      <Box fontWeight="fontWeightBold" className={classes.textColor} >
         {props.children}
       </Box>
     </Typography>

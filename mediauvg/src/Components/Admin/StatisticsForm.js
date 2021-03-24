@@ -15,7 +15,7 @@ export default function StatisticsForm({ form }) {
       {
         label: 'HOLA',
         data: [123, 124, 324],
-        backgroundColor: ['red', 'yellow', 'blue']
+        backgroundColor: ['red', 'yellow', 'blue'],
 
       }
     ]
@@ -23,26 +23,32 @@ export default function StatisticsForm({ form }) {
 
   return (
     <div id="margen">
-      <ActiveUsers 
-        title='Artistas con popularidad creciente en los últimos tres meses'
-        chartData={data}
-      />
-      <ActiveUsers 
-        title='Cantidad de nuevas suscripciones durante los últimos seis meses'
-        chartData={data}
-      />
-      <ActiveUsers 
-        title='Artistas con mayor producción músical'
-        chartData={data}
-      />
-      <ActiveUsers 
-        title='Géneros más populares'
-        chartData={data}
-      />
-      <ActiveUsers 
-        title='Usuarios más Activos'
-        chartData={data}
-      />
+      <div className ="navegador">
+        <ul>
+          <ActiveUsers 
+            title='Artistas con popularidad creciente en los últimos tres meses'
+            chartData={data}
+          />
+          <ActiveUsers 
+            title='Cantidad de nuevas suscripciones durante los últimos seis meses'
+            chartData={data}
+          />
+          
+          <ActiveUsers 
+            title='Artistas con mayor producción músical'
+            chartData={data}
+          />
+          <ActiveUsers 
+            title='Géneros más populares'
+            chartData={data}
+          />
+          <ActiveUsers 
+            title='Usuarios más Activos'
+            chartData={data}
+          />
+        </ul>
+      </div>
+      
     </div>
   );
 }

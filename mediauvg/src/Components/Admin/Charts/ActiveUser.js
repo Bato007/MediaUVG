@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
   const useStyles = makeStyles((theme) => ({
     textColor: {
       color: '#174d74',
+      // height: '200px', titulo
     },
   }));
 
@@ -14,7 +15,7 @@ export default function Chart({ title, chartData }) {
     const classes = useStyles();
 
     return (
-      <div style={{background:'white', borderRadius: '10px'}}>
+      <div style={{background:'black', borderRadius: '10px'}}>
         <Title>
           <Box className={classes.textColor}>
           {title}

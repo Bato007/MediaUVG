@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import '../Estilos/Home.css';
 import Button from '../Components/MediaButton'
 import Input from '../Components/MediaInput'
-
+import Cuadro from '../Components/MediaCuadro'
 export default function Home() {
   const location = useLocation()
   const history = useHistory()
@@ -212,10 +212,84 @@ export default function Home() {
     )
   }
 
+  const styles = {
+    estiloSearch:{
+      backgroundColor:'#021B79',
+      zIndex:1,
+      color:'white',
+      width:"450px",
+      margin: '5px',
+      border: '1px solid black',
+    }
+  }
+
+  
   return (
     <div className="fondo">
-      <div className="cuadrop">
+      <div className="resultados">
+        {songResult.bySong.map((value) => {
+          console.log('1')
+          return(
+            <div>
+              <div 
+                key={value.songid} 
+                style={styles.estiloSearch} 
+                onClick={(event) => toPlaySong(value)}>
+                {value.songname}
+                
+              </div>
+            </div>
+            
+          )
+        })}
+        {songResult.byAlbum.map((value) => {
+          console.log('2')
+          console.log(value)
+          return(
+            <div>
+              
+                <div 
+                  key={value.songid} 
+                  style={styles.estiloSearch} 
+                  onClick={(event) => toPlaySong(value)}>
+                  Nombre: {value.songname}
+                  
+                
+              </div>
+              
+            </div>
+          )
+        })}
+        {songResult.byGenre.map((value) => {
+          console.log('3')
+          return(
+            <div 
+              key={value.songid} 
+              style={styles.estiloSearch} 
+              onClick={(event) => toPlaySong(value)}>
+              Nombre: {value.songname}
+            </div>
+          )
+        })}
+        {songResult.byArtist.map((value) => {
+          console.log('4')
           
+          return(
+            <div 
+              key={value.songid} 
+              style={styles.estiloSearch} 
+              onClick={(event) => toPlaySong(value)}>
+              Nombre: {value.songname} 
+              
+            </div>
+
+          )
+          
+        })}
+      </div>
+
+      <div className="cuadrop">
+       
         <div id="nav">    
           <div className="titulonav">
             Perfil 
@@ -247,50 +321,7 @@ export default function Home() {
           </div> 
         </div>
       </div>
-      {songResult.bySong.map((value) => {
-        console.log('1')
-        return(
-          <div 
-            key={value.songid} 
-            style={{background: 'yellow'}} 
-            onClick={(event) => toPlaySong(value)}>
-            {value.songname}
-          </div>
-        )
-      })}
-      {songResult.byAlbum.map((value) => {
-        console.log('2')
-        return(
-          <div 
-            key={value.songid} 
-            style={{background: 'yellow'}} 
-            onClick={(event) => toPlaySong(value)}>
-            {value.songname}
-          </div>
-        )
-      })}
-      {songResult.byGenre.map((value) => {
-        console.log('3')
-        return(
-          <div 
-            key={value.songid} 
-            style={{background: 'yellow'}} 
-            onClick={(event) => toPlaySong(value)}>
-            {value.songname}
-          </div>
-        )
-      })}
-      {songResult.byArtist.map((value) => {
-        console.log('4')
-        return(
-          <div 
-            key={value.songid} 
-            style={{background: 'yellow'}} 
-            onClick={(event) => toPlaySong(value)}>
-            {value.songname}
-          </div>
-        )
-      })}
+      
     </div> 
   );
 }

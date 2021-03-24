@@ -8,14 +8,16 @@
 #margen{
     padding: 10px;
 }
-#navegador{
+.navegador{
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: space-between ;
+    flex-direction: row;
  }
+
  
 #titulo{
+    
     font-family: "magneto";
     font-size: 100px;
   

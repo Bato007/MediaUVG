@@ -12,9 +12,7 @@ export default function Admin() {
   const logOut = () => {
     history.push('/')
   }
-  const Reportes = () => {
-    history.push('/Admin/Reportes')
-  }
+  
 
   // Para cambiar de form 
   const adminSong = () => {
@@ -34,7 +32,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="fondo">
+    <div className="fondoP">
         <div id="titulo">
           Swap Admin 
         </div>
@@ -63,11 +61,7 @@ export default function Admin() {
               onClick={adminstatistics}
               clase="botonAdmin"
             />
-            <Button 
-              text='Reportes'
-              onClick={Reportes}
-              clase="botonAdmin"
-            />
+            
             <Button 
               text='Cerrar sesion'
               onClick={logOut}

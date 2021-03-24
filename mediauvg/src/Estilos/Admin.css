@@ -22,8 +22,7 @@
 .botonAdmin:hover{
     background-color: rgb(73, 133, 245);
 }
-.fondo{
-    
+.fondoP{
     min-height: 100vh;
     background: #0575E6;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to bottom, #021B79, #0575E6);  /* Chrome 10-25, Safari 5.1-6 */
@@ -34,7 +33,8 @@
 #titulo{
     font-family: "magneto";
     font-size: 80px;
-  
+    display: flex;
+    justify-content: center;
     font-weight: bold;
     color: black;
 }
