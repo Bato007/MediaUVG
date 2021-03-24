@@ -34,7 +34,7 @@ export default function SignIn(){
   });
   
 
-  const toHome = () =>{
+  const toHome = () => {
     const data = {
       username,
       password
@@ -48,6 +48,7 @@ export default function SignIn(){
     .then((out) => {
       if (out) {
         const resp = out[0]
+        console.log(resp)
         switch (resp.username) {
           case 'ERROR 101':
             console.log('Tirar error no existe user')

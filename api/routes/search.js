@@ -112,6 +112,16 @@ router.get('/artist', async (req, res) => {
   }
 })
 
+router.post('/playlist', async (req, res) => {
+  try {
+    const { username } = req.body
+    const artists = await pool.query('SELECT * FROM userplaylist WHERE username = $1', [username])
+    res.json(artists.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
 /*
 
 */

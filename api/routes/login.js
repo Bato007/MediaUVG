@@ -44,6 +44,8 @@ router.post('/verify', async (req, res) => {
         user.rows[0] = { premium, ...user.rows[0] }
         if (author.rowCount > 0) {
           artist = true
+          const { artistname } = author.rows[0]
+          user.rows[0] = { artistname, ...user.rows[0] }
         }
         user.rows[0] = { artist, ...user.rows[0] }
         res.json(user.rows)
