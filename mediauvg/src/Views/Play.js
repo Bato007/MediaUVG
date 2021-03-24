@@ -16,8 +16,8 @@ export default function Play(){
         .catch((error) => console.log(error))
         .then((out) => {
             console.log(out)
-            setSource((preValue) => {
-                return preValue + out[0].songlink
+            setSource(() => {
+                return 'https://open.spotify.com/embed/track/' + out[0].songlink
             })
             setRender(true)
         })
