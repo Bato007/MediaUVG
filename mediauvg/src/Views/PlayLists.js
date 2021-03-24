@@ -54,12 +54,9 @@ const styles = {
     padding: '10px',
     width: '90%',
     margin: '10px',
+    color: 'white',
     borderRadius: '10px',
-    border: '2px solid black',
-    background: '#a8c0ff',  /* fallback for old browsers */
-    background: '-webkit-linear-gradient(to top, #3f2b96, #a8c0ff)',  /* Chrome 10-25, Safari 5.1-6 */
-    background: 'linear-gradient(to top, #3f2b96, #a8c0ff)' /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: '#021B79'
   },
   smallSideMenu: {
     display: 'flex',
@@ -77,32 +74,33 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    background: 'white',
+    background: '#141E30',  /* fallback for old browsers */
+    background: '-webkit-linear-gradient(to bottom, #243B55, #141E30)', /* Chrome 10-25, Safari 5.1-6 */
+    background: 'linear-gradient(to bottom, #243B55, #141E30)', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     borderRadius: '10px',
     boxShadow: '0 0 10px 5px',
     marginRight: '15%',
     padding: '10px',
-    minHeight: '70vh',
-    minWidth: '50vh'
+    minHeight: '50px',
+    minWidth: '50px'
   },
   song: {
     display: 'flex',
     flexDirection: 'column',
-    width: '90%',
+    width: '75%',
+    height: '30px',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '10px',
-    border: '2px solid black',
+    margin: '5px',
     borderRadius: '10px',
     padding: '5px',
-    background: '#00C9FF',  /* fallback for old browsers */
-    background: '-webkit-linear-gradient(to bottom, #92FE9D, #00C9FF)',  /* Chrome 10-25, Safari 5.1-6 */
-    background: 'linear-gradient(to bottom, #92FE9D, #00C9FF)', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: '#0575E6', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ 
   },
   name: {
     fontSize: '15px',
-    color: '#000',
+    color: 'white',
     padding: '1px'
   },
 }
