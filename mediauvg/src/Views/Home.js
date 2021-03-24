@@ -214,70 +214,96 @@ export default function Home() {
       backgroundColor:'#021B79',
       zIndex:1,
       color:'white',
-      width:"450px",
+      height: '25px',
+      width:"490px",
+      borderRadius: '15px',
       margin: '5px',
-      border: '1px solid black',
+    },
+    cuadro:{
+      backgroundColor:'white',
+      width: '500px',
+      height: '500px',
+      boxShadow: '0 0 10px 5px',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      marginRight: '220px',
+      marginTop: '50px',
+    },
+    estiloTexto:{
+      fontWeight: 'bold',
+      fontFamily: "magneto",
+      fontSize: '40px',
+      color: 'black',
+      padding: '4px',
     }
   }
 
   
   return (
     <div className="fondo">
-      <div className="resultados">
-        {bySong.map((value) => {
-          return(
-            <div>
-              <div 
-                key={value.songid} 
-                style={styles.estiloSearch} 
-                onClick={(event) => toPlaySong(value)}>
-                {value.songname}
-                
-              </div>
-            </div>
+      <div style={styles.cuadro}>
+        <div style={styles.estiloTexto}> Resultados </div>
+        
+        <div>
+          {bySong.map((value) => {
             
-          )
-        })}
-        {byAlbum.map((value) => {
-          return(
-            <div>
-              
+            return(
+              <div>
                 <div 
                   key={value.songid} 
                   style={styles.estiloSearch} 
                   onClick={(event) => toPlaySong(value)}>
-                  Nombre: {value.songname}
+                  {value.songname} 
                   
-                
+                </div>
               </div>
               
-            </div>
-          )
-        })}
-        {byGenre.map((value) => {
-          return(
-            <div 
-              key={value.songid} 
-              style={styles.estiloSearch} 
-              onClick={(event) => toPlaySong(value)}>
-              Nombre: {value.songname}
-            </div>
-          )
-        })}
-        {byArtist.map((value) => {
-          return(
-            <div 
-              key={value.songid} 
-              style={styles.estiloSearch} 
-              onClick={(event) => toPlaySong(value)}>
-              Nombre: {value.songname} 
-              
-            </div>
+            )
+          })}
+          {byAlbum.map((value) => {
+            return(
+              <div>
+                
+                  <div 
+                    key={value.songid} 
+                    style={styles.estiloSearch} 
+                    onClick={(event) => toPlaySong(value)}>
+                     {value.songname}
+                    
+                  
+                </div>
+                
+              </div>
+            )
+          })}
+          {byGenre.map((value) => {
+            return(
+              <div 
+                key={value.songid} 
+                style={styles.estiloSearch} 
+                onClick={(event) => toPlaySong(value)}>
+                 {value.songname} 
+              </div>
+            )
+          })}
+          {byArtist.map((value) => {
+            return(
+              <div 
+                key={value.songid} 
+                style={styles.estiloSearch} 
+                onClick={(event) => toPlaySong(value)}>
+                 {value.songname} 
+                
+              </div>
 
-          )
-          
-        })}
+            )
+            
+          })}
+        </div>
       </div>
+      
 
       <div className="cuadrop">
         <div id="nav">    
