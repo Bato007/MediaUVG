@@ -7,7 +7,12 @@ export default function Play(){
     const history = useHistory()
     const [source, setSource] = useState('https://open.spotify.com/embed/track/')
     const location = useLocation()
-    const {songId} = location.state
+    const { username, name, artist, premium, artistname, songId, go } = location.state
+
+  const goBack = () => {
+    history.push(go, { username, name, artist, premium, artistname, songId })
+  }
+
     useEffect(() => {
         fetch("http://localhost:3001/search/play", 
         {
@@ -23,7 +28,7 @@ export default function Play(){
             })
             setRender(true)
         })
-    }, {})
+    }, [])
     
     const IFrame = () => {
         if(render){
