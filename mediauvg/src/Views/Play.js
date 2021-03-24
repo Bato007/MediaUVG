@@ -42,7 +42,6 @@ export default function Play(){
             
             width: '300px',
             height: '380px',
-            marginLeft: '550px',
             frameborder: '0',
             allowtransparency: 'true',
             allow: 'encrypted-media',
@@ -60,12 +59,25 @@ export default function Play(){
         }
     }
 
+    const playListAdd = () => {
+        
+    }
+
     return(
         <div style={styles.orden} >
             <div style={styles.fondo}>
-                <IFrame/>
-                
+                <div style={{textAlign:'center'}}>
+                    <IFrame/>
+                    <div>
+                        <Button 
+                            onClick={playListAdd}
+                            text='Agregar a Playlist'
+                            clase='botonMenu'
+                        />
+                    </div>
+                </div>
             </div>
+            
             
             
         </div>
