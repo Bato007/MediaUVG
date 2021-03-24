@@ -22,6 +22,14 @@ export default function Chart({ title, chartData }) {
           </Box>
           <Bar
             data={chartData}
+            options={{scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  min: 0
+                }    
+              }]
+            }}}
           />
         </Title>
         

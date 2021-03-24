@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/weeklyalbum', async (req, res) => {
     try{
-        const albums = await pool.query("SELECT albumname, release FROM album WHERE release > date_trunc('day', NOW() - interval '1 week')")
+        const albums = await pool.query("SELECT albumname, author FROM album WHERE release < date_trunc('day', NOW() - interval '1 week')")
         console.log(albums.rows)
         res.json(albums.rows)
     }catch(error){
@@ -15,7 +15,7 @@ router.post('/weeklyalbum', async (req, res) => {
 
 router.post('/artistsrise', async (req, res) => {
     try{
-        const artists = await pool.query('SELECT artistname FROM artist WHERE playbackthreemonths > playbacksixmonths')
+        const artists = await pool.query('SELECT artistname, (playbackthreemonths - playbacksixmonths) AS rise FROM artist WHERE playbackthreemonths > playbacksixmonths ORDER BY rise DESC LIMIT 5')
         res.json(artists.rows)
     }catch(error){
         console.error(error.message)
@@ -24,7 +24,7 @@ router.post('/artistsrise', async (req, res) => {
 
 router.post('/subsrise', async (req, res) => {
     try{
-        const subscriptions = await pool.query("SELECT COUNT(*) FROM premiumuser WHERE subscription > date_trunc('day', NOW() - interval '6 month')")
+        const subscriptions = await pool.query("SELECT COUNT(*), EXTRACT(MONTH from subscription) as month, EXTRACT(YEAR from subscription) as year FROM premiumuser WHERE subscription > date_trunc('day', NOW() - interval '6 month') GROUP BY subscription ORDER BY year ASC, month ASC")
         res.json(subscriptions.rows)
     }catch(error){
         console.error(error.message)
