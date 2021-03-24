@@ -65,7 +65,7 @@ export default function StatisticsForm({ form }) {
               {
                 label: 'Subscripciones',
                 data: rise,
-                backgroundColor: ['green', 'green', 'green', 'green', 'green']
+                backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
               }
             ]
           }
@@ -96,7 +96,7 @@ export default function StatisticsForm({ form }) {
               {
                 label: 'Produccion',
                 data: rise,
-                backgroundColor: ['green', 'green', 'green', 'green', 'green']
+                backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
               }
             ]
           }
@@ -127,7 +127,7 @@ export default function StatisticsForm({ form }) {
               {
                 label: 'Reproducciones',
                 data: rise,
-                backgroundColor: ['green', 'green', 'green', 'green', 'green']
+                backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
               }
             ]
           }
@@ -158,7 +158,7 @@ export default function StatisticsForm({ form }) {
               {
                 label: 'Actividad',
                 data: rise,
-                backgroundColor: ['green', 'green', 'green', 'green', 'green']
+                backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
               }
             ]
           }
