@@ -124,7 +124,7 @@ export default function PlayLists() {
   
   const toPlay = (value) => {
     const songId = value.songid
-    const go = '/Home'
+    const go = '/Home/PlayLists'
     history.push('/Play', { username, name, artist, premium, artistname, songId, go })
   }
 
