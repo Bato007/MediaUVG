@@ -19,7 +19,7 @@ export default function FormManager({ form }) {
       case 'statistics':
         return <StatisticsForm />
       default:
-        return <img src={lazyStitch} alt='Sin form'/>
+        return <img src={lazyStitch} alt='Sin form' style={{display:'block', margin:'auto'}} />
     }
   }
 

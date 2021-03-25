@@ -94,13 +94,6 @@ export default function SignIn(){
             onClick={toHome} 
             text='Log In'
           />
-        </div>
-        <div>
-          <Button
-            clase="button"
-            onClick={toSignUp}
-            text='Sign Up'
-          />
         </div> 
       </div>
     </div>

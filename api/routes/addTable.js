@@ -62,4 +62,19 @@ router.post('/playlist', async (req, res) => {
   }
 })
 
+router.post('/addPlay', async (req, res) => {
+  const status = {
+    status: '',
+  }
+  try {
+    const { playlistid, songid } = req.body
+    await pool.query('INSERT INTO playlistSongs (playlistId, songId) VALUES ($1, $2)',  [playlistid, songid]) 
+  } catch (error) {
+    console.error(error)
+    status.status = 'ERROR'
+  } finally{
+    res.json(status)
+  }
+})
+
 module.exports = router
