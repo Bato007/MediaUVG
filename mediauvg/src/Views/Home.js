@@ -5,29 +5,35 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import '../Estilos/Home.css';
 import Button from '../Components/MediaButton'
-import Input from '../Components/MediaInput'
+import Update from '../Components/MediaUpdate'
 
 const styles = {
   estiloSearch:{
-    backgroundColor:'#021B79',
-    zIndex:1,
+    display: 'flex',
+    justifiyContent: 'center',
+    flowDirection: 'column',
+    alignItems: 'center',
+    margin: '15px',
     color:'white',
     height: '25px',
     width:"490px",
     borderRadius: '15px',
-    margin: '5px',
+    margin: '10px',
+    background: '#4e54c8',  /* fallback for old browsers */
+    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',  /* Chrome 10-25, Safari 5.1-6 */
+    background: 'linear-gradient(to right, #8f94fb, #4e54c8)' /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   },
   cuadro:{
     backgroundColor:'white',
-    width: '500px',
-    height: '500px',
+    miWidth: '35vh',
+    minHeight: '40vh',
     boxShadow: '0 0 10px 5px',
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
-    marginRight: '220px',
-    marginTop: '50px',
+    marginRight: '10%',
   },
   estiloTexto:{
     fontWeight: 'bold',
@@ -105,7 +111,19 @@ export default function Home() {
   const toPlaySong = (value) => {
     const songId = value.songid
     const go = '/Home'
-    history.push('/Play', { username, name, artist, premium, artistname, songId, go })
+    if (!premium) {
+      fetch("http://localhost:3001/account/hear", 
+      {method: 'PUT', 
+      body: JSON.stringify({ username }), 
+      headers:{'Content-Type': 'application/json'}})
+      .then((res) => res.json())
+      .catch((error) =>  console.error('Error', error))
+      .then((out) => {
+        history.push('/Play', { username, name, artist, premium, artistname, songId, go })
+      })
+    } else {
+      history.push('/Play', { username, name, artist, premium, artistname, songId, go })
+    }
   }
 
   const toArtist = () => {
@@ -157,6 +175,7 @@ export default function Home() {
         .then((out) => {
           setByArtist(out)
         })
+      setsearch('')
     }
   }
 
@@ -257,7 +276,8 @@ export default function Home() {
           text='Ser artista'
           clase="botonMenu"
         />
-        <Input
+        <Update
+          value={artistname}
           type="text"
           placeholder="Nombre Artista"
           limit={20}
@@ -288,7 +308,8 @@ export default function Home() {
     if (premium || canHear) {
       return (
         <div style={styles.meduBody}>
-          <Input 
+          <Update 
+            value={search}
             type="text"
             placeholder="Buscar"
             limit={20}
@@ -305,34 +326,29 @@ export default function Home() {
   }
 
   const showResults = () => {
-    if (bySong.length > 0 && byAlbum.length > 0 && byArtist.length > 0 && byGenre.length > 0  ) {
+    if (bySong.length > 0 || byAlbum.length > 0 || byArtist.length > 0 || byGenre.length > 0  ) {
       return (
         <div style={styles.cuadro}>
           <div style={styles.estiloTexto}> Resultados </div>
             <div>
               {bySong.map((value) => {
                 return(
-                  <div>
-                    <div 
-                      key={value.songid} 
-                      style={styles.estiloSearch} 
-                      onClick={(event) => toPlaySong(value)}>
-                      {value.songname} 
-                    </div>
-                  </div>
-                  
+                  <div 
+                    key={value.songid} 
+                    style={styles.estiloSearch} 
+                    onClick={(event) => toPlaySong(value)}>
+                    {value.songname} 
+                  </div>                  
                 )
               })}
               {byAlbum.map((value) => {
                 return(
-                  <div>
                       <div 
                         key={value.songid} 
                         style={styles.estiloSearch} 
                         onClick={(event) => toPlaySong(value)}>
                         {value.songname}
                     </div>
-                  </div>
                 )
               })}
               {byGenre.map((value) => {
@@ -376,6 +392,21 @@ export default function Home() {
           } else {
             setCanHear(true)
           }
+            const first = new Date(out[0].lastplay)
+            const second = new Date()
+
+            if (first.getFullYear() <= second.getFullYear() 
+              && first.getMonth() <= second.getMonth()
+              && first.getDate() < second.getDate()) {
+                
+                fetch("http://localhost:3001/account/update", 
+                {method: 'PUT', 
+                body: JSON.stringify({ date: second, username }), 
+                headers:{'Content-Type': 'application/json'}})
+                .then((res) => res.json())
+                .catch((error) =>  console.error('Error', error))
+                .then(console.log('hola'))
+            }
         }
       })
     }
