@@ -152,7 +152,7 @@ router.post('/sumar', async (req, res) => {
     const add2 = await pool.query('UPDATE song SET timesplayed = timesplayed + 1 WHERE songid = $1', [username])
   }catch(eroor){
     console.error(error.messasge)
-  })
+  }
 })
 
 module.exports = router
