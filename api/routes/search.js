@@ -145,4 +145,14 @@ router.post('/play', async (req, res) => {
   }
 })
 
+router.post('/sumar', async (req, res) => {
+  try{
+    const { songId, username } = req.body
+    const add = await pool.query('UPDATE swapuser SET playback = playback + 1 WHERE username = $1', [username])
+    const add2 = await pool.query('UPDATE song SET timesplayed = timesplayed + 1 WHERE songid = $1', [username])
+  }catch(eroor){
+    console.error(error.messasge)
+  })
+})
+
 module.exports = router

@@ -35,6 +35,17 @@ export default function Play(){
             })
             setRender(true)
         })
+
+        fetch("http://localhost:3001/search/sumar", 
+        {
+            method: 'POST',
+            body: JSON.stringify({username, songId}),
+            headers: {'Content-Type':'application/json'}
+        }).then((res) => res.json())
+        .catch((error) => console.log(error))
+        .then((out) => {
+            console.log(out)
+        })
     }, [])
     
     const IFrame = () => {
