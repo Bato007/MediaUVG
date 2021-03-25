@@ -128,4 +128,36 @@ router.delete('/goauthor', async (req, res) => {
   }
 })
 
+router.put('/canhear', async (req, res) => {
+  try {
+    const { username } = req.body
+    const info = await pool.query('SELECT playbackleft, lastplay FROM freeuser WHERE username = $1', [username])
+    res.json(info.rows)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+router.put('/update', async (req, res) => {
+  try {
+    const { username, date } = req.body
+    const info = await pool.query('UPDATE freeuser SET playbackleft = 3, lastplay = $1 WHERE username = $2',
+      [date, username])
+    res.json(info.rows)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+router.put('/hear', async (req, res) => {
+  try {
+    const { username } = req.body
+    const info = await pool.query('UPDATE freeuser SET playbackleft = playbackleft - 1 WHERE username = $1',
+      [username])
+    res.json(info.rows)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 module.exports = router

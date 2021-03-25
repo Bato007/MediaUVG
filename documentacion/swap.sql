@@ -88,19 +88,19 @@ INSERT INTO swapUser (username, password, name,  playback, admin) VALUES
 	('admin', 'adminswap', 'Rodolfo', 0, true),
 	('ruther', 'salmon', 'Pez', 0, false),
 	('pepe22', 'roxtar', 'Rudeus', 53, false),
-	('Dave Grohl', 'foo', 'Dave Grohl', 500, true),
-	('AC/DC', 'acdc', 'AC/DC', 385, true),
-	('Katy Perry', 'soykaty', 'Katy Perry', 547, true),
-	('soyeldaddy', 'daddy', 'Daddy Yankee', 847, true),
-	('Fuego', 'fire', 'Fuego', 287, true),
-	('Don Omar', 'omarcito', 'Don Omar', 147, true),
-	('Angel y Khriz', 'ayk', 'Angel y Khriz', 415, true),
-	('Wisin & Yandel', 'wy', 'Wisin & Yandel', 378, true),
-	('Buxxi', 'labux', 'Buxxi', 148, true),
-	('Plan B', 'bplan', 'Plan B', 175, true),
-	('elcapo', 'capito', 'Pedro', 854, true),
-	('bacilos', 'Bcls', 'Bacilos', 1000, true),
-	('eminem', 'mandm', 'Marshall', 2000, true),
+	('Dave Grohl', 'foo', 'Dave Grohl', 500, false),
+	('AC/DC', 'acdc', 'AC/DC', 385, false),
+	('Katy Perry', 'soykaty', 'Katy Perry', 547, false),
+	('soyeldaddy', 'daddy', 'Daddy Yankee', 847, false),
+	('Fuego', 'fire', 'Fuego', 287, false),
+	('Don Omar', 'omarcito', 'Don Omar', 147, false),
+	('Angel y Khriz', 'ayk', 'Angel y Khriz', 415, false),
+	('Wisin & Yandel', 'wy', 'Wisin & Yandel', 378, false),
+	('Buxxi', 'labux', 'Buxxi', 148, false),
+	('Plan B', 'bplan', 'Plan B', 175, false),
+	('elcapo', 'capito', 'Pedro', 854, false),
+	('bacilos', 'Bcls', 'Bacilos', 1000, false),
+	('eminem', 'mandm', 'Marshall', 2000, false),
 	('swap', 'swapirte', 'Swap', 4, true);
 	
 INSERT INTO premiumUser (username, subscription) VALUES
@@ -112,7 +112,21 @@ INSERT INTO premiumUser (username, subscription) VALUES
 	
 INSERT INTO freeUser (username, playbackLeft, lastPlay) VALUES
 	('ruther', 3, '2021-03-16'),
-	('pepe22', 3, '2021-03-16');
+	('pepe22', 3, '2021-03-16'),
+	('Dave Grohl', 3, '2021-03-16'),
+	('AC/DC', 3, '2021-03-16'),
+	('Katy Perry', 3, '2021-03-16'),
+	('soyeldaddy', 3, '2021-03-16'),
+	('Fuego', 3, '2021-03-16'),
+	('Don Omar', 3, '2021-03-16'),
+	('Angel y Khriz', 3, '2021-03-16'),
+	('Wisin & Yandel',3, '2021-03-16'),
+	('Buxxi', 3, '2021-03-16'),
+	('Plan B', 3, '2021-03-16'),
+	('elcapo', 3, '2021-03-16'),
+	('bacilos', 3, '2021-03-16'),
+	('eminem', 3, '2021-03-16'),
+	('swap', 3, '2021-03-16')
 	
 INSERT INTO artist (username, artistName, playbackThreeMonths, playbackSixMonths, startRecord) VALUES
 	('bato007', 'Batoux', 234, 125, '2020-09-01'),
