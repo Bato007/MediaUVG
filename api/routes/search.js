@@ -12,7 +12,7 @@ const router = express.Router()
 router.post('/song', async (req, res) => {
   try {
     const { value } = req.body
-    const songs = await pool.query('SELECT * FROM song WHERE songname = $1', [value])
+    const songs = await pool.query('SELECT * FROM song WHERE songname = $1 AND active = true', [value])
     res.json(songs.rows)
   } catch (error) {
     console.error(error.messasge)
@@ -28,7 +28,7 @@ router.post('/song', async (req, res) => {
 router.post('/album', async (req, res) => {
   try {
     const { value } = req.body
-    const songs = await pool.query('SELECT * FROM song WHERE albumID IN (SELECT albumid FROM album WHERE albumname = $1)', [value])
+    const songs = await pool.query('SELECT * FROM song WHERE albumID IN (SELECT albumid FROM album WHERE albumname = $1) AND active = true', [value])
     res.json(songs.rows)
   } catch (error) {
     console.error(error.messasge)
@@ -60,7 +60,7 @@ router.post('/genre', async (req, res) => {
 router.post('/artist', async (req, res) => {
   try {
     const { value } = req.body
-    const songs = await pool.query('SELECT * FROM song WHERE author IN (SELECT artistname FROM artist WHERE artistname = $1)', [value])
+    const songs = await pool.query('SELECT * FROM song WHERE author IN (SELECT artistname FROM artist WHERE artistname = $1) AND active = true', [value])
     res.json(songs.rows)
   } catch (error) {
     console.error(error.messasge)
@@ -131,7 +131,6 @@ router.post('/playlist/songs', async (req, res) => {
     console.error(error.messasge)
   }
 })
-
 
 /*
 

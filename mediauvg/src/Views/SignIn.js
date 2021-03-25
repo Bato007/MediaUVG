@@ -47,14 +47,14 @@ export default function SignIn(){
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
       if (out) {
-        const resp = out[0]
-        console.log(resp)
+        let resp = out[0]
+        if (resp === undefined) resp = out
         switch (resp.username) {
           case 'ERROR 101':
-            console.log('Tirar error no existe user')
+            alert('No username')
             break
           case 'ERROR 102':
-            console.log('Tirar error contraseñas no coinciden')
+            alert('No coinciden contraseñas')
             break
           default:
             if (resp.admin) history.push('/Admin', out[0])

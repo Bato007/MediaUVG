@@ -112,29 +112,37 @@ export default function Play(){
         })}
     }
 
+    const isPremium = () => {
+      if (premium) return (
+        <div>
+          <div style={{width:'300px', backgroundColor:'white', margin:'auto', borderRadius:'20px'}}>
+              <FormControl className='Form'>
+                  <InputLabel id='PlaylistSelect'>Playlist</InputLabel>
+                  <Select onChange={handleChange}>
+                      {available.map((values) => {
+                          return <MenuItem value={values.playlistid}>{values.playlistname}</MenuItem>
+                      })}
+                  </Select>
+                  <FormHelperText>Seleccione la Playlist</FormHelperText>
+              </FormControl>
+          </div>
+          <div>
+              <Button 
+                  onClick={playListAdd}
+                  text='Agregar a Playlist'
+                  clase='botonMenu'
+              />
+          </div>
+        </div>
+      )
+    }
+
     return(
         <div style={styles.orden} >
             <div style={styles.fondo}>
                 <div style={{textAlign:'center'}}>
                     <IFrame/>
-                    <div style={{width:'300px', backgroundColor:'white', margin:'auto', borderRadius:'20px'}}>
-                        <FormControl className='Form'>
-                            <InputLabel id='PlaylistSelect'>Playlist</InputLabel>
-                            <Select onChange={handleChange}>
-                                {available.map((values) => {
-                                    return <MenuItem value={values.playlistid}>{values.playlistname}</MenuItem>
-                                })}
-                            </Select>
-                            <FormHelperText>Seleccione la Playlist</FormHelperText>
-                        </FormControl>
-                    </div>
-                    <div>
-                        <Button 
-                            onClick={playListAdd}
-                            text='Agregar a Playlist'
-                            clase='botonMenu'
-                        />
-                    </div>
+                    {isPremium()}
                     <div>
                         <Button
                             onClick={goBack}
