@@ -7,6 +7,7 @@ const accountRouter = require('./routes/accountStatus')
 const adminRouter = require('./routes/admin')
 const statsRouter = require('./routes/stats')
 const addRouter = require('./routes/addTable')
+const editRouter = require('./routes/editData')
 
 const app = express()
 const port = 3001
@@ -21,6 +22,7 @@ app.use('/account', accountRouter)
 app.use('/admin', adminRouter)
 app.use('/stats', statsRouter)
 app.use('/add', addRouter)
+app.use('/edit', editRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

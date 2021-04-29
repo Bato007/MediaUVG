@@ -17,7 +17,7 @@ const router = express.Router()
  * {
  *  status: '',
  * }
- * Si hubo un error status regresara ERROR 301 de lo contrario
+ * Si hubo un error status regresara ERROR 201 de lo contrario
  * devolvera DONE.
  */
 router.post('/album', async (req, res) => {
@@ -28,6 +28,7 @@ router.post('/album', async (req, res) => {
     const {
       albumid, albumname, author, release, active,
     } = req.body
+
     await pool.query(`
       UPDATE album SET 
       albumname = $1, 
@@ -39,7 +40,7 @@ router.post('/album', async (req, res) => {
 
     response.status = 'DONE'
   } catch (error) {
-    response.status = 'ERROR 301'
+    response.status = 'ERROR 201'
   } finally {
     res.json(response)
   }
@@ -64,9 +65,9 @@ router.post('/album', async (req, res) => {
  *
  * Se respondera con el siguiente formato:
  * {
- *  status: '',
+ *  status: 'DONE',
  * }
- * Si hubo un error status regresara ERROR 302 de lo contrario
+ * Si hubo un error status regresara ERROR 202 de lo contrario
  * devolvera DONE.
  */
 router.post('/song', async (req, res) => {
@@ -80,12 +81,10 @@ router.post('/song', async (req, res) => {
 
     await pool.query(`
           BEGIN;
-          SAVEPOINT before_update;
         `, [])
-
     await pool.query(`
       UPDATE song SET 
-      songname = $1, 
+      songname = $1,
       songlink = $2, 
       albumid = (SELECT albumid 
         FROM album 
@@ -93,7 +92,7 @@ router.post('/song', async (req, res) => {
         AND albumname = $4), 
       author = $3, 
       active = $5  
-      WHERE songid = $6
+      WHERE songid = $6;
     `, [songname, songlink, author, albumname, active, songid])
 
     if (genreList.length > 1) {
@@ -105,20 +104,117 @@ router.post('/song', async (req, res) => {
 
       // Agregando todos los generos de esa cancion
       await pool.query(`
-        INSERT INTO genre VALUES
-          SELECT * FROM UNNEST ($1::int, $2::text[]);
+        SELECT * FROM insert_all_genres ($1, $2);
       `, [songid, genreList])
     }
 
     await pool.query(`
           COMMIT;
         `, [])
+    response.status = 'DONE'
   } catch (error) {
-    response.status = 'ERROR 302'
+    response.status = 'ERROR 202'
     await pool.query(`
-          ROLLBACK TO before_update;
-          COMMIT;
+          ROLLBACK;
         `, [])
+  } finally {
+    res.json(response)
+  }
+})
+
+/**
+ * Se encarga de desactivar una cuenta free para que ya no
+ * pueda acceder a la cuenta
+ * {
+ *  username: 'ejemplo',
+ *  active: false,
+ * }
+ *
+ * Se respondera con el siguiente formato:
+ * {
+ *  status: 'DONE',
+ * }
+ * Si hubo un error status regresara ERROR 203 de lo contrario
+ * devolvera DONE.
+ */
+router.post('/free', async (req, res) => {
+  const response = {
+    status: '',
+  }
+
+  try {
+    const { active, username } = req.body
+
+    const user = await pool.query(`
+      SELECT * 
+      FROM freeuser
+      WHERE username = $1
+    `, [username])
+
+    if (user.rowCount < 1) {
+      throw 'No existe'
+    }
+
+    await pool.query(`
+      UPDATE freeuser SET
+        active = $1
+      WHERE username = $2;
+    `, [active, username])
+
+    response.status = 'DONE'
+  } catch (error) {
+    response.status = 'ERROR 203'
+  } finally {
+    res.json(response)
+  }
+})
+
+/**
+ * Se encarga de eliminar la suscripcion de un usuario
+ * premium
+ * {
+ *  username: 'ejemplo',
+ * }
+ *
+ * Se respondera con el siguiente formato:
+ * {
+ *  status: 'DONE',
+ * }
+ * Si hubo un error status regresara ERROR 204 de lo contrario
+ * devolvera DONE.
+ */
+router.post('/unpremium', async (req, res) => {
+  const response = {
+    status: '',
+  }
+
+  try {
+    const { username } = req.body
+
+    await pool.query(`
+      BEGIN;
+    `)
+
+    await pool.query(`
+      DELETE FROM premiumuser
+      WHERE username = $1;
+    `, [username])
+
+    await pool.query(`
+      INSERT INTO freeuser VALUES
+        ($1, true, 3, $2)
+    `, [username, new Date()])
+
+    await pool.query(`
+      COMMIT;
+    `)
+
+    response.status = 'DONE'
+  } catch (error) {
+    response.status = 'ERROR 203'
+    pool.query(`
+      ROLLBACK;
+    `)
   } finally {
     res.json(response)
   }

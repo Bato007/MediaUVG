@@ -154,7 +154,6 @@ router.post('/register', async (req, res) => {
         // Inicia transaccion
         await pool.query(`
           BEGIN;
-          SAVEPOINT before_insert;
         `, [])
 
         finsert = await pool.query(`
@@ -179,8 +178,7 @@ router.post('/register', async (req, res) => {
     console.error(error.messasge)
     if (finsert) {
       await pool.query(`
-        ROLLBACK TO before_insert;
-        COMMIT; 
+        ROLLBACK;
       `)
       response.created = 'ERROR 106'
     }
