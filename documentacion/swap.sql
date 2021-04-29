@@ -207,7 +207,7 @@ INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALU
 	('teenage dream',true,'55qBw1900pZKfXJ6Q9A2Lc',8,'katy perry', 7142),
 	('last friday night',true,'455AfCsOhhLPRc68sE01D8',8,'katy perry', 3487),
 	('firework',true,'4lCv7b86sLynZbXhfScfm2',8,'katy perry', 3707),
-	('part of me',true,'1nZzRJbFvCEct3uzu04ZoL',8,'katy perryy', 9615),
+	('part of me',true,'1nZzRJbFvCEct3uzu04ZoL',8,'katy perry', 9615),
 	('mayor que yo',true,'4n4CBlQVxxnU0MHGO5Mqv3',9,'daddy yankee', 2413),
 	('una vaina loca',true,'3zb856RMKFjdvWre0TKcmA',10,'fuego', 4055),
 	('lo que pasó, pasó',true,'6z5Xrx58p5Bs18RIe6KXbI',11,'daddy yankee', 7880),
