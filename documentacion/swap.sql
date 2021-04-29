@@ -6,19 +6,22 @@ CREATE TABLE swapUser (
 	admin BOOL);
 	
 CREATE TABLE premiumUser (
-	username VARCHAR(30) PRIMARY KEY,
+	username VARCHAR(30),
 	subscription DATE,
 	CONSTRAINT fk_premium_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
-	ON DELETE CASCADE ON UPDATE CASCADE);
+	ON DELETE CASCADE ON UPDATE CASCADE,
+  	UNIQUE (username));
 	
 CREATE TABLE freeUser (
-	username VARCHAR(30) PRIMARY KEY,
+	username VARCHAR(30),
+  	active BOOL,
 	playbackLeft INT, 
 	lastPlay DATE,
 	CONSTRAINT fk_free_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
-	ON DELETE CASCADE ON UPDATE CASCADE);	
+	ON DELETE CASCADE ON UPDATE CASCADE,
+  	UNIQUE (username));	
 	
 CREATE TABLE artist (
 	username VARCHAR(30),
@@ -110,23 +113,23 @@ INSERT INTO premiumUser (username, subscription) VALUES
 	('admin', '2020-12-21'),
 	('swap', '2021-03-16');
 	
-INSERT INTO freeUser (username, playbackLeft, lastPlay) VALUES
-	('ruther', 3, '2021-03-16'),
-	('pepe22', 3, '2021-03-16'),
-	('Dave Grohl', 3, '2021-03-16'),
-	('AC/DC', 3, '2021-03-16'),
-	('Katy Perry', 3, '2021-03-16'),
-	('soyeldaddy', 3, '2021-03-16'),
-	('Fuego', 3, '2021-03-16'),
-	('Don Omar', 3, '2021-03-16'),
-	('Angel y Khriz', 3, '2021-03-16'),
-	('Wisin & Yandel',3, '2021-03-16'),
-	('Buxxi', 3, '2021-03-16'),
-	('Plan B', 3, '2021-03-16'),
-	('elcapo', 3, '2021-03-16'),
-	('bacilos', 3, '2021-03-16'),
-	('eminem', 3, '2021-03-16'),
-	('swap', 3, '2021-03-16')
+INSERT INTO freeUser (username, playbackLeft, lastPlay, active) VALUES
+	('ruther', 3, '2021-03-16', true),
+	('pepe22', 3, '2021-03-16', true),
+	('Dave Grohl', 3, '2021-03-16', true),
+	('AC/DC', 3, '2021-03-16', true),
+	('Katy Perry', 3, '2021-03-16', false),
+	('soyeldaddy', 3, '2021-03-16', false),
+	('Fuego', 3, '2021-03-16', true),
+	('Don Omar', 3, '2021-03-16', true),
+	('Angel y Khriz', 3, '2021-03-16', true),
+	('Wisin & Yandel',3, '2021-03-16', false),
+	('Buxxi', 3, '2021-03-16', true),
+	('Plan B', 3, '2021-03-16', true),
+	('elcapo', 3, '2021-03-16', true),
+	('bacilos', 3, '2021-03-16', true),
+	('eminem', 3, '2021-03-16', false),
+	('swap', 3, '2021-03-16', true);
 	
 INSERT INTO artist (username, artistName, playbackThreeMonths, playbackSixMonths, startRecord) VALUES
 	('bato007', 'Batoux', 234, 125, '2020-09-01'),
