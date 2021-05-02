@@ -83,7 +83,18 @@ CREATE TABLE genre (
 	REFERENCES song(songId) 
 	ON DELETE CASCADE ON UPDATE CASCADE,
 	UNIQUE(songId, songGenre));
-	
+
+CREATE TABLE binnacle (
+  username VARCHAR(30),
+  datee DATE,
+  timee TIME,
+  affected VARCHAR(30),
+  operation VARCHAR(30),
+  CONSTRAINT fk_user_binnacle FOREIGN KEY (username)
+	REFERENCES swapuser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 INSERT INTO swapUser (username, password, name,  playback, admin) VALUES 
 	('bato007', 'hola123', 'brandon', 2, false),
 	('requetetin', 'quezo', 'martin', 5, false),
@@ -207,7 +218,7 @@ INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALU
 	('teenage dream',true,'55qBw1900pZKfXJ6Q9A2Lc',8,'katy perry', 7142),
 	('last friday night',true,'455AfCsOhhLPRc68sE01D8',8,'katy perry', 3487),
 	('firework',true,'4lCv7b86sLynZbXhfScfm2',8,'katy perry', 3707),
-	('part of me',true,'1nZzRJbFvCEct3uzu04ZoL',8,'katy perry', 9615),
+	('part of me',true,'1nZzRJbFvCEct3uzu04ZoL',8,'katy perryy', 9615),
 	('mayor que yo',true,'4n4CBlQVxxnU0MHGO5Mqv3',9,'daddy yankee', 2413),
 	('una vaina loca',true,'3zb856RMKFjdvWre0TKcmA',10,'fuego', 4055),
 	('lo que pasó, pasó',true,'6z5Xrx58p5Bs18RIe6KXbI',11,'daddy yankee', 7880),
@@ -352,3 +363,165 @@ x text;
 		END LOOP;
 	END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_binnacle() RETURNS TRIGGER AS $$
+DECLARE
+swap_name text;
+ttable text;
+operation text;
+	BEGIN
+	ttable := TG_ARGV[0];
+	operation := TG_ARGV[1];
+	
+    CREATE TEMP TABLE IF NOT EXISTS user_history (
+      username VARCHAR(30)
+    );
+
+    SELECT username INTO swap_name FROM user_history;
+
+		INSERT INTO binnacle VALUES 
+      (swap_name, (SELECT current_date), (SELECT  now()::TIMESTAMP(0)::TIME), ttable, operation);
+	
+	RETURN NEW;
+	END;
+$$ LANGUAGE plpgsql;
+
+-- Usuarios 
+CREATE TRIGGER updateuser
+AFTER UPDATE ON swapuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('user', 'update');
+
+CREATE TRIGGER deleteuser
+AFTER DELETE ON swapuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('user', 'delete');
+
+CREATE TRIGGER insertuser
+AFTER INSERT ON swapuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('user', 'insert');
+
+CREATE TRIGGER updatepremium
+AFTER UPDATE ON premiumuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('premium-user', 'update');
+
+CREATE TRIGGER deletepremium
+AFTER DELETE ON premiumuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('premium-user', 'delete');
+
+CREATE TRIGGER insertpremium
+AFTER INSERT ON premiumuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('premium-user', 'insert');
+
+CREATE TRIGGER updatefree
+AFTER UPDATE ON freeuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('free-user', 'update');
+
+CREATE TRIGGER deletefree
+AFTER DELETE ON freeuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('free-user', 'delete');
+
+CREATE TRIGGER insertfree
+AFTER INSERT ON freeuser
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('free-user', 'insert');
+
+-- Artist
+CREATE TRIGGER updateartist
+AFTER UPDATE ON artist
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('artist', 'update');
+
+CREATE TRIGGER deleteartist
+AFTER DELETE ON artist
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('artist', 'delete');
+
+CREATE TRIGGER insertartist
+AFTER INSERT ON artist
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('artist', 'insert');
+
+-- Album
+CREATE TRIGGER updatealbum
+AFTER UPDATE ON album
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('album', 'update');
+
+CREATE TRIGGER deletealbum
+AFTER DELETE ON album
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('album', 'delete');
+
+CREATE TRIGGER insertuser
+AFTER INSERT ON album
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('album', 'insert');
+
+-- Playlist
+CREATE TRIGGER updateplaylist
+AFTER UPDATE ON userplaylist
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('playlist', 'update');
+
+CREATE TRIGGER deleteplaylist
+AFTER DELETE ON userplaylist
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('playlist', 'delete');
+
+CREATE TRIGGER insertplaylist
+AFTER INSERT ON userplaylist
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('playlist', 'insert');
+
+CREATE TRIGGER updateplaylist_song
+AFTER UPDATE ON playlistsongs
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('playlist-song', 'update');
+
+CREATE TRIGGER deleteplaylist_song
+AFTER DELETE ON playlistsongs
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('playlist-song', 'delete');
+
+CREATE TRIGGER insertplaylist_song
+AFTER INSERT ON playlistsongs
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('playlist-song', 'insert');
+
+-- Tracks
+CREATE TRIGGER updatesong
+AFTER UPDATE ON song
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('song', 'update');
+
+CREATE TRIGGER deletesong
+AFTER DELETE ON song
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('song', 'delete');
+
+CREATE TRIGGER insertsong
+AFTER INSERT ON song
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('song', 'insert');
+
+CREATE TRIGGER updatesong_genre
+AFTER UPDATE ON genre
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('song-genre', 'update');
+
+CREATE TRIGGER deletesong_genre
+AFTER DELETE ON genre
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('song-genre', 'delete');
+
+CREATE TRIGGER insertsong_genre
+AFTER INSERT ON genre
+FOR EACH ROW 
+EXECUTE PROCEDURE insert_binnacle('song-genre', 'insert');

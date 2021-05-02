@@ -9,11 +9,45 @@ const statsRouter = require('./routes/stats')
 const addRouter = require('./routes/addTable')
 const editRouter = require('./routes/editData')
 
+const pool = require('./database')
+
 const app = express()
 const port = 3001
 
 app.use(express.json())
 app.use(cors())
+
+// Middleware para crear siempre la tabla
+app.use(async (req, res, next) => {
+  const { username } = req.body
+  try {
+    await pool.query(`
+      BEGIN;
+    `)
+
+    await pool.query(`
+      CREATE TEMP TABLE IF NOT EXISTS user_history (
+        username VARCHAR(30)
+      ); 
+    `)
+
+    await pool.query(`
+      DELETE FROM user_history;
+    `)
+
+    await pool.query(`
+      INSERT INTO user_history VALUES 
+        ($1);
+    `, [username])
+
+    await pool.query('COMMIT;')
+    next()
+  } catch (error) {
+    await pool.query('ROLLBACK;')
+    console.log(error.message)
+    res.json({ status: 'ERROR' })
+  }
+})
 
 app.use('/search', searchRouter)
 app.use('/login', logInRouter)
