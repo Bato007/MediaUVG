@@ -20,8 +20,8 @@ const styles = {
     borderRadius: '15px',
     margin: '10px',
     background: '#4e54c8',  /* fallback for old browsers */
-    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',  /* Chrome 10-25, Safari 5.1-6 */
-    background: 'linear-gradient(to right, #8f94fb, #4e54c8)' /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: '-webkit-linear-gradient(to left, #8f94fb, #4e54c8)',  /* Chrome 10-25, Safari 5.1-6 */
+    background: 'linear-gradient(to left, #8f94fb, #4e54c8)' /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   },
   cuadro:{
@@ -59,7 +59,7 @@ const styles = {
     background: 'white',
     height: '90vh',
     marginLeft: '70px',
-    minWidth: '45vh',
+    minWidth: '75vh',
     margin: '15px',
     borderRadius: '10px',
     boxShadow: '0 0 10px 5px'

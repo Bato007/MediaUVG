@@ -175,7 +175,7 @@ router.post('/register', async (req, res) => {
       throw 'Usuario existente'
     }
   } catch (error) {
-    console.error(error.messasge)
+    console.log(error)
     if (finsert) {
       await pool.query(`
         ROLLBACK;

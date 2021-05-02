@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import '../Estilos/Login.css';
 import Button from '../Components/MediaButton'
@@ -8,18 +8,39 @@ import Input from '../Components/MediaInput'
 
 
 export default function SignUp() {
+  const location = useLocation()
   const history = useHistory()
-  const [ nombre, setNombre ] = useState('')
+  const [ nombre, setName ] = useState('')
   const [ password, setPassword ] = useState('')
-  const [ passwordR, setPasswordR ] = useState('')
-  const [ usuario, setUsuario ] = useState('')
+  const [ confirm, setConfirm ] = useState('')
+  const [ usuario, setUsername ] = useState('')
 
-  
 
-  // Para regresar al pasado
   const toSignIn = () => {
-    history.push('/Home')
+    const data = {
+      username: usuario,
+      password,
+      confirm,
+      name: nombre
+    }
+    fetch("http://localhost:3001/login/register", 
+    {method: 'POST', 
+    body: JSON.stringify(data), 
+    headers:{'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+    .catch((error) =>  console.error('Error', error))
+    .then((out) => {
+      console.log(out)
+      if (out && out.created === 'DONE') {
+        history.push('/Home', { username:usuario, name:nombre, artist:false, premium:false, artistname:'' })
+        setName('')
+        setPassword('')
+        setConfirm('')
+        setUsername('')
+      }
+    }) 
   }
+
  
   return (
     <div className="fondo">
@@ -33,7 +54,7 @@ export default function SignUp() {
             type="text"
             placeholder="Introduce tu nombre"
             limit={20}
-            onChange={setNombre}
+            onChange={setName}
           />
         </div>
 
@@ -42,7 +63,7 @@ export default function SignUp() {
             type="text"
             placeholder="Introduce tu nombre de usuario"
             limit={20}
-            onChange={setUsuario}
+            onChange={setUsername}
           /> 
         </div>
 
@@ -60,22 +81,14 @@ export default function SignUp() {
             type="password"
             placeholder="Verifica tu contraseña"
             limit={20}
-            onChange={setPasswordR}
+            onChange={setConfirm}
           />  
         </div>
-
-        {/* <div>
-          <Button
-            onClick={handleSubmit}
-            text='Confirmar'
-          />  
-        </div> */}
-
         <div>
           <Button
             clase="button"
             onClick={toSignIn}
-            text='Entrar'
+            text='Confirmar'
           /> 
         </div>
       </div>

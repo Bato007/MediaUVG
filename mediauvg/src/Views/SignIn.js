@@ -51,8 +51,7 @@ export default function SignIn(){
         if (resp === undefined) resp = out
         switch (resp.username) {
           case 'ERROR 101':
-            alert('No username')
-            break
+            return alert('No coinciden')
           case 'ERROR 102':
             alert('No coinciden contraseñas')
             break
@@ -72,29 +71,38 @@ export default function SignIn(){
         <div id="titulo">
           Swap
         </div>
-        <div>
-          <Input 
-            type="text"
-            placeholder="Introduce tu nombre de usuario"
-            limit={20}
-            onChange={setUsername}
-          />
+        <div className="estructura"> 
+          <div>
+            <Input 
+              type="text"
+              placeholder="Introduce tu nombre de usuario"
+              limit={20}
+              onChange={setUsername}
+            />
+          </div>
+          <div>
+            <Input
+              type='password'
+              placeholder='Introduzca su contraseña'
+              limit={20}
+              onChange={setPassword}
+            />
+          </div>
+          <div>
+            <Button 
+              clase="button"
+              onClick={toHome} 
+              text='Log In'
+            />
+          </div> 
+          <div>
+            <Button 
+              clase="button"
+              onClick={toSignUp} 
+              text='Sign Up'
+            />
+          </div> 
         </div>
-        <div>
-          <Input
-            type='password'
-            placeholder='Introduzca su contraseña'
-            limit={20}
-            onChange={setPassword}
-          />
-        </div>
-        <div>
-          <Button 
-            clase="button"
-            onClick={toHome} 
-            text='Log In'
-          />
-        </div> 
       </div>
     </div>
   );
