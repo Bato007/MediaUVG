@@ -6,7 +6,6 @@ const router = express.Router()
 router.post('/weeklyalbum', async (req, res) => {
   try {
     const albums = await pool.query("SELECT albumname, author FROM album WHERE release < date_trunc('day', NOW() - interval '1 week')")
-    console.log(albums.rows)
     res.json(albums.rows)
   } catch (error) {
     console.error(error.message)
