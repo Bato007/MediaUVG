@@ -129,7 +129,7 @@ export default function SongFomr({ form }) {
       author: song.author,
       albumname: song.albumname,
       active: song.active,
-      username: location.state.username,
+      modifier: location.state.username,
     }
 
     // Se actualiza la informacion

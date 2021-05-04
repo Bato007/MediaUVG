@@ -20,7 +20,7 @@ app.use(cors())
 
 // Middleware para crear siempre la tabla
 app.use(async (req, res, next) => {
-  const { username } = req.body
+  const { modifier } = req.body
   try {
     await pool.query(`
       BEGIN;
@@ -39,7 +39,7 @@ app.use(async (req, res, next) => {
     await pool.query(`
       INSERT INTO user_history VALUES 
         ($1);
-    `, [username])
+    `, [modifier])
 
     await pool.query('COMMIT;')
     next()

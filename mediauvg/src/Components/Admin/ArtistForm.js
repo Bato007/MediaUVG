@@ -4,12 +4,14 @@ import Table from './ArtistTable'
 import Button from '../MediaButton'
 import Update from '../MediaUpdate'
 import '../songForm.css';
+import { useLocation } from 'react-router';
 
-export default function ArtistForm({ form, username }) {
+export default function ArtistForm({ form }) {
   const [ artist, setArtist ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)
   const [ rows, setRows ] = useState([])
+  const location = useLocation()
 
   const onClick = (selected) => {
     setArtist(selected)
@@ -66,6 +68,7 @@ export default function ArtistForm({ form, username }) {
     const data = { 
       username: artist.username,
       artistname: artist.artistname,
+      modifier: location.state.username,
     }
 
     // Se actualiza la informacion

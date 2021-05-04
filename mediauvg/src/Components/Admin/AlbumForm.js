@@ -91,7 +91,7 @@ export default function AlbumForm({ form }) {
       albumname: album.albumname,
       release: album.release,
       author: album.author,
-      username: location.state.username,
+      modifier: location.state.username,
     }
 
     // Se actualiza la informacion
