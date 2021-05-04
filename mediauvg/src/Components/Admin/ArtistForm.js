@@ -5,7 +5,7 @@ import Button from '../MediaButton'
 import Update from '../MediaUpdate'
 import '../songForm.css';
 
-export default function ArtistForm({ form }) {
+export default function ArtistForm({ form, username }) {
   const [ artist, setArtist ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)

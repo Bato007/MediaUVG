@@ -4,12 +4,14 @@ import Table from './AlbumTable'
 import Button from '../MediaButton'
 import Update from '../MediaUpdate'
 import '../songForm.css';
+import { useLocation } from 'react-router';
 
 export default function AlbumForm({ form }) {
   const [ album, setAlbum ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)
   const [ rows, setRows ] = useState([])
+  const location = useLocation()
 
   const onClick = (selected) => {
     setAlbum(selected)
@@ -89,6 +91,7 @@ export default function AlbumForm({ form }) {
       albumname: album.albumname,
       release: album.release,
       author: album.author,
+      username: location.state.username,
     }
 
     // Se actualiza la informacion
