@@ -9,6 +9,7 @@ const statsRouter = require('./routes/stats')
 const addRouter = require('./routes/addTable')
 const editRouter = require('./routes/editData')
 const binnacleRouter = require('./routes/binnacle')
+const monitorsRouter = require('./routes/monitors')
 
 const pool = require('./database')
 
@@ -59,6 +60,7 @@ app.use('/stats', statsRouter)
 app.use('/add', addRouter)
 app.use('/edit', editRouter)
 app.use('/binnacle', binnacleRouter)
+app.user('/monitors', monitorsRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

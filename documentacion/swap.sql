@@ -1,27 +1,51 @@
+CREATE TABLE monitor (
+  name VARCHAR(30) PRIMARY KEY
+);
+
 CREATE TABLE swapUser (
 	username VARCHAR(30) PRIMARY KEY, 
 	password VARCHAR(50), 
 	name VARCHAR(50),
 	playback INT,
-	admin BOOL);
-	
+	admin BOOL,
+  monitor VARCHAR(30),
+  CONSTRAINT fk_user_monitor FOREIGN KEY (monitor)
+	REFERENCES monitor(name)
+);
+
+CREATE TABLE operation ( 
+  id SERIAL PRIMARY KEY, 
+  description VARCHAR(100)
+);
+
+CREATE TABLE monitoroperation (
+  monitor VARCHAR(30),
+  operationid INT,
+  CONSTRAINT fk_monitor_operation FOREIGN KEY (monitor)
+	REFERENCES monitor(name),
+  CONSTRAINT fk_operation_monitor FOREIGN KEY (operationid)
+	REFERENCES operation(id)
+);
+
 CREATE TABLE premiumUser (
 	username VARCHAR(30),
 	subscription DATE,
 	CONSTRAINT fk_premium_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
 	ON DELETE CASCADE ON UPDATE CASCADE,
-  	UNIQUE (username));
+  UNIQUE (username)
+);
 	
 CREATE TABLE freeUser (
 	username VARCHAR(30),
-  	active BOOL,
+  active BOOL,
 	playbackLeft INT, 
 	lastPlay DATE,
 	CONSTRAINT fk_free_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
 	ON DELETE CASCADE ON UPDATE CASCADE,
-  	UNIQUE (username));	
+  UNIQUE (username)
+);	
 	
 CREATE TABLE artist (
 	username VARCHAR(30),
@@ -29,9 +53,11 @@ CREATE TABLE artist (
 	playbackThreeMonths INT,
 	playbackSixMonths INT,
 	startRecord DATE,
+  active BOOL,
 	CONSTRAINT fk_artist_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
-	ON DELETE CASCADE ON UPDATE CASCADE);
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE userPlaylist (
 	playlistId SERIAL PRIMARY KEY,
@@ -40,7 +66,8 @@ CREATE TABLE userPlaylist (
 	UNIQUE (username, playlistName),
 	CONSTRAINT fk_playlist_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
-	ON DELETE CASCADE ON UPDATE CASCADE);
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
 	
 CREATE TABLE album (
 	albumID SERIAL PRIMARY KEY,
@@ -49,7 +76,8 @@ CREATE TABLE album (
 	release DATE,
 	CONSTRAINT fk_album_artist FOREIGN KEY (author)
 	REFERENCES artist(artistName) 
-	ON DELETE CASCADE ON UPDATE CASCADE);
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
 	
 CREATE TABLE song (
 	songId SERIAL PRIMARY KEY,
@@ -63,7 +91,8 @@ CREATE TABLE song (
 	REFERENCES album(albumId) ON DELETE CASCADE, 
 	CONSTRAINT fk_song_artist FOREIGN KEY (author)
 	REFERENCES artist(artistName) 
-	ON DELETE CASCADE ON UPDATE CASCADE);
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
 	
 CREATE TABLE playlistSongs (
 	playlistId INT,
@@ -74,7 +103,8 @@ CREATE TABLE playlistSongs (
 	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_song FOREIGN KEY (songId)
 	REFERENCES song(songId) 
-	ON DELETE CASCADE ON UPDATE CASCADE);	
+	ON DELETE CASCADE ON UPDATE CASCADE
+);	
 
 CREATE TABLE genre (
 	songId INT,
@@ -82,7 +112,8 @@ CREATE TABLE genre (
 	CONSTRAINT fk_genre_song FOREIGN KEY (songId)
 	REFERENCES song(songId) 
 	ON DELETE CASCADE ON UPDATE CASCADE,
-	UNIQUE(songId, songGenre));
+	UNIQUE(songId, songGenre)
+);
 
 CREATE TABLE binnacle (
   username VARCHAR(30),
@@ -95,27 +126,63 @@ CREATE TABLE binnacle (
 	ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO swapUser (username, password, name,  playback, admin) VALUES 
-	('bato007', 'hola123', 'brandon', 2, false),
-	('requetetin', 'quezo', 'martin', 5, false),
-	('diego586', 'quepex', 'diego', 3, false),
-	('admin', 'adminswap', 'rodolfo', 0, true),
-	('ruther', 'salmon', 'pez', 0, false),
-	('pepe22', 'roxtar', 'rudeus', 53, false),
-	('dave grohl', 'foo', 'dave grohl', 500, false),
-	('ac/dc', 'acdc', 'ac/dc', 385, false),
-	('katy perry', 'soykaty', 'daty perry', 547, false),
-	('soyeldaddy', 'daddy', 'daddy yankee', 847, false),
-	('fuego', 'fire', 'fuego', 287, false),
-	('don omar', 'omarcito', 'don omar', 147, false),
-	('angel y khriz', 'ayk', 'angel y khriz', 415, false),
-	('wisin & yandel', 'wy', 'wisin & yandel', 378, false),
-	('buxxi', 'labux', 'buxxi', 148, false),
-	('plan b', 'bplan', 'plan b', 175, false),
-	('elcapo', 'capito', 'pedro', 854, false),
-	('bacilos', 'bcls', 'bacilos', 1000, false),
-	('eminem', 'mandm', 'marshall', 2000, false),
-	('swap', 'swapirte', 'swap', 4, true);
+INSERT INTO monitor (name) VALUES
+  ('default'),
+  ('monitor 1'),
+  ('monitor 2'),
+  ('op');
+
+INSERT INTO operation (description) VALUES
+  ('edit track and album'),
+  ('disable track and album'),
+  ('disable free user'),
+  ('unpremium a user'),
+  ('disable artist'),
+  ('associate monitor'),
+  ('watch statistics'),
+  ('watch binnacle');
+
+INSERT INTO monitoroperation (monitor, operationid) VALUES
+  ('monitor 1', 1),
+  ('monitor 1', 2),
+  ('monitor 1', 4),
+  ('monitor 1', 6),
+  ('monitor 1', 7),
+  ('monitor 2', 3),
+  ('monitor 2', 4),
+  ('monitor 2', 5),
+  ('monitor 2', 6),
+  ('monitor 2', 7),
+  ('op', 1),
+  ('op', 2),
+  ('op', 3),
+  ('op', 4),
+  ('op', 5),
+  ('op', 6),
+  ('op', 7),
+  ('op', 8);
+
+INSERT INTO swapUser (username, password, name,  playback, admin, monitor) VALUES 
+	('bato007', 'hola123', 'brandon', 2, false, 'op'),
+	('requetetin', 'quezo', 'martin', 5, false, 'default'),
+	('diego586', 'quepex', 'diego', 3, false, 'monitor 1'),
+	('admin', 'adminswap', 'rodolfo', 0, true, 'default'),
+	('ruther', 'salmon', 'pez', 0, false, 'default'),
+	('pepe22', 'roxtar', 'rudeus', 53, false, 'default'),
+	('dave grohl', 'foo', 'dave grohl', 500, false, 'monitor 1'),
+	('ac/dc', 'acdc', 'ac/dc', 385, false, 'default'),
+	('katy perry', 'soykaty', 'daty perry', 547, false, 'default'),
+	('soyeldaddy', 'daddy', 'daddy yankee', 847, false, 'default'),
+	('fuego', 'fire', 'fuego', 287, false, 'default'),
+	('don omar', 'omarcito', 'don omar', 147, false, 'default'),
+	('angel y khriz', 'ayk', 'angel y khriz', 415, false, 'default'),
+	('wisin & yandel', 'wy', 'wisin & yandel', 378, false, 'default'),
+	('buxxi', 'labux', 'buxxi', 148, false, 'default'),
+	('plan b', 'bplan', 'plan b', 175, false, 'default'),
+	('elcapo', 'capito', 'pedro', 854, false, 'monitor 1'),
+	('bacilos', 'bcls', 'bacilos', 1000, false, 'monitor 2'),
+	('eminem', 'mandm', 'marshall', 2000, false, 'default'),
+	('swap', 'swapirte', 'swap', 4, true, 'monitor 2');
 	
 INSERT INTO premiumUser (username, subscription) VALUES
 	('bato007', '2021-03-16'),
@@ -385,6 +452,20 @@ operation text;
 	RETURN NEW;
 	END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION delete_monitor() RETURNS TRIGGER AS $$
+	BEGIN
+    UPDATE swapuser SET
+    monitor = 'default'
+    WHERE monitor = OLD.name;
+	RETURN NEW;
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER onmonitor
+BEFORE DELETE ON monitor
+FOR EACH ROW 
+EXECUTE PROCEDURE delete_monitor();
 
 -- Usuarios 
 CREATE TRIGGER updateuser
