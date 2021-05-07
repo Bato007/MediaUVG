@@ -88,12 +88,21 @@ CREATE TABLE song (
 	author VARCHAR(30),
 	timesplayed INT, 
 	CONSTRAINT fk_song_album FOREIGN KEY (albumId)
-	REFERENCES album(albumId) ON DELETE CASCADE, 
+	REFERENCES album(albumId) 
+  	ON DELETE CASCADE ON UPDATE CASCADE, 
 	CONSTRAINT fk_song_artist FOREIGN KEY (author)
 	REFERENCES artist(artistName) 
 	ON DELETE CASCADE ON UPDATE CASCADE
 );
-	
+
+CREATE TABLE reproduction (
+  songid INT,
+  dia DATE,
+  plays INT,
+  CONSTRAINT fk_reproduction_song FOREIGN KEY (songid)
+	REFERENCES song(songid) ON DELETE CASCADE
+);
+
 CREATE TABLE playlistSongs (
 	playlistId INT,
 	songId INT,
@@ -317,6 +326,16 @@ INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALU
 	('the real slim shaddy',true,'7Bi0aRtNAdchLnVBPjDrcx',23,'eminem', 433),
 	('my name is',true,'5FtID9cgz6hX35unvcxyHk',23,'eminem', 934);
 
+INSERT INTO reproduction (songid, dia, plays) VALUES 
+	(1, '2021-05-5', 42),
+	(1, '2021-05-4', 42),
+	(1, '2021-05-3', 42),
+	(1, '2021-05-2', 42),
+	(1, '2021-05-1', 42),
+	(1, '2021-04-5', 42),
+	(1, '2021-03-5', 32),
+	(1, '2021-01-5', 12);
+
 INSERT INTO playlistSongs (playlistId, songId) VALUES
 	(1, 1),
 	(1, 3), 
@@ -431,6 +450,19 @@ x text;
 	END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION insert_all_operations(text, int[]) RETURNS VOID AS $$
+DECLARE
+monitor ALIAS FOR $1;
+ids ALIAS FOR $2;
+x int;
+	BEGIN
+		FOREACH x IN ARRAY ids
+		LOOP
+			INSERT INTO monitoroperation (monitor, operationid) VALUES (monitor, x);
+		END LOOP;
+	END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION insert_binnacle() RETURNS TRIGGER AS $$
 DECLARE
 swap_name text;
@@ -459,6 +491,33 @@ CREATE OR REPLACE FUNCTION delete_monitor() RETURNS TRIGGER AS $$
     monitor = 'default'
     WHERE monitor = OLD.name;
 	RETURN NEW;
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION add_play(int) RETURNS VOID AS $$
+DECLARE
+id ALIAS FOR $1;
+x INT;
+	BEGIN
+		UPDATE song SET
+		timesplayed = timesplayed + 1
+		WHERE songid = id;
+		
+		-- Verificando si hay lugar para hacer update al dia
+		SELECT COUNT(*) INTO x 
+		FROM reproduction 
+		WHERE songid = id
+		AND dia IN (SELECT current_date);
+		
+		IF (x < 1) THEN
+			INSERT INTO reproduction VALUES
+				(id, (SELECT current_date), 0);
+		END IF;
+		
+		UPDATE reproduction SET
+		plays = plays + 1
+		WHERE songid = id
+		AND dia IN (SELECT current_date);
 	END;
 $$ LANGUAGE plpgsql;
 
@@ -609,3 +668,60 @@ EXECUTE PROCEDURE insert_binnacle('song-genre', 'insert');
 
 CREATE INDEX I_user_binnacle ON binnacle(username);
 CREATE INDEX I_operation_binnacle ON binnacle(operation);
+
+CREATE OR REPLACE FUNCTION get_sales_week(date, date) 
+	RETURNS TABLE (
+		weekly TIMESTAMP WITH TIME ZONE, 
+		sales INT
+	) AS $$
+DECLARE
+start_date ALIAS FOR $1;
+final_date ALIAS FOR $2;
+	BEGIN
+		RETURN QUERY (
+			SELECT date_trunc('week', dia::DATE) AS weekly,
+       			SUM(plays)::INT          
+			FROM (
+					SELECT dia, plays           
+					FROM reproduction
+					WHERE dia > start_date
+					AND dia < final_date
+				) P1
+			GROUP BY weekly
+			ORDER BY weekly);
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_genre_sales(date, date) 
+	RETURNS TABLE (
+		genre VARCHAR(50), 
+		sales INT
+	) AS $$
+DECLARE
+start_date ALIAS FOR $1;
+final_date ALIAS FOR $2;
+	BEGIN
+		RETURN QUERY (
+			SELECT songgenre AS genre, SUM(plays)::INT AS sales
+			FROM genre NATURAL JOIN 
+				(SELECT songid, plays           
+				FROM reproduction
+				WHERE dia > start_date
+				AND dia < final_date) P1
+			GROUP BY genre
+			ORDER BY genre
+		);
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE VIEW top_artist_songs AS
+	(SELECT songid, songname, P1.author, sales
+	FROM (SELECT songid, songname, author, timesplayed
+		FROM song) P1
+		INNER JOIN 
+		(SELECT author, MAX(timesplayed) AS sales
+		FROM song
+		GROUP BY author
+		ORDER BY author) P2
+		ON P1.author = P2.author
+		AND timesplayed = sales);

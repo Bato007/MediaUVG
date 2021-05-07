@@ -60,7 +60,7 @@ app.use('/stats', statsRouter)
 app.use('/add', addRouter)
 app.use('/edit', editRouter)
 app.use('/binnacle', binnacleRouter)
-app.user('/monitors', monitorsRouter)
+app.use('/monitors', monitorsRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
