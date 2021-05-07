@@ -38,7 +38,7 @@ CREATE TABLE premiumUser (
 	
 CREATE TABLE freeUser (
 	username VARCHAR(30),
-  active BOOL,
+  	active BOOL,
 	playbackLeft INT, 
 	lastPlay DATE,
 	CONSTRAINT fk_free_user FOREIGN KEY (username)
@@ -53,9 +53,19 @@ CREATE TABLE artist (
 	playbackThreeMonths INT,
 	playbackSixMonths INT,
 	startRecord DATE,
-  active BOOL,
+  	active BOOL,
+	winpercent FLOAT,
 	CONSTRAINT fk_artist_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE reports (
+	author VARCHAR(30),
+	dia DATE,
+	payment FLOAT,
+	CONSTRAINT fk_report_artist FOREIGN KEY (author)
+	REFERENCES artist(artistname) 
 	ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -96,11 +106,11 @@ CREATE TABLE song (
 );
 
 CREATE TABLE reproduction (
-  songid INT,
-  dia DATE,
-  plays INT,
-  CONSTRAINT fk_reproduction_song FOREIGN KEY (songid)
-	REFERENCES song(songid) ON DELETE CASCADE
+  	songid INT,
+  	dia DATE,
+  	plays INT,
+  	CONSTRAINT fk_reproduction_song FOREIGN KEY (songid)
+  	REFERENCES song(songid) ON DELETE CASCADE
 );
 
 CREATE TABLE playlistSongs (
@@ -218,24 +228,27 @@ INSERT INTO freeUser (username, playbackLeft, lastPlay, active) VALUES
 	('eminem', 3, '2021-03-16', false),
 	('swap', 3, '2021-03-16', true);
 	
-INSERT INTO artist (username, artistName, playbackThreeMonths, playbackSixMonths, startRecord) VALUES
-	('bato007', 'batoux', 234, 125, '2020-09-01'),
-	('pepe22', 'el pepe', 2332, 1253, '2020-08-01'),
-	('diego586', 'xdiegox', 4322, 1125, '2020-08-23'),
-	('ac/dc', 'ac/dc', 500, 250, '1994-05-05'),
-	('katy perry', 'katy perry', 250, 385, '2004-01-06'),
-	('soyeldaddy', 'daddy yankee', 509, 384, '2000-06-09'),
-	('fuego', 'fuego', 547, 874, '2003-12-04'),
-	('don omar', 'don omar', 412, 693, '2005-08-07'),
-	('angel y khriz', 'angel y khriz', 147, 247, '2009-07-12'),
-	('wisin & yandel', 'wisin & yandel', 456, 654, '1999-11-07'),
-	('buxxi', 'buxxi', 412, 124, '2015-09-08'),	
-	('plan b', 'plan b', 148, 169, '2008-04-08'),
-	('elcapo', 'pedro capó', 258, 147, '1997-05-06'),
-	('bacilos', 'bacilos', 549, 1059, '1994-01-09'),
-	('eminem', 'eminem', 1056, 2056, '1993-02-05'),
-	('dave grohl', 'foo fighters', 521, 821, '1990-04-02');
-	
+INSERT INTO artist (username, artistName, playbackThreeMonths, playbackSixMonths, startRecord, active, winpercent) VALUES
+	('bato007', 'batoux', 234, 125, '2020-09-01', true, 0.05),
+	('pepe22', 'el pepe', 2332, 1253, '2020-08-01', true, 0.01),
+	('diego586', 'xdiegox', 4322, 1125, '2020-08-23', true, 0.05),
+	('ac/dc', 'ac/dc', 500, 250, '1994-05-05', true, 0.01),
+	('katy perry', 'katy perry', 250, 385, '2004-01-06', true, 0.01),
+	('soyeldaddy', 'daddy yankee', 509, 384, '2000-06-09', true, 0.02),
+	('fuego', 'fuego', 547, 874, '2003-12-04', true, 0.05),
+	('don omar', 'don omar', 412, 693, '2005-08-07', true, 0.05),
+	('angel y khriz', 'angel y khriz', 147, 247, '2009-07-12', true, 0.05),
+	('wisin & yandel', 'wisin & yandel', 456, 654, '1999-11-07', true, 0.05),
+	('buxxi', 'buxxi', 412, 124, '2015-09-08', true, 0.02),	
+	('plan b', 'plan b', 148, 169, '2008-04-08', true, 0.05),
+	('elcapo', 'pedro capó', 258, 147, '1997-05-06', true, 0.02),
+	('bacilos', 'bacilos', 549, 1059, '1994-01-09', true, 0.05),
+	('eminem', 'eminem', 1056, 2056, '1993-02-05', true, 0.02),
+	('dave grohl', 'foo fighters', 521, 821, '1990-04-02', true, 0.01);
+
+INSERT INTO reports (author, dia, payment) VALUES 
+	('plan b', '2021-05-06', 32.1);
+
 INSERT INTO userPlaylist (username, playlistName) VALUES
 	('bato007', 'perreo intenso'),
 	('bato007', 'electronica'),
@@ -327,6 +340,13 @@ INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALU
 	('my name is',true,'5FtID9cgz6hX35unvcxyHk',23,'eminem', 934);
 
 INSERT INTO reproduction (songid, dia, plays) VALUES 
+	(16, '2021-05-5', 100),
+	(15, '2021-05-5', 633),
+	(14, '2021-05-5', 123),
+	(13, '2021-05-5', 723),
+	(12, '2021-05-5', 473),
+	(11, '2021-05-5', 422),
+	(10, '2021-05-5', 423),
 	(1, '2021-05-5', 42),
 	(1, '2021-05-4', 42),
 	(1, '2021-05-3', 42),
@@ -462,6 +482,8 @@ x int;
 		END LOOP;
 	END;
 $$ LANGUAGE plpgsql;
+
+--- TODO CON RESPECTO A LA BITACORA
 
 CREATE OR REPLACE FUNCTION insert_binnacle() RETURNS TRIGGER AS $$
 DECLARE
@@ -669,6 +691,8 @@ EXECUTE PROCEDURE insert_binnacle('song-genre', 'insert');
 CREATE INDEX I_user_binnacle ON binnacle(username);
 CREATE INDEX I_operation_binnacle ON binnacle(operation);
 
+--- PARTE DE LOS REPORTES 
+
 CREATE OR REPLACE FUNCTION get_sales_week(date, date) 
 	RETURNS TABLE (
 		weekly TIMESTAMP WITH TIME ZONE, 
@@ -689,6 +713,30 @@ final_date ALIAS FOR $2;
 				) P1
 			GROUP BY weekly
 			ORDER BY weekly);
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_author_max(date, date, int) 
+	RETURNS TABLE (
+		author VARCHAR(50), 
+		plays INT
+	) AS $$
+DECLARE
+start_date ALIAS FOR $1;
+final_date ALIAS FOR $2;
+max_authors ALIAS FOR $3;
+	BEGIN
+		RETURN QUERY (
+			SELECT song.author, SUM(P1.plays)::INT AS total_plays
+			FROM song NATURAL JOIN 
+				(SELECT songid, reproduction.plays           
+				FROM reproduction
+				WHERE dia > start_date
+				AND dia < final_date) P1
+			GROUP BY song.author
+			ORDER BY total_plays DESC
+			LIMIT max_authors
+		);
 	END;
 $$ LANGUAGE plpgsql;
 
@@ -714,6 +762,8 @@ final_date ALIAS FOR $2;
 	END;
 $$ LANGUAGE plpgsql;
 
+CREATE INDEX I_reproducction_dia ON reproduction(dia);
+
 CREATE VIEW top_artist_songs AS
 	(SELECT songid, songname, P1.author, sales
 	FROM (SELECT songid, songname, author, timesplayed
@@ -725,3 +775,69 @@ CREATE VIEW top_artist_songs AS
 		ORDER BY author) P2
 		ON P1.author = P2.author
 		AND timesplayed = sales);
+
+CREATE INDEX I_author_song ON song(author);
+
+-- CREAR LOS REPORTES
+CREATE OR REPLACE FUNCTION create_reports() RETURNS VOID AS $$
+DECLARE
+temp_name TEXT;
+artist_count INT;
+x INT := 1;
+y INT;
+z INT;
+	BEGIN
+		-- Verificando si hay lugar para hacer update al dia
+		SELECT COUNT(*) INTO artist_count FROM artist;
+		
+		-- Borra todos los reportes del dia
+		DELETE FROM reports
+		WHERE dia IN (SELECT current_date);
+		
+		LOOP
+		
+			-- Verificando si ya sale o no
+			IF artist_count < x THEN
+				EXIT;  -- exit loop
+			END IF;
+		
+			-- Selecciona el nombre del artista
+			SELECT artistname INTO temp_name 
+			FROM artist 
+			ORDER BY artistname
+			OFFSET (x-1);
+			x = x + 1;
+		
+			-- Viendo si ya hubo plays
+			SELECT COUNT(*) INTO z
+			FROM (SELECT songid AS id, author 
+				  FROM song 
+				  WHERE author = temp_name) P1 INNER JOIN
+				reproduction 
+				ON id = songid
+			WHERE dia IN (SELECT current_date);
+
+			-- Verificando si ya hay reproducciones
+			IF z < 1 THEN
+				INSERT INTO reports VALUES
+					(temp_name, (SELECT current_date), 0);
+
+			-- Si hay reproducciones se puede calcular
+			ELSE
+				INSERT INTO reports VALUES
+				(temp_name, (SELECT current_date), 
+				(
+					SELECT plays*(SELECT winpercent FROM artist WHERE artistname = temp_name)
+					FROM (SELECT songid AS id, author 
+						  FROM song 
+						  WHERE author = temp_name) P1 INNER JOIN
+						reproduction 
+						ON id = songid
+					WHERE dia IN (SELECT current_date)
+				));
+			END IF;
+		
+			RAISE NOTICE '%', temp_name;
+		END LOOP;	
+	END;
+$$ LANGUAGE plpgsql;
