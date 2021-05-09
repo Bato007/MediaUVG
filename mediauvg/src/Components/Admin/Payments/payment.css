@@ -29,6 +29,11 @@
   padding: 0px 5px 0px 5px;
 }
 
+.header {
+  background-color: blue;
+  color: white;
+}
+
 .payment_item{
   display: inline-grid;
   justify-content: center;

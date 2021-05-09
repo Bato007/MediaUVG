@@ -99,4 +99,57 @@ router.post('/sales_week', async (req, res) => {
   }
 })
 
+router.post('/max_author', async (req, res) => {
+  let authors = []
+  try {
+    const { firstDate, lastDate, maxie } = req.body
+    const temp = await pool.query(`
+      SELECT * 
+      FROM get_author_max($1, $2, $3);
+    `, [firstDate, lastDate, maxie])
+
+    authors = temp.rows
+  } catch (error) {
+    authors = []
+  } finally {
+    res.json(authors)
+  }
+})
+
+router.post('/top_generos', async (req, res) => {
+  let authors = []
+  try {
+    const { firstDate, lastDate } = req.body
+    const temp = await pool.query(`
+      SELECT * 
+      FROM get_genre_sales($1, $2);
+    `, [firstDate, lastDate])
+
+    authors = temp.rows
+  } catch (error) {
+    authors = []
+  } finally {
+    res.json(authors)
+  }
+})
+
+router.post('/top_songs', async (req, res) => {
+  let songs = []
+  try {
+    const { author, numSong } = req.body
+    const temp = await pool.query(`
+      SELECT songid, songname, active, albumname, timesplayed
+      FROM top_artist_songs
+      WHERE author = $1
+      LIMIT $2;
+    `, [author, numSong])
+
+    songs = temp.rows
+  } catch (error) {
+    songs = []
+  } finally {
+    res.json(songs)
+  }
+})
+
 module.exports = router

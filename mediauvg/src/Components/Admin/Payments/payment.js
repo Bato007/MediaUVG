@@ -10,14 +10,14 @@ export default function Payment({ data }) {
         Reporte de Comisiones
       </div>
       <div className="payment_reports">
-        <div key={1} className="payment_info">
+        <div key={1} className="payment_info header">
           <div className="payment_item">Autor</div>
           <div className="payment_item">Fecha de Pago</div>
           <div className="payment_item">Pago (Q)</div>
         </div>
         {data.map((value) => {
           return (
-            <div key={value.author} className="payment_info">
+            <div key={value.author + value.dia} className="payment_info">
               <div className="payment_item">
                 {value.author.charAt(0).toUpperCase() + value.author.slice(1)}
               </div>

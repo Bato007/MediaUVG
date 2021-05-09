@@ -83,6 +83,7 @@ CREATE TABLE album (
 	albumID SERIAL PRIMARY KEY,
 	albumName VARCHAR(50),
 	author VARCHAR(30),
+	active BOOL,
 	release DATE,
 	CONSTRAINT fk_album_artist FOREIGN KEY (author)
 	REFERENCES artist(artistName) 
@@ -260,31 +261,31 @@ INSERT INTO userPlaylist (username, playlistName) VALUES
 	('ruther', 'viernes'),
 	('pepe22', 'le pepe');
 	
-INSERT INTO album (albumName, author, release) VALUES
-	('fantastic', 'batoux', '2021-01-2'),
-	('el pepe', 'el pepe', '2020-12-29'),
-	('pepiando', 'el pepe', '2021-02-23'),
-	('concrete and gold', 'foo fighters', '2017-09-15'),
-	('one by one', 'foo fighters', '2002-10-22'),
-	('greatest hit', 'foo fighters', '2002-10-22'),
-	('back in black', 'ac/dc', '1980-06-25'),
-	('teenage tream', 'katy perry', '2012-03-23'),
-	('infinite summer', 'daddy yankee', '2005-02-03'),
-	('una vaina loca', 'fuego', '2011-04-05'),
-	('barrio fino', 'daddy yankee', '2004-06-13'),
-	('king of kings', 'don omar', '2006-05-23'),
-	('the last don', 'don omar', '2003-07-17'),
-	('showtime', 'angel y khriz', '2008-03-11'),
-	('reggaeton de los 00`s', 'wisin & yandel', '2008-04-11'),
-	('como tu no hay dos', 'buxxi', '2011-10-31'),
-	('meet the orphans', 'don omar', '2010-11-16'),
-	('house of pleasure', 'plan b', '2010-07-20'),
-	('calma', 'pedro capó', '2018-10-05'),
-	('donde nos quedamos', 'bacilos', '2018-08-24'),
-	('caraluna', 'bacilos', '2002-07-16'),
-	('bacilos', 'bacilos', '2005-07-05'),
-	('recovery', 'eminem', '2010-06-18'),
-	('curtain call: the hits', 'eminem', '2005-12-06');
+INSERT INTO album (albumName, author, release, active) VALUES
+	('fantastic', 'batoux', '2021-01-2', true),
+	('el pepe', 'el pepe', '2020-12-29', true),
+	('pepiando', 'el pepe', '2021-02-23', true),
+	('concrete and gold', 'foo fighters', '2017-09-15', true),
+	('one by one', 'foo fighters', '2002-10-22', true),
+	('greatest hit', 'foo fighters', '2002-10-22', true),
+	('back in black', 'ac/dc', '1980-06-25', true),
+	('teenage tream', 'katy perry', '2012-03-23', true),
+	('infinite summer', 'daddy yankee', '2005-02-03', true),
+	('una vaina loca', 'fuego', '2011-04-05', true),
+	('barrio fino', 'daddy yankee', '2004-06-13', true),
+	('king of kings', 'don omar', '2006-05-23', true),
+	('the last don', 'don omar', '2003-07-17', true),
+	('showtime', 'angel y khriz', '2008-03-11', true),
+	('reggaeton de los 00`s', 'wisin & yandel', '2008-04-11', true),
+	('como tu no hay dos', 'buxxi', '2011-10-31', true),
+	('meet the orphans', 'don omar', '2010-11-16', true),
+	('house of pleasure', 'plan b', '2010-07-20', true),
+	('calma', 'pedro capó', '2018-10-05', true),
+	('donde nos quedamos', 'bacilos', '2018-08-24', true),
+	('caraluna', 'bacilos', '2002-07-16', true),
+	('bacilos', 'bacilos', '2005-07-05', true),
+	('recovery', 'eminem', '2010-06-18', true),
+	('curtain call: the hits', 'eminem', '2005-12-06', true);
 
 INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALUES 
 	('retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'batoux', 3809),
@@ -765,16 +766,10 @@ $$ LANGUAGE plpgsql;
 CREATE INDEX I_reproducction_dia ON reproduction(dia);
 
 CREATE VIEW top_artist_songs AS
-	(SELECT songid, songname, P1.author, sales
-	FROM (SELECT songid, songname, author, timesplayed
-		FROM song) P1
-		INNER JOIN 
-		(SELECT author, MAX(timesplayed) AS sales
-		FROM song
-		GROUP BY author
-		ORDER BY author) P2
-		ON P1.author = P2.author
-		AND timesplayed = sales);
+	(SELECT songid, songname, active, albumname, timesplayed, author
+	FROM song INNER JOIN 
+		(SELECT albumid, albumname FROM album) P1 USING(albumid)
+	ORDER BY timesplayed DESC);
 
 CREATE INDEX I_author_song ON song(author);
 

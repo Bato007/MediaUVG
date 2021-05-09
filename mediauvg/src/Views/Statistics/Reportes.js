@@ -5,6 +5,9 @@ import './stats.css'
 import Chart from '../../Components/Admin/Charts/Chart'
 import Payment from '../../Components/Admin/Payments/payment'
 import WeekReport from '../../Components/Admin/StatsWeek/weekStats'
+import TopSales from '../../Components/Admin/TopSales/topSales'
+import TopGenres from '../../Components/Admin/TopGenres/topGenres'
+import TopSongs from '../../Components/Admin/TopSongs/topSongs'
 import Button from '../../Components/MediaButton'
 
 export default function Home() {
@@ -87,6 +90,18 @@ export default function Home() {
       case 8:
         return (
           <WeekReport />
+        )
+      case 9:
+        return (
+          <TopSales />
+        )
+      case 10:
+        return (
+          <TopGenres />
+        )
+      case 11:
+        return (
+          <TopSongs />
         )
       default:
         return (<div></div>)
