@@ -15,7 +15,7 @@ export default function Chart({ title, chartData }) {
     const classes = useStyles();
 
     return (
-      <div style={{background:'black', borderRadius: '10px'}}>
+      <div style={{background:'black', borderRadius: '10px', 'minHeight': '300px', 'minWidth': '500px'}}>
         <Title>
           <Box className={classes.textColor}>
           {title}
@@ -24,6 +24,8 @@ export default function Chart({ title, chartData }) {
             data={chartData}
             options={{scales: {
               yAxes: [{
+                responsive: true,
+                maintainAspectRatio: true,
                 ticks: {
                   beginAtZero: true,
                   min: 0

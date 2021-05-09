@@ -57,4 +57,99 @@ router.post('/activeuser', async (req, res) => {
   }
 })
 
+router.get('/payment', async (req, res) => {
+  let reports = []
+  try {
+    await pool.query(`
+      BEGIN;
+    `)
+    await pool.query(`
+      SELECT * FROM create_reports();`)
+    const report = await pool.query(`
+      SELECT * FROM reports;`)
+    await pool.query(`
+      COMMIT;
+    `)
+
+    reports = report.rows
+  } catch (error) {
+    reports = []
+    await pool.query(`
+      ROLLBACK;
+    `)
+  } finally {
+    res.json(reports)
+  }
+})
+
+router.post('/sales_week', async (req, res) => {
+  let sales = []
+  try {
+    const { firstDate, lastDate } = req.body
+    const temp = await pool.query(`
+      SELECT * 
+      FROM get_sales_week($1, $2);
+    `, [firstDate, lastDate])
+
+    sales = temp.rows
+  } catch (error) {
+    sales = []
+  } finally {
+    res.json(sales)
+  }
+})
+
+router.post('/max_author', async (req, res) => {
+  let authors = []
+  try {
+    const { firstDate, lastDate, maxie } = req.body
+    const temp = await pool.query(`
+      SELECT * 
+      FROM get_author_max($1, $2, $3);
+    `, [firstDate, lastDate, maxie])
+
+    authors = temp.rows
+  } catch (error) {
+    authors = []
+  } finally {
+    res.json(authors)
+  }
+})
+
+router.post('/top_generos', async (req, res) => {
+  let authors = []
+  try {
+    const { firstDate, lastDate } = req.body
+    const temp = await pool.query(`
+      SELECT * 
+      FROM get_genre_sales($1, $2);
+    `, [firstDate, lastDate])
+
+    authors = temp.rows
+  } catch (error) {
+    authors = []
+  } finally {
+    res.json(authors)
+  }
+})
+
+router.post('/top_songs', async (req, res) => {
+  let songs = []
+  try {
+    const { author, numSong } = req.body
+    const temp = await pool.query(`
+      SELECT songid, songname, active, albumname, timesplayed
+      FROM top_artist_songs
+      WHERE author = $1
+      LIMIT $2;
+    `, [author, numSong])
+
+    songs = temp.rows
+  } catch (error) {
+    songs = []
+  } finally {
+    res.json(songs)
+  }
+})
+
 module.exports = router

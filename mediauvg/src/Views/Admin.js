@@ -27,7 +27,7 @@ export default function Admin() {
   }
 
   const adminstatistics = () => {
-    setForm('statistics')
+    history.push('/Admin/Reportes')
   }
 
   const monitores = () => {
