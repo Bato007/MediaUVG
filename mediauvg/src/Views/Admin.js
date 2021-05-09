@@ -8,13 +8,11 @@ import '../Estilos/Admin.css'
 export default function Admin() {
   const history = useHistory()
   const [ form, setForm ] = useState('')
-
   // Para regresar al pasado
   const logOut = () => {
     history.push('/')
   }
   
-
   // Para cambiar de form 
   const adminSong = () => {
     setForm('song')
@@ -30,6 +28,10 @@ export default function Admin() {
 
   const adminstatistics = () => {
     setForm('statistics')
+  }
+
+  const monitores = () => {
+    setForm('monitores')
   }
 
   return (
@@ -62,7 +64,11 @@ export default function Admin() {
               onClick={adminstatistics}
               clase="botonAdmin"
             />
-            
+            <Button 
+              text='Monitores'
+              onClick={monitores}
+              clase="botonAdmin"
+            />
             <Button 
               text='Cerrar sesion'
               onClick={logOut}

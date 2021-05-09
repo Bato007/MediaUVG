@@ -4,6 +4,7 @@ import SongForm from './SongForm'
 import AlbumForm from './AlbumForm'
 import ArtistForm from './ArtistForm'
 import StatisticsForm from './StatisticsForm'
+import Monitores from './Monitores'
 import lazyStitch from '../../Estilos/giphy.gif'
 
 export default function FormManager({ form }) {
@@ -18,6 +19,8 @@ export default function FormManager({ form }) {
         return <ArtistForm />
       case 'statistics':
         return <StatisticsForm />
+      case 'monitores':
+          return <Monitores />
       default:
         return <img src={lazyStitch} alt='Sin form' style={{display:'block', margin:'auto'}} />
     }
