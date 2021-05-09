@@ -1,0 +1,66 @@
+.week_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.week_title{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-family: "magneto";
+  font-weight: bold;
+  font-size: 40px;
+  color: #000;
+  padding: 4px;
+  margin: 4px;
+}
+
+.week_temp{
+  display: flex;
+  justify-content: space-between;
+}
+
+.week_button{
+  font-family: "Bahnschrift";
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 270px;
+  height: 30px;
+  border-radius: 15px;
+  border-width: 1px;
+  background-color: black;
+  outline: none;
+}
+.week_button:hover{
+  background-color: rgb(73, 133, 245);
+}
+
+
+.payment_reports{
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0px 0px 0px;
+}
+
+.payment_info{
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  margin: 0px 0px 5px 0px;
+  background-color: aqua;
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+}
+
+.payment_item{
+  display: inline-grid;
+  justify-content: center;
+  padding: 3px;
+}

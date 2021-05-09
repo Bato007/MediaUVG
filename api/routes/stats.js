@@ -57,4 +57,46 @@ router.post('/activeuser', async (req, res) => {
   }
 })
 
+router.get('/payment', async (req, res) => {
+  let reports = []
+  try {
+    await pool.query(`
+      BEGIN;
+    `)
+    await pool.query(`
+      SELECT * FROM create_reports();`)
+    const report = await pool.query(`
+      SELECT * FROM reports;`)
+    await pool.query(`
+      COMMIT;
+    `)
+
+    reports = report.rows
+  } catch (error) {
+    reports = []
+    await pool.query(`
+      ROLLBACK;
+    `)
+  } finally {
+    res.json(reports)
+  }
+})
+
+router.post('/sales_week', async (req, res) => {
+  let sales = []
+  try {
+    const { firstDate, lastDate } = req.body
+    const temp = await pool.query(`
+      SELECT * 
+      FROM get_sales_week($1, $2);
+    `, [firstDate, lastDate])
+
+    sales = temp.rows
+  } catch (error) {
+    sales = []
+  } finally {
+    res.json(sales)
+  }
+})
+
 module.exports = router

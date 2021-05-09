@@ -712,7 +712,7 @@ final_date ALIAS FOR $2;
 					AND dia < final_date
 				) P1
 			GROUP BY weekly
-			ORDER BY weekly);
+			ORDER BY weekly ASC);
 	END;
 $$ LANGUAGE plpgsql;
 
