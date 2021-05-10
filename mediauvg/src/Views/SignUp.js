@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import '../Estilos/Login.css';
 import Button from '../Components/MediaButton'
@@ -8,7 +8,6 @@ import Input from '../Components/MediaInput'
 
 
 export default function SignUp() {
-  const location = useLocation()
   const history = useHistory()
   const [ nombre, setName ] = useState('')
   const [ password, setPassword ] = useState('')

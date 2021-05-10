@@ -24,6 +24,7 @@ export default function TopSales() {
       console.log(out)
       const author = []
       const plays = []
+      // eslint-disable-next-line array-callback-return
       out.map((value) => {
         author.push(value.author)
         plays.push(value.plays)

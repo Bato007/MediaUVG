@@ -46,12 +46,22 @@ export default function Play(){
         .then((out) => {
             console.log(out)
         })
-    }, [])
+
+        fetch("http://localhost:3001/search/playlist", 
+        {method: 'POST', 
+        body: JSON.stringify({ username }), 
+        headers:{'Content-Type': 'application/json'}})
+        .then((res) => res.json())
+        .catch((error) =>  console.error('Error', error))
+        .then((out) => {
+          setAvailable(out)
+        })
+    }, [songId, username])
     
     const IFrame = () => {
         if(render){
             return(
-                <iframe src={source} style={styles.estiloSong}></iframe>
+                <iframe title="song" src={source} style={styles.estiloSong}></iframe>
             )
         }else{
             return <div></div>
@@ -81,18 +91,6 @@ export default function Play(){
             flexDirection: 'column',
         }
     }
-
-    useEffect(() => {
-        fetch("http://localhost:3001/search/playlist", 
-        {method: 'POST', 
-        body: JSON.stringify({ username }), 
-        headers:{'Content-Type': 'application/json'}})
-        .then((res) => res.json())
-        .catch((error) =>  console.error('Error', error))
-        .then((out) => {
-          setAvailable(out)
-        })
-      }, [])
 
     const handleChange = (event) => {
         setPlaylistId(event.target.value)

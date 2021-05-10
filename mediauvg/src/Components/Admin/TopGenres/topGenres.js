@@ -22,6 +22,7 @@ export default function TopGenres() {
     .then((out) => {
       const genre = []
       const sales = []
+      // eslint-disable-next-line array-callback-return
       out.map((value) => {
         genre.push(value.genre)
         sales.push(value.sales)

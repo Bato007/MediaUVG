@@ -7,7 +7,6 @@ import Input from '../Components/MediaInput'
 
 import '../Estilos/Login.css';
 
-
 export default function SignIn(){
   const history = useHistory()
   const [ username, setUsername ] = useState('')

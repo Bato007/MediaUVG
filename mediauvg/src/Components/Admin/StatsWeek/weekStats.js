@@ -22,6 +22,7 @@ export default function WeekStats() {
     .then((out) => {
       const week = []
       const sales = []
+      // eslint-disable-next-line array-callback-return
       out.map((value) => {
         week.push(value.weekly.substring(0, 10))
         sales.push(value.sales)
