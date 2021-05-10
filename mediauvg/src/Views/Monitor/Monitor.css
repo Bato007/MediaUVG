@@ -1,0 +1,60 @@
+.backMonitor {
+    min-height: 100vh;  
+    overflow-x: hidden;
+    background: linear-gradient(to bottom, #021B79, #0575E6); 
+}
+
+.buttoncontainer {
+    width: 100%;
+    padding-top: 10px;
+    margin-left: 50px;
+}
+
+.position {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.positionCuadro {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-top: 50px;
+  }
+
+.titulo {
+    font-family: "magneto";
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+    margin: 0px;
+    margin-left: 40px;
+  }
+.cuadro {
+    height: 350px;
+    width: 450px;
+    box-shadow: 0 0 10px 5px;
+    z-Index: 1;
+    margin-top: -380px;
+    margin-left: 800px;
+    background: linear-gradient(to bottom, #021B79, #0575E6);
+}
+.botonAsignar {
+    font-family: "Bahnschrift";
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin-left: 35px;
+    width: 180px;
+    height: 30px;
+    border-radius: 15px;
+    border-width: 1px;
+    background-color: black;
+    outline: none;
+}
+.botonAsignar:hover {
+    background-color: rgb(73, 133, 245);
+}

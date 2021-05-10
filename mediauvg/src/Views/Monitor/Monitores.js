@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import Button from '../MediaButton'
-import Update from '../MediaUpdate'
+import React, { useState } from 'react'
+import Button from '../../Components/MediaButton'
+import Update from '../../Components/MediaUpdate'
 import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
+import { useHistory } from 'react-router'
 import CheckboxLabel from '@material-ui/core/FormControlLabel';
-import '../songForm.css';
-import { useLocation } from 'react-router'
+import './Monitor.css'
 
 export default function SongFomr({ form }) {
   const [username, setUsername] = useState('')
+  const history = useHistory()
   const [name, setName] = useState('')
   const [monitor, setMonitor] = useState('')
   const [operations, setoperations] = useState([])
@@ -20,7 +20,10 @@ export default function SongFomr({ form }) {
   const [option6, setOption6] = React.useState(true);
   const [option7, setOption7] = React.useState(true);
   const [option8, setOption8] = React.useState(true);
-
+  
+  const goBack = () => (
+    history.goBack()
+  )
   const chooseOption1 = (event) => {
     setOption1(event.target.checked)
   };
@@ -45,41 +48,6 @@ export default function SongFomr({ form }) {
   const chooseOption8 = (event) => {
     setOption8(event.target.checked)
   };
-
-  const styles = {
-    position: {
-      display: 'flex',
-      justifiyContent: 'center',
-      flexDirection: 'column',
-      marginLeft: '15px',
-    },
-    positionCuadro: {
-      display: 'flex',
-      justifiyContent: 'center',
-      flexDirection: 'column',
-      marginLeft: '100px',
-      marginTop: '50px',
-    },
-    titulo: {
-      fontFamily: "magneto",
-      fontSize: '40px',
-      fontWeight: 'bold',
-      color: 'black',
-      margin: '0px',
-      marginLeft: '40px',
-    },
-    cuadro: {
-      height: '350px',
-      width: '450px',
-      boxShadow: '0 0 10px 5px',
-      zIndex: '1',
-      marginTop: '-380px',
-      marginLeft: '800px',
-      background: 'linear-gradient(to bottom, #021B79, #0575E6)', /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-   
-    }
-  }
-
 
   // CREAR UN MONITOR EN BASE A LA SELECCION DE UN USUARIO
   const createMonitor = () => {
@@ -166,8 +134,15 @@ export default function SongFomr({ form }) {
       })
   }
   return (
-    <div id="margen">
-      <h1 style={styles.titulo}>Crear monitor</h1>
+    <div className="backMonitor">
+      <div className="buttoncontainer">
+          <Button
+            onClick={goBack}
+            text='Atras'
+            clase="backbutton"
+          />
+      </div>
+      <h1 className="titulo">Crear monitor</h1>
       <Update
         onChange={setName}
         value={name}
@@ -176,13 +151,14 @@ export default function SongFomr({ form }) {
         type="text"
       />
       <Button
-        onClick={createMonitor}
-        clase="button"
-        text="Crear"
-      />
+            onClick={createMonitor}
+            text='Crear'
+            clase="botonAsignar"
+          />
+      
 
 
-      <div style={styles.position}>
+      <div className="position">
         <CheckboxLabel
           control={
             <Checkbox
@@ -272,10 +248,10 @@ export default function SongFomr({ form }) {
           label="Consulta de bitácora de operaciones"
         />
 
-        <div style={styles.cuadro}>
+        <div className="cuadro">
           <br />
-          <h4 style={styles.titulo}>Asignar monitor</h4>
-          <div style={styles.positionCuadro}>
+          <div className="titulo">Asignar monitor</div>
+          <div className="positionCuadro">
           <Update
             onChange={setUsername}
             placeholder="Ingrese usuario"

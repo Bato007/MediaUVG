@@ -31,7 +31,7 @@ export default function Admin() {
   }
 
   const monitores = () => {
-    setForm('monitores')
+    history.push('/Admin/Monitores')
   }
 
   const binnacleSet = () => {
