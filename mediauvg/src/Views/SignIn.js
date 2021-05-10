@@ -66,7 +66,7 @@ export default function SignIn(){
 
   return (
     <div className="fondo">
-      <div className="cuadro">
+      <div className="signinsquare">
         <div id="titulo">
           Swap
         </div>
