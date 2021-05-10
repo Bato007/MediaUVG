@@ -11,6 +11,7 @@ import Admin from './Views/Admin';
 import Reportes from './Views/Statistics/Reportes';
 import Artist from './Views/Artist'
 import Play from './Views/Play';
+import Bitacora from './Views/Binnacle/Bitacora';
 export default function App() {
 
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route exact path = '/Admin' component = {Admin} />
           <Route path = '/*/Reportes' component = {Reportes} />
           <Route path = '/Play' component = {Play} />
+          <Route path = '/*/Bitacora' component = {Bitacora} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>

@@ -34,6 +34,10 @@ export default function Admin() {
     setForm('monitores')
   }
 
+  const binnacleSet = () => {
+    history.push('/Admin/Bitacora')
+  }
+
   return (
     <div className="fondoP">
         <div id="titulo">
@@ -67,6 +71,11 @@ export default function Admin() {
             <Button 
               text='Monitores'
               onClick={monitores}
+              clase="botonAdmin"
+            />
+             <Button
+              text='Ver bitacora'
+              onClick={binnacleSet}
               clase="botonAdmin"
             />
             <Button 
