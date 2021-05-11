@@ -185,10 +185,11 @@ router.post('/ismonitor', async (req, res) => {
   try {
     const { username } = req.body
     const temp = await pool.query(`
-      SELECT operationid
-      FROM (SELECT username, monitor
+      SELECT P2.operationid, 
+        (SELECT description FROM operation WHERE operation.id IN (P2.operationid))
+      FROM ((SELECT username, monitor
         FROM swapuser
-        WHERE username = $1) P1 NATURAL JOIN monitoroperation;
+        WHERE username = $1) P1 NATURAL JOIN monitoroperation) P2
     `, [username])
 
     monitors = temp.rows
