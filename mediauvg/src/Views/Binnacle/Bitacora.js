@@ -46,7 +46,7 @@ export default function Bitacora () {
             return (
               <div className="bitgrid lightblue">
                 <h4 className="bitdata">{value.username}</h4>
-                <h6 className="bitdata">{value.datee.substring(0,10)}</h6>
+                <h4 className="bitdata">{value.datee.substring(0,10)}</h4>
                 <h4 className="bitdata">{value.timee}</h4>
                 <h4 className="bitdata">{value.operation}</h4>
                 <h4 className="bitdata">{value.affected}</h4>
