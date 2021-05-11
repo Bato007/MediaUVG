@@ -26,6 +26,14 @@ export default function Admin() {
     setForm('artist')
   }
 
+  const visibilityAS = () => {
+    history.push('/Admin/Visibility/AS')
+  }
+
+  const visibilityArtist = () => {
+    history.push('/Admin/Visibility/Artist')
+  }
+
   const adminstatistics = () => {
     history.push('/Admin/Reportes')
   }
@@ -47,7 +55,6 @@ export default function Admin() {
         <div id="navegador">
             
           <ul>
-            
             <Button 
               text='Administrar Canción'
               onClick={adminSong}
@@ -64,6 +71,16 @@ export default function Admin() {
               clase="botonAdmin"
             />
             <Button 
+              text='Activar Album/Cancion'
+              onClick={visibilityAS}
+              clase="botonAdmin"
+            />
+            <Button 
+              text='Activar Artista'
+              onClick={visibilityArtist}
+              clase="botonAdmin"
+            />
+            <Button 
               text='Ver Estadisticas'
               onClick={adminstatistics}
               clase="botonAdmin"
@@ -73,7 +90,7 @@ export default function Admin() {
               onClick={monitores}
               clase="botonAdmin"
             />
-             <Button
+            <Button
               text='Ver bitacora'
               onClick={binnacleSet}
               clase="botonAdmin"
