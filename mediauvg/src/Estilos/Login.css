@@ -101,3 +101,19 @@ input[type=password]:focus{
 .espaciado{
     margin-top: 20px;
 }
+.signupcuadro{
+    height: 450px;
+    width: 450px;
+    box-shadow: 0 0 10px 5px;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    margin-top: 25px;
+}
+.signupfondo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: #0575E6;
+    background: linear-gradient(to bottom, #021B79, #0575E6);
+}

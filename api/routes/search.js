@@ -75,7 +75,13 @@ router.post('/artist', async (req, res) => {
 */
 router.get('/song', async (req, res) => {
   try {
-    const songs = await pool.query('SELECT * FROM (song NATURAL JOIN album) P1')
+    const songs = await pool.query(`
+      SELECT author, songid, songname, active, songlink, albumname, ARRAY_AGG(songgenre) AS genres
+      FROM (song NATURAL JOIN 
+          (SELECT albumid, albumname, author, release 
+          FROM album) P2) P1 INNER JOIN genre USING(songid)
+      GROUP BY author, songid, songname, active, songlink, albumname;    
+    `)
     res.json(songs.rows)
   } catch (error) {
     console.error(error.messasge)

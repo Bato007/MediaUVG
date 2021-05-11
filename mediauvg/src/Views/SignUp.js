@@ -42,8 +42,8 @@ export default function SignUp() {
 
  
   return (
-    <div className="fondo">
-      <div className="cuadro">
+    <div className="signupfondo">
+      <div className="signupcuadro">
         <div id="titulo">
           Swap
         </div>

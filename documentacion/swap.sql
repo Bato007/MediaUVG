@@ -697,21 +697,24 @@ CREATE INDEX I_operation_binnacle ON binnacle(operation);
 CREATE OR REPLACE FUNCTION get_sales_week(date, date) 
 	RETURNS TABLE (
 		weekly TIMESTAMP WITH TIME ZONE, 
-		sales INT
+		sales FLOAT
 	) AS $$
 DECLARE
 start_date ALIAS FOR $1;
 final_date ALIAS FOR $2;
 	BEGIN
 		RETURN QUERY (
-			SELECT date_trunc('week', dia::DATE) AS weekly,
-       			SUM(plays)::INT          
-			FROM (
-					SELECT dia, plays           
-					FROM reproduction
-					WHERE dia > start_date
-					AND dia < final_date
-				) P1
+			SELECT date_trunc('week', dia::DATE) AS weekly, 
+				SUM(plays*winpercent)::FLOAT
+			FROM (SELECT dia, plays, author 
+					FROM (SELECT *          
+						FROM reproduction
+						WHERE dia > start_date
+						AND dia < final_date) X1 
+							INNER JOIN 
+						(SELECT songid, author FROM song) X2 USING(songid)) X 
+							INNER JOIN
+						artist ON artistname = author
 			GROUP BY weekly
 			ORDER BY weekly ASC);
 	END;
@@ -720,7 +723,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_author_max(date, date, int) 
 	RETURNS TABLE (
 		author VARCHAR(50), 
-		plays INT
+		sales INT
 	) AS $$
 DECLARE
 start_date ALIAS FOR $1;
@@ -728,14 +731,16 @@ final_date ALIAS FOR $2;
 max_authors ALIAS FOR $3;
 	BEGIN
 		RETURN QUERY (
-			SELECT song.author, SUM(P1.plays)::INT AS total_plays
-			FROM song NATURAL JOIN 
+			SELECT song.author, SUM(P1.plays*winpercent) AS sales
+			FROM (song NATURAL JOIN 
 				(SELECT songid, reproduction.plays           
 				FROM reproduction
 				WHERE dia > start_date
-				AND dia < final_date) P1
+				AND dia < final_date) P1) 
+					INNER JOIN artist
+				ON artistname = author
 			GROUP BY song.author
-			ORDER BY total_plays DESC
+			ORDER BY sales DESC
 			LIMIT max_authors
 		);
 	END;
@@ -744,19 +749,24 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_genre_sales(date, date) 
 	RETURNS TABLE (
 		genre VARCHAR(50), 
-		sales INT
+		sales FLOAT
 	) AS $$
 DECLARE
 start_date ALIAS FOR $1;
 final_date ALIAS FOR $2;
 	BEGIN
 		RETURN QUERY (
-			SELECT songgenre AS genre, SUM(plays)::INT AS sales
-			FROM genre NATURAL JOIN 
+			SELECT songgenre AS genre, SUM(plays*winpercent)
+			FROM ((genre NATURAL JOIN 
 				(SELECT songid, plays           
 				FROM reproduction
 				WHERE dia > start_date
-				AND dia < final_date) P1
+				AND dia < final_date) P1) X1 
+					NATURAL JOIN 
+				(SELECT songid, author FROM song) X2) X3
+					INNER JOIN 
+				(SELECT artistname, winpercent FROM artist) X4
+					ON artistname = author
 			GROUP BY genre
 			ORDER BY genre
 		);
