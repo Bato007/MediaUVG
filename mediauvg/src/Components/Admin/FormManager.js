@@ -1,7 +1,5 @@
 import React from 'react'
-
 import SongForm from './SongForm'
-import AlbumForm from './AlbumForm'
 import ArtistForm from './ArtistForm'
 import lazyStitch from '../../Estilos/giphy.gif'
 
@@ -11,8 +9,6 @@ export default function FormManager({ form }) {
     switch (form) {
       case 'song':
         return <SongForm />
-      case 'album':
-        return <AlbumForm />
       case 'artist':
         return <ArtistForm />
       default:

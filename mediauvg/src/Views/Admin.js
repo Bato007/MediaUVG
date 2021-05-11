@@ -19,7 +19,7 @@ export default function Admin() {
   }
 
   const adminAlbum = () => {
-    setForm('album')
+    history.push('/Admin/EditarAlbum')
   }
 
   const adminArtist = () => {

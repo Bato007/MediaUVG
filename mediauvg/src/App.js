@@ -13,6 +13,7 @@ import Artist from './Views/Artist'
 import Play from './Views/Play';
 import Bitacora from './Views/Binnacle/Bitacora';
 import Monitor from './Views/Monitor/Monitores';
+import Album from './Views/AdminAlbum/Album';
 export default function App() {
 
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route exact path = '/Admin' component = {Admin} />
           <Route path = '/Play' component = {Play} />
           <Route path = '/*/Reportes' component = {Reportes} />
+          <Route path = '/*/EditarAlbum' component = {Album} />
           <Route path = '/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/Monitores' component = {Monitor} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
