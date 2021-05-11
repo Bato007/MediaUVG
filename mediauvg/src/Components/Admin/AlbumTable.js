@@ -287,7 +287,7 @@ export default function SongTable({
                         {row.albumname}
                       </TableCell>
                       <TableCell align="center">{row.author}</TableCell>
-                      <TableCell>{row.release}</TableCell>
+                      <TableCell>{row.release.substring(0, 10)}</TableCell>
                   </TableRow>
                 )
               })}

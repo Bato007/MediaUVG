@@ -11,7 +11,7 @@ import TopGenres from '../../Components/Admin/TopGenres/topGenres'
 import TopSongs from '../../Components/Admin/TopSongs/topSongs'
 import Button from '../../Components/MediaButton'
 
-export default function Home() {
+export default function Stats() {
   const history = useHistory()
   
   const [stat, setStat] = useState(0)

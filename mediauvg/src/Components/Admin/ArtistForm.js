@@ -79,12 +79,9 @@ export default function ArtistForm({ form }) {
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      console.log(out)
       if (out.status === '') {
         setArtist({})
         setAction(!action)
-      } else {
-        console.log('No Update')
       }
     })
 
@@ -101,8 +98,6 @@ export default function ArtistForm({ form }) {
       if (out.status === '') {
         setArtist({})
         setAction(!action)
-      } else {
-        console.log('no se borro')
       }
     })
   }

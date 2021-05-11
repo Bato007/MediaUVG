@@ -99,6 +99,41 @@ router.post('/album/visibility', async (req, res) => {
 })
 
 /**
+ * Se encarga de desactivar o activar la cancion
+ * se necesita un objeto con la siguiente estructura:
+ * {
+ *  songid: 0,
+ *  active: false,
+ * }
+ * Se respondera con el siguiente formato:
+ * {
+ *  status: '',
+ * }
+ * Si hubo un error status regresara ERROR 205 de lo contrario
+ * devolvera DONE.
+ */
+router.post('/song/visibility', async (req, res) => {
+  const response = {
+    status: '',
+  }
+  try {
+    const { songid, active } = req.body
+
+    await pool.query(`
+      UPDATE song SET
+      active = $1
+      WHERE songid = $2;
+    `, [active, songid])
+
+    response.status = 'DONE'
+  } catch (error) {
+    response.status = 'ERROR 205'
+  } finally {
+    res.json(response)
+  }
+})
+
+/**
  * Se encarga de realizarle el update al song en su totalidad
  * se necesita un objeto con la siguiente estructura:
  * {
@@ -107,7 +142,6 @@ router.post('/album/visibility', async (req, res) => {
  *  songlink: 'hola',
  *  author: 'ejemplo',
  *  albumname: 'ejemplo',
- *  active: false,
  *  genreList: [],
  * }
  * La lista de genreList funciona de la siguiente forma:
@@ -128,7 +162,7 @@ router.post('/song', async (req, res) => {
   }
   try {
     const {
-      songid, songname, songlink, author, albumname, active, genreList,
+      songid, songname, songlink, author, albumname, genreList,
     } = req.body
 
     await pool.query(`
@@ -143,9 +177,8 @@ router.post('/song', async (req, res) => {
         WHERE author = $3 
         AND albumname = $4), 
       author = $3, 
-      active = $5  
       WHERE songid = $6;
-    `, [songname, songlink, author, albumname, active, songid])
+    `, [songname, songlink, author, albumname, songid])
 
     if (genreList.length > 1) {
       // Borrando todos los generos de esa cancion
@@ -178,13 +211,8 @@ router.post('/song', async (req, res) => {
  * Se encarga de realizarle el update al song en su totalidad
  * se necesita un objeto con la siguiente estructura:
  * {
- *  songid: -1,
- *  songname: 'hola',
- *  songlink: 'hola',
- *  author: 'ejemplo',
- *  albumname: 'ejemplo',
+ *  artist: 'ejemplo',
  *  active: false,
- *  genreList: [],
  * }
  * La lista de genreList funciona de la siguiente forma:
  *  - Si esta vacia la lista no se realizan modificaciones
@@ -204,47 +232,18 @@ router.post('/artist/visibility', async (req, res) => {
   }
   try {
     const {
-      songid, songname, songlink, author, albumname, active, genreList,
+      artist, active,
     } = req.body
 
     await pool.query(`
-          BEGIN;
-        `, [])
-    await pool.query(`
-      UPDATE song SET 
-      songname = $1,
-      songlink = $2, 
-      albumid = (SELECT albumid 
-        FROM album 
-        WHERE author = $3 
-        AND albumname = $4), 
-      author = $3, 
-      active = $5  
-      WHERE songid = $6;
-    `, [songname, songlink, author, albumname, active, songid])
+      UPDATE artist SET 
+      active = $1
+      WHERE artistname = $2;
+    `, [active, artist])
 
-    if (genreList.length > 1) {
-      // Borrando todos los generos de esa cancion
-      await pool.query(`
-        DELETE FROM genre
-        WHERE songid = $1
-      `, [songid])
-
-      // Agregando todos los generos de esa cancion
-      await pool.query(`
-        SELECT * FROM insert_all_genres ($1, $2);
-      `, [songid, genreList])
-    }
-
-    await pool.query(`
-          COMMIT;
-        `, [])
     response.status = 'DONE'
   } catch (error) {
     response.status = 'ERROR 202'
-    await pool.query(`
-          ROLLBACK;
-        `, [])
   } finally {
     res.json(response)
   }

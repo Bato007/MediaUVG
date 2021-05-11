@@ -1,0 +1,25 @@
+.visibility_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;}
+
+.active_container {
+  background-color: mintcream;
+  border-radius: 25px;
+  padding: 30px;
+}
+
+.active_goback {
+  background-color: white;
+  border-radius: 15px;
+  outline: none;
+  padding: 10px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.active_goback:hover {
+  background-color: #4c65dd;
+}

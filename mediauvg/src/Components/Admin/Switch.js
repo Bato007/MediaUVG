@@ -8,10 +8,10 @@ const PurpleSwitch = withStyles({
   switchBase: {
     color: "#000000",
     '&$checked': {
-      color: "#ffffff",
+      color: "rgba(76,100,220,255)",
     },
     '&$checked + $track': {
-      backgroundColor: "#ffffff",
+      backgroundColor: "rgba(76,100,220,255)",
     },
   },
   checked: {},
