@@ -266,6 +266,7 @@ export default function SongTable({
                 .map((row, index) => {
                 const isItemSelected = isSelected(row);
                 const labelId = `enhanced-table-checkbox-${index}`;
+                let activeStyle = (row.active) ? classes.active : classes.notActive
 
                 return (
                   <TableRow
@@ -283,11 +284,13 @@ export default function SongTable({
                         id={labelId} 
                         scope="row" 
                         padding="none"
+                        align="center"
+                        className={activeStyle}
                       >
                         {row.albumname}
                       </TableCell>
-                      <TableCell align="center">{row.author}</TableCell>
-                      <TableCell>{row.release.substring(0, 10)}</TableCell>
+                      <TableCell align="center" className={activeStyle}>{row.author}</TableCell>
+                      <TableCell align="center" className={activeStyle}>{row.release.substring(0, 10)}</TableCell>
                   </TableRow>
                 )
               })}

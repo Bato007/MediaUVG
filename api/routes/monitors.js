@@ -169,4 +169,34 @@ router.post('/assign', async (req, res) => {
   }
 })
 
+/**
+ * Se agrega un monitor, se debe de mandar lo siguiente:
+ * {
+ *  username: 'ejemplo',
+ * }
+ * Si hubo un error mandara el ERROR 902 con el siguiente
+ * template:
+ * {
+ *  monitors: [1, 2, 3, 4, ..., 8]
+ * }
+ */
+router.post('/ismonitor', async (req, res) => {
+  let monitors = []
+  try {
+    const { username } = req.body
+    const temp = await pool.query(`
+      SELECT operationid
+      FROM (SELECT username, monitor
+        FROM swapuser
+        WHERE username = $1) P1 NATURAL JOIN monitoroperation;
+    `, [username])
+
+    monitors = temp.rows
+  } catch (error) {
+    monitors = []
+  } finally {
+    res.json(monitors)
+  }
+})
+
 module.exports = router

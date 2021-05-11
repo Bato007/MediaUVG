@@ -81,13 +81,13 @@ export default function Admin() {
               clase="botonAdmin"
             />
             <Button 
-              text='Ver Estadisticas'
-              onClick={adminstatistics}
+              text='Monitores'
+              onClick={monitores}
               clase="botonAdmin"
             />
             <Button 
-              text='Monitores'
-              onClick={monitores}
+              text='Ver Estadisticas'
+              onClick={adminstatistics}
               clase="botonAdmin"
             />
             <Button

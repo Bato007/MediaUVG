@@ -290,12 +290,13 @@ export default function SongTable({
                         id={labelId} 
                         scope="row" 
                         padding="none"
+                        align="center"
                       >
                         {row.songname}
                       </TableCell>
                       <TableCell className={activeStyle} align="center">{row.albumname}</TableCell>
                       <TableCell className={activeStyle} align="center">{row.author}</TableCell>
-                      <TableCell className={activeStyle}>{row.songlink}</TableCell>
+                      <TableCell className={activeStyle} align="center">{row.songlink}</TableCell>
                   </TableRow>
                 )
               })}

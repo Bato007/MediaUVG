@@ -34,7 +34,7 @@ export default function VisibilityAS() {
   return (
       <div className="stats_back">
         <div className="stats_cont">
-          <div class="stats_title">
+          <div className="stats_title">
             Estadisticas
           </div>
           <Button
