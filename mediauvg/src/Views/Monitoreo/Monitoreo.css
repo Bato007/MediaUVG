@@ -1,0 +1,63 @@
+.monback{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background: #0575E6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #021B79, #0575E6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #021B79, #0575E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.moncontainer{
+  background: white;
+  border-radius: 25px;
+  width: 650px;
+  margin-top: 10px;
+  text-align: center;
+}
+.montitle{
+  text-align: center;
+  font-weight: bold;
+  font-family: "magneto";
+  font-weight: bold;
+  font-size: 40px;
+  color: #000;
+  padding: 4px;
+  margin: 4px;
+}
+.bitgrid{
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  margin: 10px;
+  border-radius: 15px;
+}
+.bitdata{
+  justify-self: center;
+  margin: 8px;;
+}
+.monbackbtn{
+  font-family: "Bahnschrift";
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 150px;
+  height: 30px;
+  border-radius: 15px;
+  border-width: 1px;
+  background-color: black;
+  outline: none;
+}
+.monbackbtn:hover{
+  background-color: rgb(73, 133, 245);
+}
+.monbtncontainer{
+  width: 100%;
+  padding-top: 10px;
+  margin-left: 50px;
+}
+.monbtnmargin{
+  margin-left: 6px;
+  margin-right: 6px;
+}

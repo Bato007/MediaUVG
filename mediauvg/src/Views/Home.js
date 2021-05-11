@@ -325,6 +325,10 @@ export default function Home() {
     }
   }
 
+  const goMonitor = () => (
+    history.push('/Home/Monitoreo', { username, name, artist, premium, artistname })
+  )
+
   const showResults = () => {
     if (bySong.length > 0 || byAlbum.length > 0 || byArtist.length > 0 || byGenre.length > 0  ) {
       return (
@@ -424,6 +428,11 @@ export default function Home() {
         {showAuthor()}
         {showPremium()}
         {showSearch()}
+        <Button 
+          onClick={goMonitor}
+          text='Monitoreo'
+          clase="botonMenu"
+        />
         <Button
           onClick={logOut}
           text='Cerrar sesion'

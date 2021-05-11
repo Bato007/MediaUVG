@@ -17,6 +17,7 @@ import Reportes from './Views/Statistics/Reportes';
 import Bitacora from './Views/Binnacle/Bitacora';
 import Monitor from './Views/Monitor/Monitores';
 import Album from './Views/AdminAlbum/Album';
+import Monitoreo from './Views/Monitoreo/Monitoreo'
 export default function App() {
 
   return (
@@ -36,6 +37,7 @@ export default function App() {
           <Route path = '/*/EditarAlbum' component = {Album} />
           <Route path = '/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/Monitores' component = {Monitor} />
+          <Route path = '/*/Monitoreo' component = {Monitoreo} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
