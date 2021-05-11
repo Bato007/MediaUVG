@@ -61,3 +61,20 @@
   margin-left: 6px;
   margin-right: 6px;
 }
+.monbtnone{
+  font-family: "Bahnschrift";
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 200px;
+  height: 60px;
+  border-radius: 15px;
+  border-width: 1px;
+  background-color: black;
+  outline: none;
+}
+.monbtnone:hover{
+  background-color: rgb(73, 133, 245);
+}

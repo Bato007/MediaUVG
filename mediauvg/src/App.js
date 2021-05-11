@@ -38,6 +38,7 @@ export default function App() {
           <Route path = '/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/Monitores' component = {Monitor} />
           <Route path = '/*/Monitoreo' component = {Monitoreo} />
+          <Route path = '/*/*/Bitacora' component = {Bitacora} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
