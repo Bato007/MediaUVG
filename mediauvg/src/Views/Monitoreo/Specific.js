@@ -1,6 +1,5 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import Bitacora from '../Binnacle/Bitacora'
 
 export default function Specific ({ monitorCheck }) {
   const history = useHistory()
@@ -9,11 +8,9 @@ export default function Specific ({ monitorCheck }) {
       <div>1</div>
     )
   }
-  if (monitorCheck === 2){
-    return(
-      <div>2</div>
-    )
-  }
+  if (monitorCheck === 2)(
+    history.push('/Home/Monitoreo/Visibility/AS')
+  )
   if (monitorCheck === 3){
     return(
       <div>3</div>
@@ -24,21 +21,15 @@ export default function Specific ({ monitorCheck }) {
       <div>4</div>
     )
   }
-  if (monitorCheck === 5){
-    return(
-      <div>5</div>
-    )
-  }
-  if (monitorCheck === 6){
-    return(
-      <div>6</div>
-    )
-  }
-  if (monitorCheck === 7){
-    return(
-      <div>7</div>
-    )
-  }
+  if (monitorCheck === 5)(
+    history.push('/Home/Monitoreo/Visibility/Artist')
+  )
+  if (monitorCheck === 6)(
+    history.push('/Home/Monitoreo/Monitores')
+  )
+  if (monitorCheck === 7)(
+    history.push('/Home/Monitoreo/Reportes')
+  )
   if (monitorCheck === 8)(
       history.push('/Home/Monitoreo/Bitacora')
   )

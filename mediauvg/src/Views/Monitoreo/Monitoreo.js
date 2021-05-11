@@ -25,7 +25,6 @@ export default function Monitoreo () {
     }).then((res) => res.json())
     .catch((error) => console.log(error))
     .then((out) => {
-      console.log(out)
       setMonitorData(out)
     })
   }, [username]) 

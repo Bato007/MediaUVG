@@ -19,7 +19,6 @@ export default function Bitacora () {
     }).then((res) => res.json())
     .catch((error) => console.log(error))
     .then((out) => {
-      console.log(out)
       setBitacoraData(out)
     })
   }, []) 
