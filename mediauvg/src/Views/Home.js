@@ -326,7 +326,7 @@ export default function Home() {
   }
 
   const goMonitor = () => (
-    history.push('/Home/Monitoreo', { username, name, artist, premium, artistname })
+    history.push('/Home/Monitoreo', location.state)
   )
 
   const showResults = () => {

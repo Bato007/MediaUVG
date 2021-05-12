@@ -2,18 +2,45 @@ import Button from '../../Components/MediaButton'
 import React, {useEffect, useState} from 'react'
 import { useHistory, useLocation } from 'react-router'
 import './Monitoreo.css'
-import Specific from './Specific'
 
 export default function Monitoreo () {
   const history = useHistory()
   const [monitorData, setMonitorData] = useState([])
-  const [monitorCheck, setMonitorCheck] = useState()
   const location = useLocation()
   const { username } = location.state
 
   const goBack = () => (
     history.goBack(location.state)
   )
+
+  const monitorCheck = (value) => {
+    if (value === 1){
+      return(
+        <div>1</div>
+      )
+    }
+    if (value === 2)(
+      history.push('/Home/Monitoreo/Visibility/AS', location.state)
+    )
+    if (value === 3)(
+      history.push('/Home/Monitoreo/DisableFree', location.state)
+    )
+    if (value === 4)(
+      history.push('/Home/Monitoreo/DisablePrem', location.state)
+    )
+    if (value === 5)(
+      history.push('/Home/Monitoreo/Visibility/Artist', location.state)
+    )
+    if (value === 6)(
+      history.push('/Home/Monitoreo/Assign', location.state)
+    )
+    if (value === 7)(
+      history.push('/Home/Monitoreo/Reportes', location.state)
+    )
+    if (value === 8)(
+        history.push('/Home/Monitoreo/Bitacora', location.state)
+    )
+  }
 
 
   useEffect (() => {
@@ -43,14 +70,14 @@ export default function Monitoreo () {
           {monitorData.map((value) => {
             return (
               <Button
+                key = {value.operationid}
                 text={value.description}
                 clase="monbtnone monbtnmargin"
-                onClick={() => (setMonitorCheck(value.operationid))}
+                onClick={() => monitorCheck(value.operationid)}
               />
             )
           })}
         </div>
-        <Specific monitorCheck={monitorCheck} />
       </div>
     )
   

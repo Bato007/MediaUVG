@@ -132,20 +132,6 @@ router.get('/freeuser', async (req, res) => {
   }
 })
 
-router.get('/freeuser', async (req, res) => {
-  try {
-    const freeusers = await pool.query(`
-      SELECT username, active
-      FROM (swapuser LEFT JOIN freeuser USING(username))
-      WHERE admin = false
-      AND active IS NOT null;    
-    `)
-    res.json(freeusers.rows)
-  } catch (error) {
-    console.error(error.messasge)
-  }
-})
-
 router.get('/premium', async (req, res) => {
   try {
     const premium = await pool.query(`

@@ -18,7 +18,9 @@ import assignMonitor from './Views/AssignMonitor/AssignMonitor'
 import Reportes from './Views/Statistics/Reportes';
 import Bitacora from './Views/Binnacle/Bitacora';
 import Monitor from './Views/Monitor/Monitores';
-import Monitoreo from './Views/Monitoreo/Monitoreo'
+import Monitoreo from './Views/Monitoreo/Monitoreo';
+import DisableFree from './Views/Disable/DisableFree';
+import DisablePrem from './Views/Disable/DisablePrem';
 export default function App() {
 
   return (
@@ -35,16 +37,17 @@ export default function App() {
           <Route path = '/*/EditarAlbum' component = {Album} />
           <Route path = '/*/Visibility/AS' component = {VisibilityAS} />
           <Route path = '/*/Visibility/Artist' component = {VisibilityArtist} />
-          <Route path = '/*/Monitores/Assign' component = {assignMonitor} />
+          <Route path = '/*/*/Assign' component = {assignMonitor} />
           <Route path = '/*/Reportes' component = {Reportes} />
           <Route path = '/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/Monitores' component = {Monitor} />
           <Route path = '/*/Monitoreo' component = {Monitoreo} />
           <Route path = '/*/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/*/Reportes' component = {Reportes} />
-          <Route path = '/*/*/Monitores' component = {Monitor} />
           <Route path = '/*/*/Visibility/AS' component = {VisibilityAS} />
           <Route path = '/*/*/Visibility/Artist' component = {VisibilityArtist} />
+          <Route path = '/*/*/DisableFree' component = {DisableFree} />
+          <Route path = '/*/*/DisablePrem' component = {DisablePrem} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
