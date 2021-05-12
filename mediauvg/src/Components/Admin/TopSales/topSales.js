@@ -21,20 +21,19 @@ export default function TopSales() {
     }).then((res) => res.json())
     .catch((error) => console.log(error))
     .then((out) => {
-      console.log(out)
       const author = []
-      const plays = []
+      const sales = []
       // eslint-disable-next-line array-callback-return
       out.map((value) => {
         author.push(value.author)
-        plays.push(value.plays)
+        sales.push(value.sales)
       })
       setData({
         labels: author,
         datasets: [
           {
             label: 'Sales',
-            data: plays,
+            data: sales,
             backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
           }
         ]
