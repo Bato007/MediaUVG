@@ -38,7 +38,7 @@ export default function Monitoreo () {
       history.push('/Home/Monitoreo/Reportes', location.state)
     )
     if (value === 8)(
-        history.push('/Home/Monitoreo/Bitacora', location.state)
+      history.push('/Home/Monitoreo/Bitacora', location.state)
     )
   }
 

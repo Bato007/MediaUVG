@@ -20,7 +20,7 @@ import Monitor from './Views/Monitor/Monitores';
 import Monitoreo from './Views/Monitoreo/Monitoreo';
 import DisableFree from './Views/Disable/DisableFree';
 import DisablePrem from './Views/Disable/DisablePrem';
-import Song from './Views/AdminSong/Song'
+import Song from './Views/AdminSong/Song';
 export default function App() {
 
   return (
@@ -50,6 +50,8 @@ export default function App() {
           <Route path = '/*/*/Visibility/Artist' component = {VisibilityArtist} />
           <Route path = '/*/*/DisableFree' component = {DisableFree} />
           <Route path = '/*/*/DisablePrem' component = {DisablePrem} />
+          <Route path = '/*/DisableFree' component = {DisableFree} />
+          <Route path = '/*/DisablePrem' component = {DisablePrem} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
