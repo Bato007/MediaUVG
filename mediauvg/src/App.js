@@ -10,7 +10,6 @@ import PlayLists from './Views/PlayLists';
 import Admin from './Views/Admin';
 import Artist from './Views/Artist'
 import Play from './Views/Play';
-
 import Album from './Views/AdminAlbum/Album';
 import VisibilityAS from './Views/ActiveAS/VisibilityAS'
 import VisibilityArtist from './Views/ActiveAuthor/VisibilityArtist'
@@ -21,6 +20,7 @@ import Monitor from './Views/Monitor/Monitores';
 import Monitoreo from './Views/Monitoreo/Monitoreo';
 import DisableFree from './Views/Disable/DisableFree';
 import DisablePrem from './Views/Disable/DisablePrem';
+import Song from './Views/AdminSong/Song'
 export default function App() {
 
   return (
@@ -44,6 +44,8 @@ export default function App() {
           <Route path = '/*/Monitoreo' component = {Monitoreo} />
           <Route path = '/*/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/*/Reportes' component = {Reportes} />
+          <Route path = '/*/*/Monitores' component = {Monitor} />
+          <Route path = '/*/Song' component = {Song} />
           <Route path = '/*/*/Visibility/AS' component = {VisibilityAS} />
           <Route path = '/*/*/Visibility/Artist' component = {VisibilityArtist} />
           <Route path = '/*/*/DisableFree' component = {DisableFree} />
