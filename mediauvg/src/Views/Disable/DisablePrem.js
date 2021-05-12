@@ -15,6 +15,9 @@ export default function DisableFree() {
   )
 
   const unpremium = () => {
+    if (userUnPremium === ''){
+      alert('No se ha seleccionado un usuario')
+    }
     fetch("http://localhost:3001/edit/unpremium", 
       {
         method: 'POST',

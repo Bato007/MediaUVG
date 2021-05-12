@@ -326,7 +326,7 @@ export default function Home() {
   }
 
   const goMonitor = () => (
-    history.push('/Home/DisableFree', location.state)
+    history.push('/Home/Monitoreo', location.state)
   )
 
   const showResults = () => {

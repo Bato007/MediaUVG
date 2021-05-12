@@ -15,6 +15,9 @@ export default function DisableFree() {
   )
 
   const deactivate = () => {
+    if(userDeactivate === ''){
+      alert('No se ha seleccionado un usuario')
+    }
     fetch("http://localhost:3001/edit/free", 
       {
         method: 'POST',
@@ -55,10 +58,10 @@ export default function DisableFree() {
         <div className="distitle">Usuarios Gratiuitos</div>
         <div className="dissub">Desactivar a {userDeactivate}?</div>
         <Button
-          text='CONFIRMAR'
-          clase="disbackbtn"
-          onClick={deactivate}
-        />
+            text='CONFIRMAR'
+            clase="disbackbtn"
+            onClick={deactivate}
+          />
         {freeUsers.map((value) => {
           if (value.active) {
             return (
