@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react'
-import { useHistory} from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import './stats.css'
 import Chart from '../../Components/Admin/Charts/Chart'
@@ -13,7 +13,8 @@ import Button from '../../Components/MediaButton'
 
 export default function Stats() {
   const history = useHistory()
-  
+  const location = useLocation()
+
   const [stat, setStat] = useState(0)
   const [lastRealeses, setLastRealeses] = useState({})
   const [risingArtist, setRisingArtist] = useState({})
@@ -25,7 +26,7 @@ export default function Stats() {
 
   // Para regresar al pasado
   const goBack = () => {
-    history.goBack()
+    history.goBack(location.state)
   }
 
   const selectStats = () => {
@@ -286,7 +287,7 @@ export default function Stats() {
   return (
       <div className="stats_back">
         <div className="stats_cont">
-          <div class="stats_title">
+          <div className="stats_title">
             Estadisticas
           </div>
   

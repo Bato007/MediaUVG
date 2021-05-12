@@ -11,12 +11,13 @@ import Admin from './Views/Admin';
 import Artist from './Views/Artist'
 import Play from './Views/Play';
 
+import Album from './Views/AdminAlbum/Album';
 import VisibilityAS from './Views/ActiveAS/VisibilityAS'
 import VisibilityArtist from './Views/ActiveAuthor/VisibilityArtist'
+import assignMonitor from './Views/AssignMonitor/AssignMonitor'
 import Reportes from './Views/Statistics/Reportes';
 import Bitacora from './Views/Binnacle/Bitacora';
 import Monitor from './Views/Monitor/Monitores';
-import Album from './Views/AdminAlbum/Album';
 import Monitoreo from './Views/Monitoreo/Monitoreo'
 export default function App() {
 
@@ -31,10 +32,11 @@ export default function App() {
           <Route exact path = '/Home/Artist' component = {Artist} />
           <Route exact path = '/Admin' component = {Admin} />
           <Route path = '/Play' component = {Play} />
+          <Route path = '/*/EditarAlbum' component = {Album} />
           <Route path = '/*/Visibility/AS' component = {VisibilityAS} />
           <Route path = '/*/Visibility/Artist' component = {VisibilityArtist} />
+          <Route path = '/*/Monitores/Assign' component = {assignMonitor} />
           <Route path = '/*/Reportes' component = {Reportes} />
-          <Route path = '/*/EditarAlbum' component = {Album} />
           <Route path = '/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/Monitores' component = {Monitor} />
           <Route path = '/*/Monitoreo' component = {Monitoreo} />

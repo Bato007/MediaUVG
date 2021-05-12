@@ -10,7 +10,7 @@ export default function Monitoreo () {
   const { username } = location.state
 
   const goBack = () => (
-    history.goBack()
+    history.goBack(location.state)
   )
 
   useEffect (() => {

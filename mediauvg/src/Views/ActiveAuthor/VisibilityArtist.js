@@ -9,12 +9,12 @@ import './visibilityArtist.css'
 
 export default function VisibilityArtist() {
   const history = useHistory()
+  const location = useLocation()
 
   const [ artist, setArtist ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)
   const [ rows, setRows ] = useState([])
-  const location = useLocation()
 
   const goBack = () => {
     history.goBack()
@@ -41,7 +41,7 @@ export default function VisibilityArtist() {
         />  
         <div id="navegador">
           <Button 
-            onClick={updateSong}
+            onClick={updateArtist}
             clase="button"
             text='Actualizar'
           />
@@ -64,7 +64,7 @@ export default function VisibilityArtist() {
     })
   }, [action])
 
-  const updateSong = () => {
+  const updateArtist = () => {
     const data = { 
       artist: artist.artistname,
       active: artist.active,
@@ -73,13 +73,13 @@ export default function VisibilityArtist() {
 
     // Se actualiza la informacion
     fetch('http://localhost:3001/edit/artist/visibility', 
-    {method: 'PUT', 
+    {method: 'POST', 
     body: JSON.stringify(data),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      if (out.status === '') {
+      if (out.status === 'DONE') {
         setArtist({})
         setAction(!action)
       }

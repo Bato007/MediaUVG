@@ -19,7 +19,9 @@ router.get('/', async (req, res) => {
   try {
     const aux = await pool.query(`
       SELECT *
-      FROM binnacle;
+      FROM binnacle
+      WHERE username IS NOT NULL
+      ORDER BY datee DESC, timee DESC;
     `)
 
     history = aux.rows

@@ -37,8 +37,8 @@ router.post('/album', async (req, res) => {
       UPDATE album SET 
       albumname = $1, 
       author = $2, 
-      release = $3,
-      WHERE albumid = $5;
+      release = $3
+      WHERE albumid = $4;
     `, [albumname, author, release, albumid])
 
     response.status = 'DONE'
@@ -236,14 +236,36 @@ router.post('/artist/visibility', async (req, res) => {
     } = req.body
 
     await pool.query(`
+      BEGIN;
+    `)
+
+    await pool.query(`
       UPDATE artist SET 
       active = $1
       WHERE artistname = $2;
     `, [active, artist])
 
+    await pool.query(`
+      UPDATE album SET
+      active = $1
+      WHERE author = $2;
+    `, [active, artist])
+
+    await pool.query(`
+      UPDATE song SET
+      active = $1
+      WHERE author = $2;
+    `, [active, artist])
+
+    await pool.query(`
+      COMMIT;
+    `)
     response.status = 'DONE'
   } catch (error) {
     response.status = 'ERROR 202'
+    await pool.query(`
+      ROLLBACK;
+    `)
   } finally {
     res.json(response)
   }

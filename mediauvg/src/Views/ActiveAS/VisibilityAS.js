@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { useState } from 'react'
-import { useHistory} from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import './visibilityAS.css'
 import VisibilitySongs from '../../Components/Admin/ActiveSongs/activeSongs'
@@ -9,7 +9,10 @@ import Button from '../../Components/MediaButton'
 
 export default function VisibilityAS() {
   const history = useHistory()
+  const location = useLocation()
+
   const [stat, setStat] = useState(0)
+  const { username } = location.state
 
   // Para regresar al pasado
   const goBack = () => {
@@ -20,11 +23,11 @@ export default function VisibilityAS() {
     switch (stat) {
       case 1:
         return (
-          <VisibilitySongs />
+          <VisibilitySongs username={username} />
         )
       case 2:
         return (
-          <VisibilityAlbums />
+          <VisibilityAlbums username={username} />
         )
       default:
         return (<div></div>)

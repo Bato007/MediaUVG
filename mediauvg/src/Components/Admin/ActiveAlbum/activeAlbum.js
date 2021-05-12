@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router';
 
 import Table from '../AlbumTable'
 import Button from '../../MediaButton'
@@ -7,12 +6,11 @@ import Switch from '../Switch'
 
 import './activeAlbums.css'
 
-export default function ActiveAlbum() {
+export default function ActiveAlbum({ username }) {
   const [ album, setAlbum ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)
   const [ rows, setRows ] = useState([])
-  const location = useLocation()
 
   const onClick = (selected) => {
     setAlbum(selected)
@@ -59,18 +57,18 @@ export default function ActiveAlbum() {
     const data = { 
       albumid: album.albumid,
       active: album.active,
-      modifier: location.state.username,
+      modifier: username,
     }
 
     // Se actualiza la informacion
     fetch('http://localhost:3001/edit/album/visibility', 
-    {method: 'PUT', 
+    {method: 'POST', 
     body: JSON.stringify(data),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      if (out.status === '') {
+      if (out.status === 'DONE') {
         setAlbum({})
         setAction(!action)
       }

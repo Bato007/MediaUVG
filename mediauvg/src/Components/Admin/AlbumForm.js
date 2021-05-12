@@ -56,7 +56,7 @@ export default function AlbumForm({ form }) {
               placeholder={''}
               limit={20}
               type='text'
-              value={album.release}
+              value={album.release.substring(0, 10)}
             />          
             <Button 
               onClick={updateAlbum}
@@ -105,8 +105,6 @@ export default function AlbumForm({ form }) {
       if (out.status === '') {
         setAlbum({})
         setAction(!action)
-      } else {
-        console.log('No Update')
       }
     })
 
@@ -123,8 +121,6 @@ export default function AlbumForm({ form }) {
       if (out.status === '') {
         setAlbum({})
         setAction(!action)
-      } else {
-        console.log('no se borro')
       }
     })
   }

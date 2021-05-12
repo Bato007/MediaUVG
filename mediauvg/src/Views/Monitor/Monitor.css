@@ -1,4 +1,7 @@
 .backMonitor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;  
     overflow-x: hidden;
     background: linear-gradient(to bottom, #021B79, #0575E6); 
@@ -10,7 +13,20 @@
     margin-left: 50px;
 }
 
+.monitors_containe_create {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: mintcream;
+  border-radius: 25px;
+  padding: 30px;
+}
+
 .backbutton{
+    position: fixed;
+    top: 10px;
+    left: 10px;
     font-family: "Bahnschrift";
     font-weight: bold;
     font-size: 15px;
@@ -30,7 +46,6 @@
     justify-content: center;
     flex-direction: column;
     margin-left: 35px;
-    background-color: #0575E6;
     width: 600px;
     height: 400px;
     border-radius: 15px;
@@ -55,6 +70,7 @@
     margin: 0px;
     margin-left: 40px;
 }
+
 .tituloMonitor {
     font-family: "magneto";
     font-size: 40px;
@@ -65,7 +81,6 @@
     margin-right: 40px;
     padding-left: 30px;
     border-radius: 15px;
-    background-color: #0575E6;
 }
 .cuadro {
     height: 350px;

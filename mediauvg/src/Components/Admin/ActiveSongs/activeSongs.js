@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router';
 
 import Table from '../SongTable'
 import Button from '../../MediaButton'
@@ -7,12 +6,11 @@ import Switch from '../Switch'
 
 import './activeSong.css'
 
-export default function ActiveSongs() {
+export default function ActiveSongs({ username }) {
   const [ song, setSong ] = useState({})
   const [ action, setAction ] = useState(false)
   const [ page, setPage ] = useState(0)
   const [ rows, setRows ] = useState([])
-  const location = useLocation()
 
   const onClick = (selected) => {
     setSong(selected)
@@ -62,19 +60,18 @@ export default function ActiveSongs() {
     const data = { 
       songid: song.songid,
       active: song.active,
-      modifier: location.state.username,
+      modifier: username,
     }
 
     // Se actualiza la informacion
     fetch('http://localhost:3001/edit/song/visibility', 
-    {method: 'PUT', 
+    {method: 'POST', 
     body: JSON.stringify(data),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
     .then((out) => {
-      console.log(out)
-      if (out.status === '') {
+      if (out.status === 'DONE') {
         setSong({})
         setAction(!action)
       }

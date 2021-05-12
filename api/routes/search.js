@@ -118,6 +118,47 @@ router.get('/artist', async (req, res) => {
   }
 })
 
+router.get('/freeuser', async (req, res) => {
+  try {
+    const freeusers = await pool.query(`
+      SELECT username, active
+      FROM (swapuser LEFT JOIN freeuser USING(username))
+      WHERE admin = false
+      AND active IS NOT null;    
+    `)
+    res.json(freeusers.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
+router.get('/freeuser', async (req, res) => {
+  try {
+    const freeusers = await pool.query(`
+      SELECT username, active
+      FROM (swapuser LEFT JOIN freeuser USING(username))
+      WHERE admin = false
+      AND active IS NOT null;    
+    `)
+    res.json(freeusers.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
+router.get('/premium', async (req, res) => {
+  try {
+    const premium = await pool.query(`
+      SELECT username
+      FROM (swapuser NATURAL JOIN premiumuser)
+      WHERE admin = false; 
+    `)
+    res.json(premium.rows)
+  } catch (error) {
+    console.error(error.messasge)
+  }
+})
+
 router.post('/playlist', async (req, res) => {
   try {
     const { username } = req.body
