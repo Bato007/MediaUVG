@@ -12,7 +12,7 @@ export default function VisibilityAS() {
   const location = useLocation()
 
   const [stat, setStat] = useState(0)
-  //const { username } = location.state
+  const { username } = location.state
 
   // Para regresar al pasado
   const goBack = () => {
@@ -23,11 +23,11 @@ export default function VisibilityAS() {
     switch (stat) {
       case 1:
         return (
-          <VisibilitySongs /*username={username}*/ />
+          <VisibilitySongs username={username} />
         )
       case 2:
         return (
-          <VisibilityAlbums /*username={username}*/ />
+          <VisibilityAlbums username={username} />
         )
       default:
         return (<div></div>)

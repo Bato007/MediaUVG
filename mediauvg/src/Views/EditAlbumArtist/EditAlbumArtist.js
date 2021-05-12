@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import './EditAlbumArtist.css'
-import Album from '../../Views/AdminAlbum/Album'
+import Album from '../../Components/Admin/EditAlbum/editeAlbum'
 import Song from '../../Views/AdminSong/Song'
 import Button from '../../Components/MediaButton'
 

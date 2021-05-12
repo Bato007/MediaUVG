@@ -11,7 +11,6 @@ const router = express.Router()
  *  albumname: 'hola',
  *  author: 'ejemplo',
  *  release: '24-02-2000',
- *  active: false,
  * }
  * Se respondera con el siguiente formato:
  * {
@@ -28,7 +27,7 @@ router.post('/album', async (req, res) => {
     const {
       albumid, albumname, author, release,
     } = req.body
-
+    console.log(req.body)
     await pool.query(`
       BEGIN;  
     `)
