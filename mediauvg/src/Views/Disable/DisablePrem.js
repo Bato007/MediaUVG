@@ -46,7 +46,7 @@ export default function DisableFree() {
     .then((out) => {
       setPremUsers(out)
     })
-  }, [])
+  }, [active])
 
   return (
     <div className="disback">
