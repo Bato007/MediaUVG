@@ -21,7 +21,7 @@ export default function Admin() {
   }
 
   const adminAlbum = () => {
-    history.push('/Admin/EditarAlbum')
+    history.push('/Admin/EditAlbumArtist', location.state)
   }
 
   const adminArtist = () => {
@@ -67,13 +67,8 @@ export default function Admin() {
               clase="botonAdmin"
             />
             <Button 
-              text='Administrar Album'
+              text='Editar Album/Artista'
               onClick={adminAlbum}
-              clase="botonAdmin"
-            />
-            <Button 
-              text='Administrar Artista'
-              onClick={adminArtist}
               clase="botonAdmin"
             />
             <Button 
