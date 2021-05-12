@@ -15,17 +15,10 @@ export default function Admin() {
     history.push('/')
   }
   
-  // Para cambiar de form 
-  const adminSong = () => {
-    history.push('/Admin/Song', location.state)
-  }
+  
 
   const adminAlbum = () => {
     history.push('/Admin/EditAlbumArtist', location.state)
-  }
-
-  const adminArtist = () => {
-    setForm('artist')
   }
 
   const visibilityAS = () => {
@@ -61,11 +54,6 @@ export default function Admin() {
         <div id="navegador">
             
           <ul>
-            <Button 
-              text='Administrar Canción'
-              onClick={adminSong}
-              clase="botonAdmin"
-            />
             <Button 
               text='Editar Album/Artista'
               onClick={adminAlbum}

@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import './EditAlbumArtist.css'
 import Album from '../../Views/AdminAlbum/Album'
+import Song from '../../Views/AdminSong/Song'
 import Artist from '../../Views/AdminArtist/Artist'
 import Button from '../../Components/MediaButton'
 
@@ -29,6 +30,10 @@ export default function VisibilityAS() {
         return (
           <Artist /*username={username}*/ />
         )
+      case 3:
+          return (
+          <Song /*username={username}*/ />
+      )
       default:
         return (<div></div>)
     }
@@ -48,6 +53,11 @@ export default function VisibilityAS() {
           <Button
             onClick={() => setStat(2)}
             text='Editar Artista'
+            clase="edits_boton"
+          />
+          <Button
+            onClick={() => setStat(3)}
+            text='Editar Cancion'
             clase="edits_boton"
           />
           <Button
