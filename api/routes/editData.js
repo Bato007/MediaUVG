@@ -162,7 +162,7 @@ router.post('/song', async (req, res) => {
   }
   try {
     const {
-      songid, songname, songlink, author, albumname, genreList,
+      songid, songname, songlink, author, albumname, genres,
     } = req.body
 
     await pool.query(`
@@ -176,22 +176,20 @@ router.post('/song', async (req, res) => {
         FROM album 
         WHERE author = $3 
         AND albumname = $4), 
-      author = $3, 
-      WHERE songid = $6;
+      author = $3 
+      WHERE songid = $5;
     `, [songname, songlink, author, albumname, songid])
 
-    if (genreList.length > 1) {
-      // Borrando todos los generos de esa cancion
-      await pool.query(`
-        DELETE FROM genre
-        WHERE songid = $1
-      `, [songid])
+    // Borrando todos los generos de esa cancion
+    await pool.query(`
+      DELETE FROM genre
+      WHERE songid = $1
+    `, [songid])
 
-      // Agregando todos los generos de esa cancion
-      await pool.query(`
-        SELECT * FROM insert_all_genres ($1, $2);
-      `, [songid, genreList])
-    }
+    // Agregando todos los generos de esa cancion
+    await pool.query(`
+      SELECT * FROM insert_all_genres ($1, $2);
+    `, [songid, genres])
 
     await pool.query(`
           COMMIT;

@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import './EditAlbumArtist.css'
 import Album from '../../Views/AdminAlbum/Album'
-import Song from '../../Views/AdminSong/Song'
+import Song from '../../Components/Admin/EditSong/EditSong'
 import Button from '../../Components/MediaButton'
 
 export default function VisibilityAS() {

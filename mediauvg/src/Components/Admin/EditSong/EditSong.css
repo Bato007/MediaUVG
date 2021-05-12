@@ -1,0 +1,32 @@
+.highest_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.second_div {
+  background-color: mintcream;
+  border-radius: 25px;
+  padding: 30px;
+}
+
+.editbtn {
+  background-color: white;
+  border-radius: 15px;
+  outline: none;
+  padding: 10px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.editbtn:hover {
+  background-color: #4c65dd;
+}
+.editseccontainer{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 3px;
+}
