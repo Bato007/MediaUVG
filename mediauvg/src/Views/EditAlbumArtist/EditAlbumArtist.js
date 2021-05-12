@@ -2,9 +2,9 @@
 import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import './visibilityAS.css'
-import VisibilitySongs from '../../Components/Admin/ActiveSongs/activeSongs'
-import VisibilityAlbums from '../../Components/Admin/ActiveAlbum/activeAlbum'
+import './EditAlbumArtist.css'
+import Album from '../../Views/AdminAlbum/Album'
+import Artist from '../../Views/AdminArtist/Artist'
 import Button from '../../Components/MediaButton'
 
 export default function VisibilityAS() {
@@ -19,15 +19,15 @@ export default function VisibilityAS() {
     history.goBack()
   }
 
-  const selectStats = () => {
+  const selectEdits = () => {
     switch (stat) {
       case 1:
         return (
-          <VisibilitySongs /*username={username}*/ />
+          <Album /*username={username}*/ />
         )
       case 2:
         return (
-          <VisibilityAlbums /*username={username}*/ />
+          <Artist /*username={username}*/ />
         )
       default:
         return (<div></div>)
@@ -35,30 +35,30 @@ export default function VisibilityAS() {
   }
 
   return (
-      <div className="stats_back">
-        <div className="stats_cont">
-          <div className="stats_title">
-            Visibilidad 
+      <div className="edits_back">
+        <div className="edits_cont">
+          <div className="edits_title">
+            Album/Artista 
           </div>
           <Button
             onClick={() => setStat(1)}
-            text='Visibilidad Cancion'
-            clase="stats_boton"
+            text='Editar Album'
+            clase="edits_boton"
           /> 
           <Button
             onClick={() => setStat(2)}
-            text='Visibilidad Album'
-            clase="stats_boton"
+            text='Editar Artista'
+            clase="edits_boton"
           />
           <Button
             onClick={goBack}
             text='Atras'
-            clase="stats_boton"
+            clase="edits_boton"
           />
         </div>
-        <div className="stats_container">
-          <div className="stats_center">
-            {selectStats()}
+        <div className="edits_container">
+          <div className="edits_center">
+            {selectEdits()}
           </div>
         </div>
       </div> 

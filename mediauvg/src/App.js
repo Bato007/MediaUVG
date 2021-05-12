@@ -12,6 +12,7 @@ import Artist from './Views/Artist'
 import Play from './Views/Play';
 import Album from './Views/AdminAlbum/Album';
 import VisibilityAS from './Views/ActiveAS/VisibilityAS'
+import EditAlbumArtist from './Views/EditAlbumArtist/EditAlbumArtist'
 import VisibilityArtist from './Views/ActiveAuthor/VisibilityArtist'
 import assignMonitor from './Views/AssignMonitor/AssignMonitor'
 import Reportes from './Views/Statistics/Reportes';
@@ -47,6 +48,7 @@ export default function App() {
           <Route path = '/*/*/Monitores' component = {Monitor} />
           <Route path = '/*/Song' component = {Song} />
           <Route path = '/*/*/Visibility/AS' component = {VisibilityAS} />
+          <Route path = '/*/EditAlbumArtist' component = {EditAlbumArtist} />
           <Route path = '/*/*/Visibility/Artist' component = {VisibilityArtist} />
           <Route path = '/*/*/DisableFree' component = {DisableFree} />
           <Route path = '/*/*/DisablePrem' component = {DisablePrem} />
