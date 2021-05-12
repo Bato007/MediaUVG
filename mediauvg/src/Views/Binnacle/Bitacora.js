@@ -41,9 +41,9 @@ export default function Bitacora () {
             <h4 className="bitdata">OPERATION</h4>
             <h4 className="bitdata">MODIFICATION</h4>
           </div>
-          {bitacoraData.map((value) => {
+          {bitacoraData.map((value, index) => {
             return (
-              <div className="bitgrid lightblue" key={value.timee}>
+              <div className="bitgrid lightblue" key={index}>
                 <h4 className="bitdata">{value.username}</h4>
                 <h4 className="bitdata">{value.datee.substring(0,10)}</h4>
                 <h4 className="bitdata">{value.timee}</h4>

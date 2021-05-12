@@ -49,7 +49,6 @@ export default function CreateMonitor() {
 
   // CREAR UN MONITOR EN BASE A LA SELECCION DE UN USUARIO
   const createMonitor = () => {
-    console.log(checked)
     if (name === '')
       return
 

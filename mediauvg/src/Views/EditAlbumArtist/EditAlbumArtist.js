@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import './EditAlbumArtist.css'
-import Album from '../../Views/AdminAlbum/Album'
 import Song from '../../Components/Admin/EditSong/EditSong'
+import Album from '../../Components/Admin/EditAlbum/editeAlbum'
 import Button from '../../Components/MediaButton'
 
 export default function VisibilityAS() {
