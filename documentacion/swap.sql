@@ -693,7 +693,6 @@ CREATE INDEX I_user_binnacle ON binnacle(username);
 CREATE INDEX I_operation_binnacle ON binnacle(operation);
 
 --- PARTE DE LOS REPORTES 
-
 CREATE OR REPLACE FUNCTION get_sales_week(date, date) 
 	RETURNS TABLE (
 		weekly TIMESTAMP WITH TIME ZONE, 
@@ -723,7 +722,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_author_max(date, date, int) 
 	RETURNS TABLE (
 		author VARCHAR(50), 
-		sales INT
+		sales FLOAT
 	) AS $$
 DECLARE
 start_date ALIAS FOR $1;
@@ -731,14 +730,14 @@ final_date ALIAS FOR $2;
 max_authors ALIAS FOR $3;
 	BEGIN
 		RETURN QUERY (
-			SELECT song.author, SUM(P1.plays*winpercent) AS sales
+			SELECT song.author, SUM(P1.plays*winpercent)::FLOAT AS sales
 			FROM (song NATURAL JOIN 
 				(SELECT songid, reproduction.plays           
 				FROM reproduction
 				WHERE dia > start_date
 				AND dia < final_date) P1) 
 					INNER JOIN artist
-				ON artistname = author
+				ON artistname = song.author
 			GROUP BY song.author
 			ORDER BY sales DESC
 			LIMIT max_authors
@@ -756,7 +755,7 @@ start_date ALIAS FOR $1;
 final_date ALIAS FOR $2;
 	BEGIN
 		RETURN QUERY (
-			SELECT songgenre AS genre, SUM(plays*winpercent)
+			SELECT songgenre AS genre, SUM(plays*winpercent)::FLOAT
 			FROM ((genre NATURAL JOIN 
 				(SELECT songid, plays           
 				FROM reproduction

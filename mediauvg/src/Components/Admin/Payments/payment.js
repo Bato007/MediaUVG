@@ -22,7 +22,7 @@ export default function Payment({ data }) {
                 {value.author.charAt(0).toUpperCase() + value.author.slice(1)}
               </div>
               <div className="payment_item">{value.dia.substring(0,10)}</div>
-              <div className="payment_item">{value.payment}</div>
+              <div className="payment_item">{value.payment.toFixed(2)}</div>
             </div>
           )
         })}
