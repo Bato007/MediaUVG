@@ -9,6 +9,7 @@ export default function DisableFree() {
   const [userDeactivate, setUserDeactivate] = useState('')
   const history = useHistory()
   const location = useLocation()
+  const [active, setActive] = useState(true)
 
   const goBack = () => (
     history.goBack(location.state)
@@ -22,12 +23,13 @@ export default function DisableFree() {
     fetch("http://localhost:3001/edit/free", 
       {
         method: 'POST',
-        body: JSON.stringify({ userDeactivate }),
+        body: JSON.stringify({ username:userDeactivate, active:false }),
         headers: {'Content-Type': 'application/json'}
       }).then((res) => res.json())
       .catch((error) => console.log(error))
       .then((out) => {
-        console.log(out)
+        setActive(!active)
+        setUserDeactivate('')
       }
     )
   }
@@ -44,7 +46,7 @@ export default function DisableFree() {
     .then((out) => {
       setFreeUsers(out)
     })
-  }, [])
+  }, [active])
 
   return (
     <div className="disback">

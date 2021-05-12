@@ -9,6 +9,7 @@ export default function DisableFree() {
   const [userUnPremium, setUserUnPremium] = useState('')
   const history = useHistory()
   const location = useLocation()
+  const [active, setActive] = useState(true)
 
   const goBack = () => (
     history.goBack(location.state)
@@ -22,12 +23,13 @@ export default function DisableFree() {
     fetch("http://localhost:3001/edit/unpremium", 
       {
         method: 'POST',
-        body: JSON.stringify({ userUnPremium }),
+        body: JSON.stringify({ username:userUnPremium }),
         headers: {'Content-Type': 'application/json'}
       }).then((res) => res.json())
       .catch((error) => console.log(error))
       .then((out) => {
-        console.log(out)
+        setActive(!active)
+        setUserUnPremium('')
       }
     )
   }

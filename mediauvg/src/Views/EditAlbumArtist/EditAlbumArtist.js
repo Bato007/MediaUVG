@@ -5,7 +5,6 @@ import { useHistory, useLocation } from 'react-router-dom'
 import './EditAlbumArtist.css'
 import Album from '../../Views/AdminAlbum/Album'
 import Song from '../../Views/AdminSong/Song'
-import Artist from '../../Views/AdminArtist/Artist'
 import Button from '../../Components/MediaButton'
 
 export default function VisibilityAS() {
@@ -13,7 +12,7 @@ export default function VisibilityAS() {
   const location = useLocation()
 
   const [stat, setStat] = useState(0)
-  //const { username } = location.state
+  const { username } = location.state
 
   // Para regresar al pasado
   const goBack = () => {
@@ -24,15 +23,11 @@ export default function VisibilityAS() {
     switch (stat) {
       case 1:
         return (
-          <Album /*username={username}*/ />
-        )
-      case 2:
-        return (
-          <Artist /*username={username}*/ />
+          <Album username={username} />
         )
       case 3:
           return (
-          <Song /*username={username}*/ />
+          <Song username={username} />
       )
       default:
         return (<div></div>)
@@ -43,16 +38,11 @@ export default function VisibilityAS() {
       <div className="edits_back">
         <div className="edits_cont">
           <div className="edits_title">
-            Album/Artista 
+            Album/Cancion 
           </div>
           <Button
             onClick={() => setStat(1)}
             text='Editar Album'
-            clase="edits_boton"
-          /> 
-          <Button
-            onClick={() => setStat(2)}
-            text='Editar Artista'
             clase="edits_boton"
           />
           <Button

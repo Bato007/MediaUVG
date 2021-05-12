@@ -55,7 +55,7 @@ export default function Admin() {
             
           <ul>
             <Button 
-              text='Editar Album/Artista'
+              text='Editar Album/Cancion'
               onClick={adminAlbum}
               clase="botonAdmin"
             />
