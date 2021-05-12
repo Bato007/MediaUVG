@@ -87,6 +87,21 @@ export default function Admin() {
               onClick={binnacleSet}
               clase="botonAdmin"
             />
+            <Button
+              text='Borrar Cancion'
+              onClick={() => setForm(1)}
+              clase="botonAdmin"
+            />
+            <Button
+              text='Borrar Album'
+              onClick={() => setForm(2)}
+              clase="botonAdmin"
+            />
+            <Button
+              text='Borrar Artista'
+              onClick={() => setForm(3)}
+              clase="botonAdmin"
+            />
             <Button 
               text='Cerrar sesion'
               onClick={logOut}

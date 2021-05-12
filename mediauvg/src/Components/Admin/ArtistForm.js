@@ -42,7 +42,7 @@ export default function ArtistForm({ form }) {
   const deleteArtist = () => {
     fetch('http://localhost:3001/admin/artist', 
     {method: 'DELETE', 
-    body: JSON.stringify({ ...artist, modifier: location.satate.username }),
+    body: JSON.stringify({ ...artist, modifier: location.state.username }),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))

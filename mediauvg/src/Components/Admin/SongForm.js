@@ -40,7 +40,7 @@ export default function SongFomr({ form }) {
   const deleteSong = () => {
     fetch('http://localhost:3001/admin/song', 
     {method: 'DELETE', 
-    body: JSON.stringify({ ...song, modifier: location.satate.username }),
+    body: JSON.stringify({ ...song, modifier: location.state.username }),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))

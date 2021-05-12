@@ -42,7 +42,7 @@ export default function AlbumForm({ form }) {
   const deleteAlbum = () => {
     fetch('http://localhost:3001/admin/album', 
     {method: 'DELETE', 
-    body: JSON.stringify({ ...album, modifier: location.satate.username }),
+    body: JSON.stringify({ ...album, modifier: location.state.username }),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))

@@ -19,7 +19,6 @@ import Monitor from './Views/Monitor/Monitores'
 import Monitoreo from './Views/Monitoreo/Monitoreo'
 import DisableFree from './Views/Disable/DisableFree'
 import DisablePrem from './Views/Disable/DisablePrem'
-import Song from './Views/AdminSong/Song'
 export default function App() {
 
   return (
@@ -43,7 +42,6 @@ export default function App() {
           <Route path = '/*/*/Bitacora' component = {Bitacora} />
           <Route path = '/*/*/Reportes' component = {Reportes} />
           <Route path = '/*/*/Monitores' component = {Monitor} />
-          <Route path = '/*/Song' component = {Song} />
           <Route path = '/*/*/Visibility/AS' component = {VisibilityAS} />
           <Route path = '/*/EditAlbumArtist' component = {EditAlbumArtist} />
           <Route path = '/*/*/EditAlbumArtist' component = {EditAlbumArtist} />
