@@ -48,6 +48,7 @@ const headCells = [
   { id: 'albumname', numeric: false, disablePadding: false, label: 'Album' },
   { id: 'author', numeric: false, disablePadding: false, label: 'Autor' },
   { id: 'songlink', numeric: false, disablePadding: false, label: 'Link' },
+  { id: 'genres', numeric: false, disablePadding: false, label: 'Generos' },
 ];
 
 // Se crean las columnas con la informacion de 'const headCells', junto con las flechas 
@@ -219,7 +220,8 @@ export default function SongTable({
                 release: '',
                 songid: -1,
                 songlink: '',
-                songname: ''
+                songname: '',
+                genres: ''
             });
         }
     };
@@ -297,6 +299,7 @@ export default function SongTable({
                       <TableCell className={activeStyle} align="center">{row.albumname}</TableCell>
                       <TableCell className={activeStyle} align="center">{row.author}</TableCell>
                       <TableCell className={activeStyle} align="center">{row.songlink}</TableCell>
+                      <TableCell className={activeStyle} align="center">{row.genres}</TableCell>
                   </TableRow>
                 )
               })}

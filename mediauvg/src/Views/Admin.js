@@ -17,7 +17,7 @@ export default function Admin() {
   
   // Para cambiar de form 
   const adminSong = () => {
-    setForm('song')
+    history.push('/Admin/Song', location.state)
   }
 
   const adminAlbum = () => {
