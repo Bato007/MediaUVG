@@ -27,7 +27,6 @@ router.post('/album', async (req, res) => {
     const {
       albumid, albumname, author, release,
     } = req.body
-    console.log(req.body)
     await pool.query(`
       BEGIN;  
     `)

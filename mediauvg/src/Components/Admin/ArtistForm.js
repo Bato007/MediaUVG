@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 
 import Table from './ArtistTable'
 import Button from '../MediaButton'
-import Update from '../MediaUpdate'
 import '../songForm.css';
 import { useLocation } from 'react-router';
 
@@ -17,38 +16,14 @@ export default function ArtistForm({ form }) {
     setArtist(selected)
   }
 
-  const onSetArtistName = (text) => {
-    setArtist({
-      ...artist,
-      artistname: text
-    })
-  }
-
-
   const onSelected = () => {
     if(artist.username !== undefined && artist.username !== '') return (
       <div>
-        <div id="navegador">
-          <ul>
-            <Update 
-              onChange={onSetArtistName}
-              placeholder={''}
-              limit={20}
-              type='text'
-              value={artist.artistname}
-            />      
-            <Button 
-              onClick={updateArtist}
-              clase="button"
-              text='Actualizar'
-            />
-            <Button
-              onClick={deleteArtist}
-              text='Eliminar'
-              clase="button"
-            />
-          </ul>
-        </div>
+        <Button
+          onClick={deleteArtist}
+          text='Eliminar'
+          clase="button"
+        />
       </div>
     )
   }
@@ -64,33 +39,10 @@ export default function ArtistForm({ form }) {
     })
   }, [form, action])
 
-  const updateArtist = () => {
-    const data = { 
-      username: artist.username,
-      artistname: artist.artistname,
-      modifier: location.state.username,
-    }
-
-    // Se actualiza la informacion
-    fetch('http://localhost:3001/admin/artist', 
-    {method: 'PUT', 
-    body: JSON.stringify(data),
-    headers:{'Content-Type': 'application/json'}})
-    .then((res) => res.json())
-    .catch((error) =>  console.error('Error', error))
-    .then((out) => {
-      if (out.status === '') {
-        setArtist({})
-        setAction(!action)
-      }
-    })
-
-  }
-
   const deleteArtist = () => {
     fetch('http://localhost:3001/admin/artist', 
     {method: 'DELETE', 
-    body: JSON.stringify(artist),
+    body: JSON.stringify({ ...artist, modifier: location.satate.username }),
     headers:{'Content-Type': 'application/json'}})
     .then((res) => res.json())
     .catch((error) =>  console.error('Error', error))
