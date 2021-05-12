@@ -14,8 +14,6 @@ export default function Admin() {
   const logOut = () => {
     history.push('/')
   }
-  
-  
 
   const adminAlbum = () => {
     history.push('/Admin/EditAlbumArtist', location.state)
@@ -96,7 +94,6 @@ export default function Admin() {
             />
           </ul>
         </div>  
-      
       <Form 
         form={form}
       />
