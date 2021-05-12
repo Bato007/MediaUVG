@@ -49,6 +49,7 @@ export default function App() {
           <Route path = '/*/Song' component = {Song} />
           <Route path = '/*/*/Visibility/AS' component = {VisibilityAS} />
           <Route path = '/*/EditAlbumArtist' component = {EditAlbumArtist} />
+          <Route path = '/*/*/EditAlbumArtist' component = {EditAlbumArtist} />
           <Route path = '/*/*/Visibility/Artist' component = {VisibilityArtist} />
           <Route path = '/*/*/DisableFree' component = {DisableFree} />
           <Route path = '/*/*/DisablePrem' component = {DisablePrem} />

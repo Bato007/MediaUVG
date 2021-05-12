@@ -14,19 +14,17 @@ export default function Monitoreo () {
   )
 
   const monitorCheck = (value) => {
-    if (value === 1){
-      return(
-        <div>1</div>
-      )
-    }
+    if (value === 1)(
+      history.push('/Home/EditAlbumArtist', location.state)
+    )
     if (value === 2)(
       history.push('/Home/Monitoreo/Visibility/AS', location.state)
     )
     if (value === 3)(
-      history.push('/Home/Monitoreo/DisableFree', location.state)
+      history.push('/Home/DisableFree', location.state)
     )
     if (value === 4)(
-      history.push('/Home/Monitoreo/DisablePrem', location.state)
+      history.push('/Home/DisablePrem', location.state)
     )
     if (value === 5)(
       history.push('/Home/Monitoreo/Visibility/Artist', location.state)

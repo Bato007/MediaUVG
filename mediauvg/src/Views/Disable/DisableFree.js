@@ -17,6 +17,7 @@ export default function DisableFree() {
   const deactivate = () => {
     if(userDeactivate === ''){
       alert('No se ha seleccionado un usuario')
+      return
     }
     fetch("http://localhost:3001/edit/free", 
       {
