@@ -38,7 +38,7 @@ CREATE TABLE premiumUser (
 	
 CREATE TABLE freeUser (
 	username VARCHAR(30),
-  	active BOOL,
+  active BOOL,
 	playbackLeft INT, 
 	lastPlay DATE,
 	CONSTRAINT fk_free_user FOREIGN KEY (username)
@@ -53,7 +53,7 @@ CREATE TABLE artist (
 	playbackThreeMonths INT,
 	playbackSixMonths INT,
 	startRecord DATE,
-  	active BOOL,
+  active BOOL,
 	winpercent FLOAT,
 	CONSTRAINT fk_artist_user FOREIGN KEY (username)
 	REFERENCES swapUser(username) 
