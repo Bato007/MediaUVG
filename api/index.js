@@ -10,6 +10,8 @@ const addRouter = require('./routes/addTable')
 const editRouter = require('./routes/editData')
 const binnacleRouter = require('./routes/binnacle')
 const monitorsRouter = require('./routes/monitors')
+const simulationRouter = require('./routes/simulation')
+const noRelationalRouter = require('./routes/noRelational')
 
 const pool = require('./database')
 
@@ -61,6 +63,8 @@ app.use('/add', addRouter)
 app.use('/edit', editRouter)
 app.use('/binnacle', binnacleRouter)
 app.use('/monitors', monitorsRouter)
+app.use('/simulation', simulationRouter)
+app.use('/mongo', noRelationalRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

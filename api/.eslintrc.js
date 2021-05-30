@@ -21,6 +21,7 @@ module.exports = {
     semi: ['error', 'never'],
     'no-console': 0,
     'no-throw-literal': 0,
+    'no-unused-vars': 0,
     'linebreak-style': 0,
   },
 }

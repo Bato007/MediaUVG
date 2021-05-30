@@ -146,6 +146,18 @@ CREATE TABLE binnacle (
 	ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE userplay (
+	username VARCHAR(30),
+	songid INT,
+	fecha DATE,
+	CONSTRAINT fk_userplay_swapuser FOREIGN KEY (username)
+	REFERENCES swapuser(username) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_song FOREIGN KEY (songId)
+	REFERENCES song(songId) 
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 INSERT INTO monitor (name) VALUES
   ('default'),
   ('monitor 1'),
@@ -183,6 +195,7 @@ INSERT INTO monitoroperation (monitor, operationid) VALUES
   ('op', 8);
 
 INSERT INTO swapUser (username, password, name,  playback, admin, monitor) VALUES 
+  	('test', 'test', 'test', 0, false, 'default'),
 	('bato007', 'hola123', 'brandon', 2, false, 'op'),
 	('requetetin', 'quezo', 'martin', 5, false, 'default'),
 	('diego586', 'quepex', 'diego', 3, false, 'monitor 1'),
@@ -205,7 +218,8 @@ INSERT INTO swapUser (username, password, name,  playback, admin, monitor) VALUE
 	('swap', 'swapirte', 'swap', 4, true, 'monitor 2');
 	
 INSERT INTO premiumUser (username, subscription) VALUES
-	('bato007', '2021-03-16'),
+	('test', '2000-01-01'),
+  	('bato007', '2021-03-16'),
 	('requetetin', '2021-02-12'),
 	('diego586', '2021-01-01'),
 	('admin', '2020-12-21'),
@@ -230,7 +244,8 @@ INSERT INTO freeUser (username, playbackLeft, lastPlay, active) VALUES
 	('swap', 3, '2021-03-16', true);
 	
 INSERT INTO artist (username, artistName, playbackThreeMonths, playbackSixMonths, startRecord, active, winpercent) VALUES
-	('bato007', 'batoux', 234, 125, '2020-09-01', true, 0.05),
+	('test', 'test', 0, 0, '2001-01-01', true, 0.01),
+  	('bato007', 'batoux', 234, 125, '2020-09-01', true, 0.05),
 	('pepe22', 'el pepe', 2332, 1253, '2020-08-01', true, 0.01),
 	('diego586', 'xdiegox', 4322, 1125, '2020-08-23', true, 0.05),
 	('ac/dc', 'ac/dc', 500, 250, '1994-05-05', true, 0.01),
@@ -285,7 +300,8 @@ INSERT INTO album (albumName, author, release, active) VALUES
 	('caraluna', 'bacilos', '2002-07-16', true),
 	('bacilos', 'bacilos', '2005-07-05', true),
 	('recovery', 'eminem', '2010-06-18', true),
-	('curtain call: the hits', 'eminem', '2005-12-06', true);
+	('curtain call: the hits', 'eminem', '2005-12-06', true),
+  ('test', 'test', '2000-01-01', true);
 
 INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALUES 
 	('retaul', true, '3AzjcOeAmA57TIOr9zF1ZW', 1, 'batoux', 3809),
@@ -845,3 +861,69 @@ z INT;
 		END LOOP;	
 	END;
 $$ LANGUAGE plpgsql;
+
+------------------- PARA LA SIMULACION --------------------
+CREATE OR REPLACE FUNCTION create_songs(int) 
+	RETURNS TABLE (
+		songid INT 
+	) AS $$
+DECLARE
+amount ALIAS FOR $1;
+x INT;
+	BEGIN	
+		-- Verificando si hay lugar para hacer update al dia
+		SELECT COUNT(*) INTO x 
+		FROM song;
+		
+		FOR i IN 1..amount LOOP
+		  INSERT INTO song (songName, active, songLink, albumId, author, timesplayed) VALUES
+			('test-song', true, 'test', 25, 'test', 0);
+		END LOOP;
+
+		RETURN QUERY (
+		  SELECT song.songid
+		  FROM song 
+		  OFFSET x
+		);
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_genres(int[], text[], int) RETURNS VOID AS $$
+DECLARE
+ids ALIAS FOR $1;
+genres ALIAS FOR $2;
+arr_length ALIAS FOR $3;
+x INT;
+	BEGIN
+		FOR i IN 1..arr_length LOOP
+		  INSERT INTO genre VALUES
+			(ids[i], genres[i]);
+		END LOOP;
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION simulate_plays(int[], text[], int, date) RETURNS VOID AS $$
+DECLARE
+songsids ALIAS FOR $1;
+usernames ALIAS FOR $2;
+arr_size ALIAS FOR $3;
+fecha ALIAS FOR $4;
+x INT;
+w text;
+	BEGIN
+		FOR i IN 1..arr_size LOOP
+		  	INSERT INTO userplay (username, songid, fecha) VALUES
+				(usernames[i], songsids[i], fecha);
+			SELECT * INTO w FROM add_play(songsids[i]);
+		END LOOP;
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE VIEW user_plays AS
+	(SELECT fecha, username, songid, songname, songgenre, COUNT(*)
+	 FROM userplay
+	 NATURAL JOIN 
+		(SELECT songid, songname, songgenre 
+	 	FROM song NATURAL JOIN (SELECT DISTINCT * FROM genre) X) X2
+		GROUP BY fecha, username, songid, songname, songgenre);
+
