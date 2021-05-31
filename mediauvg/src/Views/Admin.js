@@ -47,6 +47,10 @@ export default function Admin() {
     history.push('/Admin/Simulaciones', location.state)
   }
 
+  const promociones = () => {
+    history.push('/Admin/Promociones', location.state)
+  }
+
   return (
     <div className="fondoP">
         <div id="titulo">
@@ -109,6 +113,11 @@ export default function Admin() {
             <Button
               text='Simulaciones'
               onClick={simulacionSet}
+              clase="botonAdmin"
+            />
+            <Button
+              text='Promociones'
+              onClick={promociones}
               clase="botonAdmin"
             />
             <Button 
