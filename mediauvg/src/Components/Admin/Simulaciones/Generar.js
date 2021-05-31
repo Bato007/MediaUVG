@@ -6,23 +6,36 @@ export default function Generar() {
   const [date, setDate] = useState('')
   const [tracks, setTracks] = useState('')
   const [reproductions, setReproductions] = useState('')
+  const [error, setError] = useState('')
 
   const sendInfo = () => {
-    const data = {
-      date: date,
-      tracks: tracks,
-      reproductions: reproductions
+    if (date !== '' && tracks !== '' && reproductions !== '') {
+      setError('')
+      const data = {
+        date: date,
+        tracks: tracks,
+        reproductions: reproductions
+      }
+  
+      fetch('http://localhost:3001/simulation/create',
+      {method: 'POST',
+      body: JSON.stringify(data),
+      headers:{'Content-type': 'application/json'}})
+      .then((res) => res.json())
+      .catch((error) => console.error('Error', error))
+      .then((out) => {
+        console.log(out)
+      })
+    } if (date === '') {
+      setError('No se a ingresado fecha')
+      return
+    } if (tracks === '') {
+      setError('No se ha ingresado cantidad de tracks')
+      return
+    } if (reproductions === '') {
+      setError('No se ha definido la cantida de reproducciones')
+      return
     }
-
-    fetch('http://localhost:3001/simulation/create',
-    {method: 'POST',
-    body: JSON.stringify(data),
-    headers:{'Content-type': 'application/json'}})
-    .then((res) => res.json())
-    .catch((error) => console.error('Error', error))
-    .then((out) => {
-      console.log(out)
-    })
   }
 
   return (
@@ -50,6 +63,9 @@ export default function Generar() {
         text= "Generar"
         clase= "gen_btn"
       />
+      <div className="gen_error">
+        {error}
+      </div>
     </div>
   )
 }
