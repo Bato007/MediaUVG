@@ -43,6 +43,10 @@ export default function Admin() {
     history.push('/Admin/Bitacora', location.state)
   }
 
+  const simulacionSet = () => {
+    history.push('/Admin/Simulaciones', location.state)
+  }
+
   return (
     <div className="fondoP">
         <div id="titulo">
@@ -100,6 +104,11 @@ export default function Admin() {
             <Button
               text='Borrar Artista'
               onClick={() => setForm(3)}
+              clase="botonAdmin"
+            />
+            <Button
+              text='Simulaciones'
+              onClick={simulacionSet}
               clase="botonAdmin"
             />
             <Button 
