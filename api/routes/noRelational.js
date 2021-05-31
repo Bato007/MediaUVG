@@ -109,10 +109,11 @@ router.post('/migrate', async (req, res) => {
         await usersDC.insertOne(newEntry)
       }
     })
+    res.json({ message: 'DONE' })
   } catch (error) {
     console.log(error.message)
+    res.json({ message: 'ERROR' })
   }
-  res.json({ message: 'adios perro' })
 })
 
 /**
@@ -226,10 +227,44 @@ router.post('/migrate/from', async (req, res) => {
         }
       })
     })
+    res.json({ message: 'DONE' })
   } catch (error) {
     console.log(error.message)
+    res.json({ message: 'ERROR' })
   }
-  res.json({ message: 'adios perro' })
+})
+
+router.post('/report', async (req, res) => {
+  const schema = Joi.object({
+    date: Joi.date().iso().required(),
+  })
+
+  const validation = schema.validate(req.body)
+  if (validation.error) {
+    const { message } = validation.error.details[0]
+    res.status(400).json({ message })
+  }
+  const { date } = req.body
+
+  try {
+    await client.connect()
+    const usersDC = client.db('swap').collection('users')
+
+    // Obtener 10 usuarios
+    const randomUsers = await usersDC.aggregate([
+      { $sample: { size: 10 } },
+    ])
+    console.log(randomUsers)
+    const usernames = []
+    randomUsers.forEach((user) => {
+      usernames.push(user.username)
+    })
+
+    res.json({ message: 'DONE' })
+  } catch (error) {
+    console.log(error.message)
+    res.json({ message: 'ERROR' })
+  }
 })
 
 module.exports = router
