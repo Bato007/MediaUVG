@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
+import Generar from '../../Components/Admin/Simulaciones/Generar'
+import Existente from '../../Components/Admin/Simulaciones/Existente'
 import Button from '../../Components/MediaButton'
 import './Simulaciones.css'
 
@@ -17,7 +19,7 @@ export default function Simulaciones() {
         return (
           <div className="sim_cont">
             <div className="sim_center">
-              Hola
+              <Existente />
             </div>
           </div>
         )
@@ -25,7 +27,7 @@ export default function Simulaciones() {
         return (
           <div className="sim_cont">
             <div className="sim_center">
-              Adios
+              <Generar />
             </div>
           </div>
         )
