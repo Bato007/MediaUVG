@@ -20,6 +20,7 @@ import Monitoreo from './Views/Monitoreo/Monitoreo'
 import DisableFree from './Views/Disable/DisableFree'
 import DisablePrem from './Views/Disable/DisablePrem'
 import Simulaciones from './Views/Simulaciones/Simulaciones'
+import Promociones from './Views/Promocion/Promocion'
 export default function App() {
 
   return (
@@ -52,6 +53,7 @@ export default function App() {
           <Route path = '/*/DisableFree' component = {DisableFree} />
           <Route path = '/*/DisablePrem' component = {DisablePrem} />
           <Route path = '/*/Simulaciones' component = {Simulaciones} />
+          <Route path = '/*/Promociones' component = {Promociones} />
           <Route path = '*' component = {() => "404 NOT FOUND"} />
         </Switch>
       </BrowserRouter>
