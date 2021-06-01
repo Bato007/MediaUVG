@@ -11,6 +11,13 @@ export default function Generar() {
 
   const sendInfo = () => {
     if (date !== '' && tracks !== '' && reproductions !== '') {
+      if (parseInt(tracks, 10) < 1) {
+        setError('Ingrese valor de tracks mayor a 0')
+        return
+      } if (parseInt(reproductions, 10) < 1) {
+        setError('Ingrese valor de reproducciones mayor a 0')
+        return
+      }
       setError('')
       const data = {
         date: date,
