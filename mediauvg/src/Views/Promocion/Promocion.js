@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import Button from '../../Components/MediaButton'
 import './Promocion.css'
-import Chart from '../../Components/Admin/Charts/Chart'
 import MediaUpdate from '../../Components/MediaUpdate'
 import MediaButton from '../../Components/MediaButton'
 
@@ -10,78 +9,78 @@ export default function Promocion() {
   const history = useHistory()
   const [date, setDate] = useState('')
   const [prom, setProm] = useState(0)
-  const [data, setData] = useState([])
-  const [flag, setFlag] = useState(false)
 
   const goBack = () => {
     history.goBack()
   }
 
-  const getChart = () => {
-    if (flag) {
-      return (
-        <Chart 
-          title='Mejores Generos'
-          chartData={data}
-        />
-      )
-    } 
-    return (
-      <div></div>
-    )
-    }
+
     // Obtiene las estadisticas
-  const getStats = () => {
-    fetch("http://localhost:3001/stats/top_generos", {
-      method: 'POST',
-      body: JSON.stringify({ date }), 
-      headers: {'Content-Type': 'application/json'}
-    }).then((res) => res.json())
-    .catch((error) => console.log(error))
-    .then((out) => {
-      const genre = []
-      const sales = []
-      // eslint-disable-next-line array-callback-return
-      out.map((value) => {
-        genre.push(value.genre)
-        sales.push(value.sales)
+  const getDay = () => {
+    //console.log("fecha",date)
+    if (date !== '' ) {
+      
+      const data = {
+        date: date,
+      }
+      console.log("fecha",data)
+      fetch('http://localhost:3001/mongo/migrate',
+      {method: 'POST',
+      body: JSON.stringify(data),
+      headers:{'Content-type': 'application/json'}})
+      .then((res) => res.json())
+      .catch((error) => console.error('Error', error))
+      .then((out) => {
+        console.log(out)
       })
-      setData({
-        labels: genre,
-        datasets: [
-          {
-            label: 'Sales',
-            data: sales,
-            backgroundColor: ['#099FBD', '#06677A', '#0CD2FA', '#088198', '#0BBDE0']
-          }
-        ]
-      })
-    })
-    setFlag(true)
+    } 
+    setProm(4)
+    setDate('')
   }
+    // Obtiene las estadisticas
+    const getByDate = () => {
+      //console.log("fecha",date)
+      if (date !== '' ) {
+        
+        const data = {
+          date: date,
+        }
+        console.log("fecha",data)
+        fetch('http://localhost:3001/mongo/migrate/from',
+        {method: 'POST',
+        body: JSON.stringify(data),
+        headers:{'Content-type': 'application/json'}})
+        .then((res) => res.json())
+        .catch((error) => console.error('Error', error))
+        .then((out) => {
+          console.log(out)
+        })
+      } 
+      setProm(4)
+      setDate('')
+    }
   const selectProm = () => {
     switch (prom) {
         case 1:
             return (
                 <div className="prom_container">
                     <div className="prom_title">
-                    Solo ese dia
+                    Solo un dia
                     </div>
                     <div className="prom_temp">
                         <MediaUpdate
                             value={date}
                             type="text"
-                            placeholder="Doa: YYYY-MM-DD"
+                            placeholder="Dia: YYYY-MM-DD"
                             limit={10}
                             onChange={setDate}
                         />
                     </div>
                     <MediaButton 
-                        onClick={getStats}
-                        text='Obtener Valores'
+                        onClick={getDay}
+                        text='Generar'
                         clase="prom_button"
                     />
-            {getChart()}
           </div>
             )
         case 2:
@@ -100,11 +99,10 @@ export default function Promocion() {
                         />
                     </div>
                     <MediaButton 
-                        onClick={getStats}
-                        text='Obtener Valores'
+                        onClick={getByDate}
+                        text='Generar'
                         clase="prom_button"
                     />
-                {getChart()}
               </div>
             )
         case 3:
@@ -112,6 +110,14 @@ export default function Promocion() {
             <div className="prom_cont">
                 <div className="prom_center">
                 En construccion
+                </div>
+            </div>
+        )
+        case 4:
+            return (
+            <div className="prom_container">
+                <div className="prom_title">
+                  Realizado con exito
                 </div>
             </div>
         )
@@ -129,17 +135,17 @@ export default function Promocion() {
         </div>
         <Button
           onClick={() => setProm(1)}
-          text='Buscar por dia'
+          text='Reporte por dia'
           clase="prom_button1"
         />
         <Button
           onClick={() => setProm(2)}
-          text='Buscar por fecha'
+          text='Reporte por fecha'
           clase="prom_button1"
         />
         <Button
           onClick={() => setProm(3)}
-          text='Recomendacion'
+          text='Recomendaciones'
           clase="prom_button1"
         />
         <Button
