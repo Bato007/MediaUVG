@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 const express = require('express')
 const Joi = require('joi')
 const { MongoClient } = require('mongodb')
@@ -245,25 +246,93 @@ router.post('/report', async (req, res) => {
     res.status(400).json({ message })
   }
   const { date } = req.body
+  const recomendations = []
 
   try {
     await client.connect()
     const usersDC = client.db('swap').collection('users')
 
     // Obtener 10 usuarios
-    const randomUsers = await usersDC.aggregate([
+    const randomUsers = usersDC.aggregate([
       { $sample: { size: 10 } },
     ])
-    console.log(randomUsers)
     const usernames = []
-    randomUsers.forEach((user) => {
+    await randomUsers.forEach((user) => {
       usernames.push(user.username)
     })
 
-    res.json({ message: 'DONE' })
+    // Se obtienen los generos de una fecha
+    const promises = usernames.map(async (username) => {
+      const result = await usersDC.findOne({ username, 'history.fecha': date })
+      if (result) { // Encontro entonces se le puede hacer una recomendacion
+        const { history } = result
+        let songs = []
+        // Buscando la fecha
+        history.forEach((value) => {
+          if (value.fecha === date) {
+            songs = value.songs
+          }
+        })
+
+        // Ahora se obtiene los generos escuchados
+        const topGenre = {}
+        songs.forEach((song) => {
+          if (topGenre[song.songgenre]) {
+            topGenre[song.songgenre] += parseInt(song.count, 10)
+          } else {
+            topGenre[song.songgenre] = parseInt(song.count, 10)
+          }
+        })
+        const genres = Object.keys(topGenre)
+
+        // Obteniendo el mayor
+        let bestGenre = ''
+        if (genres.length < 2) {
+          bestGenre = genres[0]
+        } else {
+          let max = -1
+          let key = ''
+          genres.forEach((genre) => {
+            if (topGenre[genre] > max) {
+              key = genre
+              max = topGenre[genre]
+            }
+          })
+          bestGenre = key
+        }
+
+        // Se realiza la recomendacion
+        const temp = await pool.query(`
+          SELECT songid, songname, author
+          FROM (song NATURAL JOIN genre) X
+          WHERE songgenre = $1
+          ORDER BY RANDOM()
+          LIMIT 3;
+        `, [bestGenre])
+
+        const recomendation = temp.rows
+        recomendations.push({
+          username,
+          recomendation,
+        })
+        return ({
+          username,
+          recomendation,
+        })
+      } // No se realiza ninguna recomendacion
+      recomendations.push({
+        username,
+      })
+      return ({
+        username,
+      })
+    })
+
+    // Realizando las promesas
+    Promise.allSettled(promises).then(() => res.json(recomendations))
   } catch (error) {
     console.log(error.message)
-    res.json({ message: 'ERROR' })
+    res.json({})
   }
 })
 
