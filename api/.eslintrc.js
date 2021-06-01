@@ -23,5 +23,6 @@ module.exports = {
     'no-throw-literal': 0,
     'no-unused-vars': 0,
     'linebreak-style': 0,
+    'prefer-destructuring': 0,
   },
 }
