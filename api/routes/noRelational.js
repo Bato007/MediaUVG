@@ -55,7 +55,7 @@ router.post('/migrate', async (req, res) => {
 
       // Si es null insertarlo
       if (searched) {
-        const hasDate = await usersDC.findOne({ username: 'bato007', 'history.fecha': date })
+        const hasDate = await usersDC.findOne({ username, 'history.fecha': date })
         // Si no se encuentra insertar
         if (hasDate) {
           // Si se encontro entonces se tienen que remplazar solo los songs
@@ -112,7 +112,6 @@ router.post('/migrate', async (req, res) => {
     })
     res.json({ message: 'DONE' })
   } catch (error) {
-    console.log(error.message)
     res.json({ message: 'ERROR' })
   }
 })
@@ -172,7 +171,7 @@ router.post('/migrate/from', async (req, res) => {
 
         // Si es null insertarlo
         if (searched) {
-          const hasDate = await usersDC.findOne({ username: 'bato007', 'history.fecha': date })
+          const hasDate = await usersDC.findOne({ username, 'history.fecha': date })
           // Si no se encuentra insertar
           if (hasDate) {
             // Si se encontro entonces se tienen que remplazar solo los songs
@@ -230,7 +229,6 @@ router.post('/migrate/from', async (req, res) => {
     })
     res.json({ message: 'DONE' })
   } catch (error) {
-    console.log(error.message)
     res.json({ message: 'ERROR' })
   }
 })

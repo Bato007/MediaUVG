@@ -30,9 +30,19 @@ export default function Generar() {
       body: JSON.stringify(data),
       headers:{'Content-type': 'application/json'}})
       .then((res) => res.json())
-      .catch((error) => console.error('Error', error))
+      .catch((err) => console.error('Error', err))
       .then((out) => {
-        console.log(out)
+        if (out) {
+          const { message } = out
+          if (message === 'DONE') {
+            setError('Simulacion finalizada con exito')
+          } else {
+            setError('Algo ha fallado')
+          }
+          setDate('')
+          setTracks('')
+          setReproductions('')
+        }
       })
     } if (date === '') {
       setError('No se a ingresado fecha')
@@ -52,23 +62,38 @@ export default function Generar() {
         <div className="gen_title">
           Fecha
         </div>
-        <input type="date" className="date_input" onChange={(event) => setDate(event.target.value)} />
+        <input
+          type="date"
+          className="date_input"  
+          onChange={(event) => setDate(event.target.value)} 
+          value={date}
+        />
       </div>
       <div className="input_container">
         <div className="gen_title">
           Tracks
         </div>
-        <input type="number" onChange={(event) => setTracks(event.target.value)} className="num_input" />
+        <input
+          type="number" 
+          onChange={(event) => setTracks(event.target.value)} 
+          className="num_input" 
+          value={tracks}
+        />
       </div>
       <div className="input_container">
         <div className="gen_title">
           Reproduciones
         </div>
-        <input type="number" onChange={(event) => setReproductions(event.target.value)} className="num_input" />
+        <input 
+          type="number" 
+          onChange={(event) => setReproductions(event.target.value)} 
+          className="num_input" 
+          value={reproductions}
+        />
       </div>
       <Button
         onClick={sendInfo}
-        text= "Buscar"
+        text= "Simular"
         clase= "gen_btn"
       />
       <div className="gen_error">
