@@ -138,6 +138,29 @@ router.post('/migrate/from', async (req, res) => {
     await client.connect()
     const usersDC = client.db('swap').collection('users')
 
+    const tempSwap = await pool.query(`
+        SELECT DISTINCT username
+        FROM swapuser;
+      `)
+    const swapusers = tempSwap.rows
+
+    // Se meten tooso los usuarios
+    swapusers.forEach(async (swapuser) => {
+      const { username } = swapuser
+
+      // Buscar al user
+      const searched = await usersDC.findOne({ username })
+
+      // Si es null insertarlo
+      if (!searched) {
+        const newEntry = {
+          username,
+          history: [],
+        }
+        await usersDC.insertOne(newEntry)
+      }
+    })
+
     const tempDates = await pool.query(`
       SELECT DISTINCT to_char(fecha, 'YYYY-MM-DD') AS date
       FROM user_plays
@@ -166,64 +189,46 @@ router.post('/migrate/from', async (req, res) => {
 
         const songs = tempSongs.rows
 
-        // Buscar al user
-        const searched = await usersDC.findOne({ username })
+        const hasDate = await usersDC.findOne({ username, 'history.fecha': date })
+        // Si no se encuentra insertar
+        if (hasDate) {
+          // Si se encontro entonces se tienen que remplazar solo los songs
+          await usersDC.updateOne({
+            username,
+            'history.fecha': date,
+          }, {
+            $unset: {
+              'history.$.songs': [],
+            },
+          }, {
+            multi: true,
+          })
 
-        // Si es null insertarlo
-        if (searched) {
-          const hasDate = await usersDC.findOne({ username, 'history.fecha': date })
-          // Si no se encuentra insertar
-          if (hasDate) {
-            // Si se encontro entonces se tienen que remplazar solo los songs
+          // Insertando todos los datos
+          songs.forEach(async (song) => {
             await usersDC.updateOne({
               username,
               'history.fecha': date,
             }, {
-              $unset: {
-                'history.$.songs': [],
+              $push: {
+                'history.$.songs': song,
+              },
+            }, {
+              mutli: true,
+            })
+          })
+        } else { // No se encuentra se pushean los songs
+          await usersDC.updateOne({ username },
+            {
+              $push: {
+                history: {
+                  fecha: date,
+                  songs,
+                },
               },
             }, {
               multi: true,
             })
-
-            // Insertando todos los datos
-            songs.forEach(async (song) => {
-              await usersDC.updateOne({
-                username,
-                'history.fecha': date,
-              }, {
-                $push: {
-                  'history.$.songs': song,
-                },
-              }, {
-                mutli: true,
-              })
-            })
-          } else { // No se encuentra se pushean los songs
-            await usersDC.updateOne({ username },
-              {
-                $push: {
-                  history: {
-                    fecha: date,
-                    songs,
-                  },
-                },
-              }, {
-                multi: true,
-              })
-          }
-        } else { // Mete las nuevas canciones
-        // Crea la nueva entidad
-          const newEntry = {
-            username,
-            history: [
-              {
-                fecha: date,
-                songs,
-              },
-            ],
-          }
-          await usersDC.insertOne(newEntry)
         }
       })
     })

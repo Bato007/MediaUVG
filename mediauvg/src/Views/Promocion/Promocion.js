@@ -234,6 +234,11 @@ export default function Promocion() {
           clase="prom_button1"
         />
         <Button
+          onClick={() => setProm(2)}
+          text='Migracion hasta el dia'
+          clase="prom_button1"
+        />
+        <Button
           onClick={() => setProm(3)}
           text='Recomendaciones'
           clase="prom_button1"
