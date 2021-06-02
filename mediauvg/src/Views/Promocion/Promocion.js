@@ -9,6 +9,7 @@ export default function Promocion() {
   const history = useHistory()
   const [date, setDate] = useState('')
   const [prom, setProm] = useState(0)
+  const [recomendation, setRecomendation] = useState([])
 
   const goBack = () => {
     history.goBack()
@@ -33,8 +34,10 @@ export default function Promocion() {
       .then((out) => {
         console.log(out)
       })
-    } 
-    setProm(4)
+      setProm(4)
+    } else {
+      setProm(5)
+    }
     setDate('')
   }
     // Obtiene las estadisticas
@@ -55,10 +58,44 @@ export default function Promocion() {
         .then((out) => {
           console.log(out)
         })
-      } 
-      setProm(4)
+        setProm(4)
+      } else {
+        setProm(5)
+      }
       setDate('')
     }
+
+    // Obtiene las recomendaciones
+    const getRecomendation = () => {
+      //console.log("fecha",date)
+      
+      if (date !== '' ) {
+        
+        const data = {
+          date: date,
+        }
+        console.log("fecha",data)
+        fetch('http://localhost:3001/mongo/report',
+        {method: 'POST',
+        body: JSON.stringify(data),
+        headers:{'Content-type': 'application/json'}})
+        .then((res) => res.json())
+        .catch((error) => console.error('Error', error))
+        .then((out) => {
+          //console.log(out)
+          setRecomendation(recomendation => [...recomendation, out]);
+          //setRecomendation(out)
+          
+          //recomendation.splice(0,1)
+          setProm(6)
+        })
+      } else {
+        setProm(5)
+      }
+      
+      setDate('')
+    }
+
   const selectProm = () => {
     switch (prom) {
         case 1:
@@ -70,8 +107,7 @@ export default function Promocion() {
                     <div className="prom_temp">
                         <MediaUpdate
                             value={date}
-                            type="text"
-                            placeholder="Dia: YYYY-MM-DD"
+                            type="date"
                             limit={10}
                             onChange={setDate}
                         />
@@ -92,8 +128,7 @@ export default function Promocion() {
                     <div className="prom_temp">
                         <MediaUpdate
                             value={date}
-                            type="text"
-                            placeholder="Hasta: YYYY-MM-DD"
+                            type="date"
                             limit={10}
                             onChange={setDate}
                         />
@@ -107,10 +142,25 @@ export default function Promocion() {
             )
         case 3:
             return (
-            <div className="prom_cont">
-                <div className="prom_center">
-                En construccion
-                </div>
+            <div className="prom_container">
+                <div className="prom_title">
+                    De esta fecha hacia atras
+                    </div>
+                    <div className="prom_temp">
+                        <MediaUpdate
+                            value={date}
+                            type="date"
+                            limit={10}
+                            onChange={setDate}
+                        />
+                    </div>
+                    <MediaButton 
+                        onClick={getRecomendation}
+                        text='Generar'
+                        clase="prom_button"
+                    />
+                    
+                
             </div>
         )
         case 4:
@@ -119,6 +169,50 @@ export default function Promocion() {
                 <div className="prom_title">
                   Realizado con exito
                 </div>
+            </div>
+        )
+        case 5:
+            return (
+            <div className="prom_container">
+                <div className="prom_title">
+                  Error, vuelva a intentar
+                </div>
+            </div>
+        )
+        case 6:
+            return (
+            <div className="prom_container">
+                <div className="prom_title">
+                  Se te recomienda oir a
+                </div>
+                {recomendation[0].map((value) => {
+                  //console.log(value.hasOwnProperty("recomendation"))
+                  // validar que algun usuario no tenga recomendaciones
+                  // no los muestra :c
+                  if (value.hasOwnProperty("recomendation") === false){
+                    return (
+                      <div key={value.username} >
+                        Para el usuario {value.username} no se recomienda nada
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div key={value.username} >
+                        Para el usuario {value.username}
+                        {console.log(value)}
+
+                          {value.recomendation.map(value => {
+                           
+                          return (
+                            <div key={value.songname}>
+                              {value.songname} + {value.author}
+                            </div>  
+                          )
+                        })} 
+                    </div>
+                  )
+                })}
             </div>
         )
     
@@ -131,16 +225,16 @@ export default function Promocion() {
     <div className="prom_background">
       <div className="prom_container1">
         <div className="prom_title1">
-          Promocion
+          MongoDB
         </div>
         <Button
           onClick={() => setProm(1)}
-          text='Reporte por dia'
+          text='Migracion por dia'
           clase="prom_button1"
         />
         <Button
           onClick={() => setProm(2)}
-          text='Reporte por fecha'
+          text='Migracion hasta dia'
           clase="prom_button1"
         />
         <Button

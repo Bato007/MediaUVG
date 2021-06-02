@@ -329,7 +329,9 @@ router.post('/report', async (req, res) => {
     })
 
     // Realizando las promesas
-    Promise.allSettled(promises).then(() => res.json(recomendations))
+    Promise.allSettled(promises).then(() => {
+      res.json(recomendations)
+    })
   } catch (error) {
     console.log(error.message)
     res.json({})
