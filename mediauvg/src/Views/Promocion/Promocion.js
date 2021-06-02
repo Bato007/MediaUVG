@@ -24,7 +24,7 @@ export default function Promocion() {
       const data = {
         date: date,
       }
-      console.log("fecha",data)
+      
       fetch('http://localhost:3001/mongo/migrate',
       {method: 'POST',
       body: JSON.stringify(data),
@@ -48,7 +48,6 @@ export default function Promocion() {
         const data = {
           date: date,
         }
-        console.log("fecha",data)
         fetch('http://localhost:3001/mongo/migrate/from',
         {method: 'POST',
         body: JSON.stringify(data),
@@ -232,11 +231,6 @@ export default function Promocion() {
         <Button
           onClick={() => setProm(1)}
           text='Migracion por dia'
-          clase="prom_button1"
-        />
-        <Button
-          onClick={() => setProm(2)}
-          text='Migracion hasta dia'
           clase="prom_button1"
         />
         <Button
