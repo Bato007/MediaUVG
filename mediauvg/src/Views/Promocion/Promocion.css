@@ -42,10 +42,23 @@
   .prom_button1:hover{
     background-color: rgb(73, 133, 245);
   }
-  .prom_cont{
-    display: inline-grid;
-    height: 100%;
+  .recomendation{
+    display: flex;
+    flex-direction: row;
     width: 100%;
+    justify-content: center;
+  }
+  .songsRecomedation{
+    border: black;
+    border-style: solid;
+    width: 25vw;
+    margin-top: 1vh;
+    text-align: center;
+    text-transform: capitalize;
+  }
+  .songsRecomedationTitle{
+    font-weight: bold;
+    background-color: lawngreen;
   }
   .prom_center{
     display: flex;

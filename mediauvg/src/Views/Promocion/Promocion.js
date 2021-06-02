@@ -144,7 +144,7 @@ export default function Promocion() {
             return (
             <div className="prom_container">
                 <div className="prom_title">
-                    De esta fecha hacia atras
+                    Elige una fecha
                     </div>
                     <div className="prom_temp">
                         <MediaUpdate
@@ -183,7 +183,7 @@ export default function Promocion() {
             return (
             <div className="prom_container">
                 <div className="prom_title">
-                  Se te recomienda oir a
+                  Recomendaciones
                 </div>
                 {recomendation[0].map((value) => {
                   //console.log(value.hasOwnProperty("recomendation"))
@@ -198,19 +198,21 @@ export default function Promocion() {
                   }
 
                   return (
-                    <div key={value.username} >
-                        Para el usuario {value.username}
-                        {console.log(value)}
-
-                          {value.recomendation.map(value => {
-                           
-                          return (
-                            <div key={value.songname}>
-                              {value.songname} + {value.author}
-                            </div>  
-                          )
-                        })} 
+                    <div className="recomendation">
+                      <div key={value.username} className="songsRecomedation">
+                          <div className="songsRecomedationTitle">
+                            Para el usuario {value.username} se recomienda
+                          </div>
+                            {value.recomendation.map(value => {
+                            return (
+                              <div key={value.songname} >
+                                {value.songname} de {value.author}
+                              </div>  
+                            )
+                          })} 
+                      </div>
                     </div>
+                    
                   )
                 })}
             </div>
